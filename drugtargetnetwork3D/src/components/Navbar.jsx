@@ -30,6 +30,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="Tissues"
             handleChange={handleChange}
+            dropwidth = "100px"
           />
         </Col>
         <Col>
@@ -37,6 +38,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="Max clinical phase"
             handleChange={handleChange}
+              dropwidth = "150px"
           />
         </Col>
         <Col>
@@ -44,6 +46,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="GDSC1"
             handleChange={handleChange}
+              dropwidth = "100px"
           />
         </Col>
         <Col>
@@ -51,6 +54,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="PIC50"
             handleChange={handleChange}
+              dropwidth = "90px"
           />
         </Col>
         <Col>
@@ -58,6 +62,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="Cell line lineage"
             handleChange={handleChange}
+              dropwidth = "150px"
           />
         </Col>
         <Col>
@@ -65,6 +70,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="Disease class"
             handleChange={handleChange}
+              dropwidth = "120px"
           />
         </Col>
         <Col>
@@ -72,6 +78,7 @@ const Navbar = () => {
             options={dropdownOptions}
             placeholder="Compound class"
             handleChange={handleChange}
+              dropwidth = "150px"
           />
         </Col>
         <Col>

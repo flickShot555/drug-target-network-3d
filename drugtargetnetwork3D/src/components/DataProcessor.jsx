@@ -48,7 +48,7 @@ const DataProcessor = () => {
 
   // Render the graph only when graphData is available
   return (
-    <div>
+    <div  >
       <h2>3D Force Network Graph</h2>
       {graphData ? (
         <ForceNetworkGraph graphData={graphData} />

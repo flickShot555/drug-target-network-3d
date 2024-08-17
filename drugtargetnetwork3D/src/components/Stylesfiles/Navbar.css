@@ -1,0 +1,21 @@
+/* App.css */
+.header {
+    background: rgb(219, 219, 219); /* Dark background color */
+    /* padding: 0 20px; Horizontal padding */
+    width: 100%;
+  }
+  
+  .header .ant-row {
+    align-items: center; /* Center items vertically */
+  }
+  
+  .header .ant-select {
+    width: 100%;
+    max-width: 150px; /* Adjust dropdown width as needed */
+    margin: 0 10px; /* Space between dropdowns */
+  }
+  
+  .header .ant-col {
+    padding: 0; /* Remove padding from columns */
+  }
+  

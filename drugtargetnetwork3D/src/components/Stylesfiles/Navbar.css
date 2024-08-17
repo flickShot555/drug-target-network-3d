@@ -19,3 +19,15 @@
     padding: 0; /* Remove padding from columns */
   }
   
+
+
+  .ant-select-selection-item {
+    line-height: 28px; /* Adjust to make sure text fits within the 30px height */
+    margin: 0 4px;
+  }
+  
+  .ant-select-selection-overflow {
+    height: 30px; /* Force the height to match your requirement */
+    overflow: hidden; /* Hide overflowing content */
+  }
+  

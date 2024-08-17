@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
 import SelectComponent from './components/SelectComponent'; // Import your SelectComponent
+import CustomButton from './components/CustomButton';
+
 import './App.css'; // Import the CSS file
 
 const { Header } = Layout;
@@ -21,54 +23,64 @@ const App = () => {
     <Layout>
       <Header className="header">
         <Row >
+          <Col>
+          {/* <p>add more</p> */}
+          <CustomButton>200+</CustomButton>
+          <CustomButton>200+</CustomButton>
+          </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 2"
+                  placeholder="Tissues"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder=" Max clinical phase"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder="GDSC1"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder="PIC50"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder="Cell line lineage"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder="Disease class"
                   handleChange={handleChange}
                 />
               </Col>
               <Col>
                 <SelectComponent
                   options={dropdownOptions}
-                  placeholder="Dropdown 1"
+                  placeholder="Compound class"
                   handleChange={handleChange}
                 />
+              </Col>
+             
+              <Col>
+          <CustomButton>Soon</CustomButton>
+          <CustomButton>Apply Filter</CustomButton>
               </Col>
 
         </Row>

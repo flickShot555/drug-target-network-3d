@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div style={{ padding: '20px', background: 'white', textAlign: 'center' , display: "flex",flexDirection :"row", justifyContent:"center" , alignContent: "center" }}>
   <CustomButton>redraw</CustomButton>
-      <div style={{ marginTop: '20px', width: "200px" }}>
+      <div style={{ marginTop: '5px', width: "200px" }}>
         <Slider defaultValue={30} />
       </div>
       <CustomButton>Export</CustomButton>

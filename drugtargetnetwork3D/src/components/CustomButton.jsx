@@ -6,7 +6,7 @@ const CustomButton = ({ children }) => {
     <Button
       style={{
         background: 'rgb(27,150,134)' ,
-        background: 'linear-gradient(90deg, rgba(141,158,156,1) 8%, rgba(113,214,233,1) 97%)',
+        background: 'linear-gradient(90deg, rgba(141,158,156,1) 9%, rgba(113,214,233,1) 91%)',
         color: 'white',
         border: 'none',
         textAlign: 'center',

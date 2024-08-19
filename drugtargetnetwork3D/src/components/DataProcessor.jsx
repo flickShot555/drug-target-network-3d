@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ForceNetworkGraph from "./ForceNetworkGraph";
 import { Card, Row, Col } from "antd";
-import Legend from "./Legend";
+import LegendDisease from "./LegendDisease";
+
+import LegendProtien from "./LegendProtien";
 
 const DataProcessor = () => {
   const [graphData, setGraphData] = useState(null);
-
+  const [legendData, setlegendData] = useState(null);
   // Fetch the JSON data from sampledata.json
   useEffect(() => {
     fetch("/sampledata.json")
@@ -13,22 +15,24 @@ const DataProcessor = () => {
       .then((data) => {
         const transformedData = transformData(data);
         setGraphData(transformedData);
+        setlegendData(transformedData) 
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   // Transform the data into nodes and links
   const transformData = (data) => {
+    console.log("inital data" , data)
     const nodes = [];
     const links = [];
     const nodeSet = new Set(); // Ensure uniqueness of nodes
 
     data.forEach((item) => {
-      const { COMPOUND_NAME, CELL_LINE_NAME, Disease_name } = item;
+      const { COMPOUND_NAME, CELL_LINE_NAME, Disease_name ,Disease_class , Phase} = item;
 
       // Add unique nodes
       if (!nodeSet.has(COMPOUND_NAME)) {
-        nodes.push({ id: COMPOUND_NAME, group: 1 });
+        nodes.push({ id: COMPOUND_NAME,    group: 1 });
         nodeSet.add(COMPOUND_NAME);
       }
       if (!nodeSet.has(CELL_LINE_NAME)) {
@@ -36,7 +40,7 @@ const DataProcessor = () => {
         nodeSet.add(CELL_LINE_NAME);
       }
       if (!nodeSet.has(Disease_name)) {
-        nodes.push({ id: Disease_name, group: 3 });
+        nodes.push({ id: Disease_name, Disease_class , Phase,  group: 3 });
         nodeSet.add(Disease_name);
       }
 
@@ -53,10 +57,14 @@ const DataProcessor = () => {
       {/* Legend - 15% width */}
       <Col span={4}>
         <Card title="Legend data " bordered={true}>
-          <Legend />
+        {legendData ? (
+            <LegendDisease legendData={legendData} />
+          ) : (
+            <p>Loading data...</p>
+          )}
         </Card>
       </Col>
-
+      
       {/* Graph - 85% width */}
       <Col span={16}>
         <Card title="3D Force Network Graph" bordered={false}>
@@ -70,7 +78,11 @@ const DataProcessor = () => {
       </Col>
       <Col span={4}>
         <Card title="Legend data " bordered={true}>
-          <Legend />
+        {legendData ? (
+            <LegendProtien legendData={legendData} />
+          ) : (
+            <p>Loading data...</p>
+          )}
         </Card>
       </Col>
     </Row>

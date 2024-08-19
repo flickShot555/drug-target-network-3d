@@ -14,6 +14,9 @@ const LegendProtien = ({ legendData }) => {
   const MAX_PHASE = getUniqueValues(legendData.nodes, 'MAX_PHASE');
   const ONCOTREE_LINEAGE = getUniqueValues(legendData.nodes, 'ONCOTREE_LINEAGE');
 
+  const DATASET = getUniqueValues(legendData.nodes, 'DATASET');
+  
+  const METRIC = getUniqueValues(legendData.nodes, 'METRIC');
   // Function to render checkboxes for a given list of values
   const renderCheckboxList = (list, key) => (
     list.map(value => {
@@ -41,7 +44,19 @@ const LegendProtien = ({ legendData }) => {
         <ul>
             {renderCheckboxList(ONCOTREE_LINEAGE, 'ONCOTREE_LINEAGE')}
         </ul>
-     
+        <h5>
+        Data platform
+        </h5>
+        <ul>
+            {renderCheckboxList(DATASET, 'DATASET')}
+        </ul>
+        <h5>
+        METRIC
+        </h5>
+        <ul>
+            {renderCheckboxList(METRIC, 'METRIC')}
+        </ul>
+       
       </div>
     </div>
   );

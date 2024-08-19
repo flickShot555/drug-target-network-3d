@@ -305,11 +305,13 @@ const handleChange = (value) => {
 const Navbar = () => {
   return (
     <Header className="header">
-      <Row>
-        <Col>
-          <CustomButton>200+</CustomButton>
-          <CustomButton>200+</CustomButton>
-        </Col>
+      <Row className="navrow">
+      <Col style={{ display: 'flex', alignItems: 'center' }}>
+  <p style={{ marginRight: '10px' , color:"white" }}>Add More</p>
+  <CustomButton>200+</CustomButton>
+  <CustomButton>200+</CustomButton>
+</Col>
+
         <Col>
           <SelectComponent
             options={Tissues}

@@ -28,15 +28,15 @@ const DataProcessor = () => {
     const nodeSet = new Set(); // Ensure uniqueness of nodes
 
     data.forEach((item) => {
-      const { COMPOUND_NAME, CELL_LINE_NAME, Disease_name ,Disease_class , Phase} = item;
+      const { COMPOUND_NAME, CELL_LINE_NAME, Disease_name ,Disease_class , Phase , DATASET ,MAX_PHASE ,ONCOTREE_LINEAGE } = item;
 
       // Add unique nodes
       if (!nodeSet.has(COMPOUND_NAME)) {
-        nodes.push({ id: COMPOUND_NAME,    group: 1 });
+        nodes.push({ id: COMPOUND_NAME, DATASET, MAX_PHASE ,   group: 1 });
         nodeSet.add(COMPOUND_NAME);
       }
       if (!nodeSet.has(CELL_LINE_NAME)) {
-        nodes.push({ id: CELL_LINE_NAME, group: 2 });
+        nodes.push({ id: CELL_LINE_NAME,DATASET, ONCOTREE_LINEAGE, group: 2 });
         nodeSet.add(CELL_LINE_NAME);
       }
       if (!nodeSet.has(Disease_name)) {

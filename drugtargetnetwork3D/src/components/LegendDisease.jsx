@@ -2,6 +2,7 @@ import React from 'react';
 import { Checkbox } from 'antd';
 
 const LegendDisease = ({ legendData }) => {
+  console.log(legendData , "legendData")
   // Helper function to get unique values from an array of objects
   const getUniqueValues = (data, key) => {
     const values = data
@@ -19,7 +20,7 @@ const LegendDisease = ({ legendData }) => {
     list.map(value => {
       const isChecked = legendData.nodes.some(node => node[key] === value);
       return (
-        <li key={value}>
+        <li key={value} style={{ listStyleType: "none", }}>
           <Checkbox defaultChecked={isChecked}>{value}</Checkbox>
         </li>
       );

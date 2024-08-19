@@ -5,10 +5,10 @@ const CustomButton = ({ children }) => {
   return (
     <Button
       style={{
-        backgroundColor: '#28a5fb',
+        background: 'rgb(27,150,134)' ,
+        background: 'linear-gradient(90deg, rgba(141,158,156,1) 8%, rgba(113,214,233,1) 97%)',
         color: 'white',
         border: 'none',
-        // padding: '10px 10px',
         textAlign: 'center',
         textDecoration: 'none',
         display: 'inline-block',
@@ -16,6 +16,7 @@ const CustomButton = ({ children }) => {
         margin: '6px 2px',
         cursor: 'pointer',
         borderRadius: '4px',
+        // padding: '10px 20px', // Adjusted padding for better appearance
       }}
     >
       {children}

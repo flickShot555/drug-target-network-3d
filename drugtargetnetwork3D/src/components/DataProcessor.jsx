@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import ForceNetworkGraph from './ForceNetworkGraph';
+import React, { useState, useEffect } from "react";
+import ForceNetworkGraph from "./ForceNetworkGraph";
+import { Card, Row, Col } from "antd";
+import Legend from "./Legend";
 
 const DataProcessor = () => {
   const [graphData, setGraphData] = useState(null);
 
   // Fetch the JSON data from sampledata.json
   useEffect(() => {
-    fetch('/sampledata.json')
-      .then(response => response.json())
-      .then(data => {
+    fetch("/sampledata.json")
+      .then((response) => response.json())
+      .then((data) => {
         const transformedData = transformData(data);
         setGraphData(transformedData);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   // Transform the data into nodes and links
@@ -21,7 +23,7 @@ const DataProcessor = () => {
     const links = [];
     const nodeSet = new Set(); // Ensure uniqueness of nodes
 
-    data.forEach(item => {
+    data.forEach((item) => {
       const { COMPOUND_NAME, CELL_LINE_NAME, Disease_name } = item;
 
       // Add unique nodes
@@ -46,16 +48,32 @@ const DataProcessor = () => {
     return { nodes, links };
   };
 
-  // Render the graph only when graphData is available
   return (
-    <div  >
-      <h2>3D Force Network Graph</h2>
-      {graphData ? (
-        <ForceNetworkGraph graphData={graphData} />
-      ) : (
-        <p>Loading data...</p>
-      )}
-    </div>
+    <Row justify="center" style={{ padding: "20px", marginTop: "40px" }}>
+      {/* Legend - 15% width */}
+      <Col span={4}>
+        <Card title="Legend data " bordered={true}>
+          <Legend />
+        </Card>
+      </Col>
+
+      {/* Graph - 85% width */}
+      <Col span={16}>
+        <Card title="3D Force Network Graph" bordered={false}>
+          {graphData ? (
+            <ForceNetworkGraph graphData={graphData} />
+          ) : (
+            <p>Loading data...</p>
+          )}
+      
+        </Card>
+      </Col>
+      <Col span={4}>
+        <Card title="Legend data " bordered={true}>
+          <Legend />
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

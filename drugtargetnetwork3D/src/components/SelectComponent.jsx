@@ -9,7 +9,7 @@ const SelectComponent = ({ options, placeholder, handleChange, dropwidth }) => (
     onChange={handleChange}
     options={options}
     dropdownRender={menu => (
-      <div style={{ maxHeight: '100px', overflowY: 'auto' }}>
+      <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
         {menu}
       </div>
     )}

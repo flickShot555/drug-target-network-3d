@@ -1,33 +1,30 @@
 /* App.css */
 .header {
-    background: rgb(219, 219, 219); /* Dark background color */
-    /* padding: 0 20px; Horizontal padding */
-    width: 100%;
-  }
-  
-  .header .ant-row {
-    align-items: center; /* Center items vertically */
-  }
-  
-  .header .ant-select {
-    width: 100%;
-    max-width: 150px; /* Adjust dropdown width as needed */
-    margin: 0 10px; /* Space between dropdowns */
-  }
-  
-  .header .ant-col {
-    padding: 0; /* Remove padding from columns */
-  }
-  
+  background: rgb(219, 219, 219); /* Dark background color */
+  /* padding: 0 20px; Horizontal padding */
+  width: 100%;
+}
 
+.header .ant-row {
+  align-items: center; /* Center items vertically */
+}
 
-  .ant-select-selection-item {
-    line-height: 28px; /* Adjust to make sure text fits within the 30px height */
-    margin: 0 4px;
-  }
-  
-  .ant-select-selection-overflow {
-    height: 30px; /* Force the height to match your requirement */
-    overflow: hidden; /* Hide overflowing content */
-  }
-  
+.header .ant-select {
+  width: 100%;
+  max-width: 150px; /* Adjust dropdown width as needed */
+  margin: 0 10px; /* Space between dropdowns */
+}
+
+.header .ant-col {
+  padding: 0; /* Remove padding from columns */
+}
+
+.ant-select-selection-item {
+  line-height: 28px; /* Adjust to make sure text fits within the 30px height */
+  margin: 0 4px;
+}
+
+.ant-select-selection-overflow {
+  height: 30px; /* Force the height to match your requirement */
+  overflow: hidden; /* Hide overflowing content */
+}

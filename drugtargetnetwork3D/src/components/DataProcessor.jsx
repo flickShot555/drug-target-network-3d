@@ -32,15 +32,15 @@ const DataProcessor = () => {
 
       // Add unique nodes
       if (!nodeSet.has(COMPOUND_NAME)) {
-        nodes.push({ id: COMPOUND_NAME, DATASET, MAX_PHASE , METRIC,  group: 1 });
+        nodes.push({ id: COMPOUND_NAME, class :MAX_PHASE ,type :"parent_source"  , DATASET, MAX_PHASE , METRIC,  group: 1 });
         nodeSet.add(COMPOUND_NAME);
       }
       if (!nodeSet.has(CELL_LINE_NAME)) {
-        nodes.push({ id: CELL_LINE_NAME,DATASET, ONCOTREE_LINEAGE,METRIC, group: 2 });
+        nodes.push({ id: CELL_LINE_NAME, class :ONCOTREE_LINEAGE ,type: "protien_child"  ,DATASET,ONCOTREE_LINEAGE ,METRIC, group: 2 });
         nodeSet.add(CELL_LINE_NAME);
       }
       if (!nodeSet.has(Disease_name)) {
-        nodes.push({ id: Disease_name, Disease_class , Phase,METRIC, group: 3 });
+        nodes.push({ id: Disease_name, class: Disease_class, type: "disease_child" ,Disease_class ,Phase,METRIC, group: 3 });
         nodeSet.add(Disease_name);
       }
 

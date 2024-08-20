@@ -45,7 +45,7 @@ const DataProcessor = () => {
       {/* Legend Disease */}
       <Col xs={24} sm={12} md={6}>
         <Card title="Disease Legend" bordered>
-          {legendData ? <LegendProtein legendData={legendData} /> : null}
+          {legendData ? <LegendDisease legendData={legendData} /> : null}
         </Card>
       </Col>
 

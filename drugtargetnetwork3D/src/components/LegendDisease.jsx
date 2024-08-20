@@ -22,6 +22,7 @@ const LegendDisease = ({ legendData }) => {
       return (
         <li key={value} style={{ listStyleType: "none", }}>
           <Checkbox defaultChecked={isChecked}>{value}</Checkbox>
+        
         </li>
       );
     })
@@ -32,7 +33,9 @@ const LegendDisease = ({ legendData }) => {
       <div className="legend1" id="legend1" style={{ marginLeft: '12px' }}>
         <h5 className="legenddata" id="Drug_disease_phase">
           Disease clinical phase
+         
         </h5>
+{legendData ? <><div>{legendData.nodes}</div></>: null}
         <ul id="phases_disease">
             {renderCheckboxList(uniquePhases, 'Phase')}
         </ul>

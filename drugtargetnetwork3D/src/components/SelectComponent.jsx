@@ -17,3 +17,5 @@ const SelectComponent = ({ options, placeholder, handleChange, dropwidth }) => (
 );
 
 export default SelectComponent;
+
+

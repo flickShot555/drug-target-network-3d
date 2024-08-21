@@ -8,6 +8,7 @@ const ForceNetworkGraph = ({ graphData }) => {
   useEffect(() => {
     if (fgRef.current) {
       const fg = fgRef.current;
+      console.log(fg , "fg")
 
       // Customize force layout here, if needed
       fg.d3Force("link").distance((link) => 30);
@@ -32,7 +33,7 @@ const ForceNetworkGraph = ({ graphData }) => {
         linkDirectionalParticleSpeed={(d) => d.value * 0.001}
         linkWidth={(link) => Math.sqrt(link.value)}
         // linkColor={() => "rgba(255, 255, 255, 0.6)"}
-        linkColor={() => "black"}
+        // linkColor={() => "black"}
         width={window.innerWidth * 0.8} // Explicitly setting the width
         height={600} // Explicitly setting the height
         backgroundColor="white"

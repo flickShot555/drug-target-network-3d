@@ -25,6 +25,7 @@ const LegendProtien = ({ legendData }) => {
   const renderCheckboxList = (list, key) =>
     list.map((value) => {
       const isChecked = legendData.nodes.some((node) => node[key] === value);
+      console.log("value" , value  )
       return (
         <li key={value} style={{ listStyleType: "none" }}>
           <Checkbox defaultChecked={isChecked}>{value}</Checkbox>

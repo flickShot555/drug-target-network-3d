@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { ForceGraph3D } from "react-force-graph";
 
 const ForceNetworkGraph = ({ graphData }) => {
+  console.log("graphData graphData" , graphData)
   const fgRef = useRef();
 
   useEffect(() => {

@@ -35,7 +35,7 @@ const LegendDisease = ({ legendData }) => {
           Disease clinical phase
          
         </h5>
-{legendData ? <><div>{legendData.nodes}</div></>: null}
+{/* {legendData ? <><div>{legendData.nodes}</div></>: null} */}
         <ul id="phases_disease">
             {renderCheckboxList(uniquePhases, 'Phase')}
         </ul>

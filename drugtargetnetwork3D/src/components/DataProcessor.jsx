@@ -215,21 +215,21 @@ const DataProcessor = () => {
   return (
     <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
       {/* Legend Disease */}
-      <Col xs={24} sm={12} md={6}>
+      <Col xs={24} sm={12} md={5} >
         <Card title="Disease Legend" bordered>
           {legendData ? <LegendDisease legendData={legendData} /> : null}
         </Card>
       </Col>
 
       {/* Force Network Graph */}
-      <Col xs={24} sm={24} md={12}>
+      <Col xs={24} sm={24} md={14} >
         <Card title="3D Force Network Graph" bordered>
           {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData} /> : null}
         </Card>
       </Col>
 
       {/* Legend Protein */}
-      <Col xs={24} sm={12} md={6}>
+      <Col xs={24} sm={12} md={5}>
         <Card title="Protein Legend" bordered>
           {legendData ? <LegendProtein legendData={legendData} /> : null}
         </Card>

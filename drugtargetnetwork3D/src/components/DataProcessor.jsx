@@ -192,15 +192,6 @@ const DataProcessor = () => {
     : null;
 
   // Clone graphData and add color property to nodes
-  const clonedLegenddata = legendData
-    ? {
-        nodes: graphData.nodes.map((node) => ({
-          ...node,
-          color: getNodeColor(node), // Add color property
-        })),
-        links: graphData.links.map((link) => ({ ...link })),
-      }
-    : null;
 
     const handleLegendChange = (category, value) => {
       setLegendData2((prevState) => ({
@@ -215,34 +206,27 @@ const DataProcessor = () => {
       }));
     };
 
-
-  return (
-    <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
-      {/* Legend Disease */}
-      <Col xs={24} sm={12} md={6}>
-        <Card title="Disease Legend" bordered>
-          {legendData ? (
-            
-      <Legend legendData={legendData2} onLegendChange={handleLegendChange} />
-          ) : null}
-        </Card>
-      </Col>
-
-      {/* Force Network Graph */}
-      <Col xs={24} sm={24} md={18} >
-        <Card title="3D Force Network Graph" bordered>
-          {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData }  getNodeShape={getNodeShape}  /> : null}
-        </Card>
-      </Col>
-
-      {/* Legend Protein */}
-      {/* <Col xs={24} sm={12} md={5}>
-        <Card title="Protein Legend" bordered>
-          {legendData ? <LegendProtein legendData={legendData}  getNodeShape={getNodeShape} /> : null}
-        </Card>
-      </Col> */}
-    </Row>
-  );
-};
+    return (
+      <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
+        {/* Legend Disease */}
+        <Col xs={24} sm={12} md={6}>
+          <Card title="Legend" bordered>
+            <div style={{ height: "600px", overflowY: "auto" }}>
+              {legendData ? (
+                <Legend legendData={legendData2} onLegendChange={handleLegendChange} />
+              ) : null}
+            </div>
+          </Card>
+        </Col>
+    
+        {/* Force Network Graph */}
+        <Col xs={24} sm={24} md={18}>
+          <Card title="3D Force Network Graph" bordered>
+            {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData} getNodeShape={getNodeShape} /> : null}
+          </Card>
+        </Col>
+      </Row>
+    );
+  };
 
 export default DataProcessor;

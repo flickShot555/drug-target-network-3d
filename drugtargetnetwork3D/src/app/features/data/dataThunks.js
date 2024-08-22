@@ -42,7 +42,10 @@ const transformData = (data) => {
         type: 'parent_source',
         dataset: DATASET,
         maxPhase: MAX_PHASE,
+        oncotreeLineage: ONCOTREE_LINEAGE,
         metric: METRIC,
+        diseaseClass: Disease_class,
+        phase: Phase,
         group: 1,
       });
       nodeSet.add(COMPOUND_NAME);
@@ -56,6 +59,9 @@ const transformData = (data) => {
         dataset: DATASET,
         oncotreeLineage: ONCOTREE_LINEAGE,
         metric: METRIC,
+        diseaseClass: Disease_class,
+        phase: Phase,
+        maxPhase: MAX_PHASE,
         group: 2,
       });
       nodeSet.add(CELL_LINE_NAME);
@@ -67,8 +73,11 @@ const transformData = (data) => {
         class: Disease_class,
         type: 'disease_child',
         diseaseClass: Disease_class,
+        oncotreeLineage: ONCOTREE_LINEAGE,
         phase: Phase,
         metric: METRIC,
+        dataset: DATASET,
+        maxPhase: MAX_PHASE,
         group: 3,
       });
       nodeSet.add(Disease_name);

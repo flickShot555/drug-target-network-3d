@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
@@ -19,6 +19,48 @@ const DataProcessor = () => {
   const legendData = useSelector(selectLegendData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
+
+  const [legendData2, setLegendData2] = useState({});
+
+  useEffect(() => {
+    if (legendData) {
+      const extractUniqueValues = (key) => {
+        return [...new Set(legendData.nodes.map((node) => node[key]))].filter(Boolean);
+      };
+
+      const createLegendData = () => {
+        const categories = [
+          'phase', 
+          'diseaseClass', 
+          'maxPhase', 
+          'oncotreeLineage', 
+          'metric', 
+          'dataset'
+        ];
+
+        const newLegendData = {};
+
+        categories.forEach((category) => {
+          const uniqueValues = extractUniqueValues(category);
+          newLegendData[category] = uniqueValues.reduce((acc, value) => {
+            acc[value] = {
+              color: getNodeColor({ class: value }), // Use the color function for each unique value
+              checked: true,
+            };
+            return acc;
+          }, {});
+        });
+
+        setLegendData2(newLegendData);
+      };
+
+      createLegendData();
+    }
+  }, [legendData]);
+
+
+  console.log(legendData ,legendData2 ,  "here is the legend data there ")
+
   const child_colors = [
     "#1f77b4",
     "#ff7f0e",
@@ -149,7 +191,30 @@ const DataProcessor = () => {
       }
     : null;
 
-  console.log(clonedGraphData, "clonedGraphData");
+  // Clone graphData and add color property to nodes
+  const clonedLegenddata = legendData
+    ? {
+        nodes: graphData.nodes.map((node) => ({
+          ...node,
+          color: getNodeColor(node), // Add color property
+        })),
+        links: graphData.links.map((link) => ({ ...link })),
+      }
+    : null;
+
+    const handleLegendChange = (category, value) => {
+      setLegendData2((prevState) => ({
+        ...prevState,
+        [category]: {
+          ...prevState[category],
+          [value]: {
+            ...prevState[category][value],
+            checked: !prevState[category][value].checked,
+          },
+        },
+      }));
+    };
+
 
   return (
     <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
@@ -157,8 +222,8 @@ const DataProcessor = () => {
       <Col xs={24} sm={12} md={6}>
         <Card title="Disease Legend" bordered>
           {legendData ? (
-            <Legend
-            />
+            
+      <Legend legendData={legendData2} onLegendChange={handleLegendChange} />
           ) : null}
         </Card>
       </Col>

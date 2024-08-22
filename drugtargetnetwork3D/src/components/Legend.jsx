@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Checkbox } from "antd";
 
-const LegendDisease = ({ legendData }) => {
+const Legend = () => {
   return (
     <div>
       <div className="legend1" id="legend1" style={{ marginLeft: "12px" }}>
@@ -44,4 +44,4 @@ const LegendDisease = ({ legendData }) => {
   );
 };
 
-export default LegendDisease;
+export default Legend;

@@ -9,7 +9,7 @@ import {
   selectDataError,
 } from "../app/features/data/dataSelectors";
 import ForceNetworkGraph from "./ForceNetworkGraph";
-import LegendDisease from "./LegendDisease";
+import Legend from "./Legend";
 import LegendProtein from "./LegendProtien";
 
 const DataProcessor = () => {
@@ -154,30 +154,28 @@ const DataProcessor = () => {
   return (
     <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
       {/* Legend Disease */}
-      <Col xs={24} sm={12} md={5}>
+      <Col xs={24} sm={12} md={6}>
         <Card title="Disease Legend" bordered>
           {legendData ? (
-            <LegendDisease 
-              legendData={legendData} 
-              getNodeShape={getNodeShape} 
+            <Legend
             />
           ) : null}
         </Card>
       </Col>
 
       {/* Force Network Graph */}
-      <Col xs={24} sm={24} md={14} >
+      <Col xs={24} sm={24} md={18} >
         <Card title="3D Force Network Graph" bordered>
           {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData }  getNodeShape={getNodeShape}  /> : null}
         </Card>
       </Col>
 
       {/* Legend Protein */}
-      <Col xs={24} sm={12} md={5}>
+      {/* <Col xs={24} sm={12} md={5}>
         <Card title="Protein Legend" bordered>
           {legendData ? <LegendProtein legendData={legendData}  getNodeShape={getNodeShape} /> : null}
         </Card>
-      </Col>
+      </Col> */}
     </Row>
   );
 };

@@ -19,8 +19,10 @@ const DataProcessor = () => {
   const legendData = useSelector(selectLegendData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
+const [legendData2, setLegendData2] = useState({});
 
-  const [legendData2, setLegendData2] = useState({});
+
+
 
   useEffect(() => {
     if (legendData) {
@@ -28,33 +30,33 @@ const DataProcessor = () => {
         return [...new Set(legendData.nodes.map((node) => node[key]))].filter(Boolean);
       };
 
-      const createLegendData = () => {
-        const categories = [
-          'phase', 
-          'diseaseClass', 
-          'maxPhase', 
-          'oncotreeLineage', 
-          'metric', 
-          'dataset'
-        ];
+        const createLegendData = () => {
+          const categories = [
+            'phase', 
+            'diseaseClass', 
+            'maxPhase', 
+            'oncotreeLineage', 
+            'metric', 
+            'dataset'
+          ];
 
-        const newLegendData = {};
+          const newLegendData = {};
 
-        categories.forEach((category) => {
-          const uniqueValues = extractUniqueValues(category);
-          newLegendData[category] = uniqueValues.reduce((acc, value) => {
-            acc[value] = {
-              color: getNodeColor({ class: value }), // Use the color function for each unique value
-              checked: true,
-            };
-            return acc;
-          }, {});
-        });
+          categories.forEach((category) => {
+            const uniqueValues = extractUniqueValues(category);
+            newLegendData[category] = uniqueValues.reduce((acc, value) => {
+              acc[value] = {
+                color: getNodeColor({ class: value }), // Use the color function for each unique value
+                checked: true,
+              };
+              return acc;
+            }, {});
+          });
 
-        setLegendData2(newLegendData);
-      };
+          setLegendData2(newLegendData);
+        };
 
-      createLegendData();
+        createLegendData();
     }
   }, [legendData]);
 

@@ -1,10 +1,11 @@
 // src/features/data/dataSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchGraphData } from './dataThunks';
-
+import { transformData } from './utils/transformData';
 const initialState = {
   graphData: null,
   legendData: null,
+  legendFilteration :null , 
   status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null,
 };
@@ -22,8 +23,8 @@ const dataSlice = createSlice({
       })
       .addCase(fetchGraphData.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.graphData = action.payload;
-        state.legendData = action.payload; // Modify as needed if legend data is different
+        state.graphData = transformData(action.payload); 
+        state.legendData = transformData(action.payload); // Modify as needed if legend data is different
       })
       .addCase(fetchGraphData.rejected, (state, action) => {
         state.status = 'failed';

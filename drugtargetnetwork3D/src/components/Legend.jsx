@@ -73,7 +73,7 @@ const Legend = ({ legendData, onLegendChange }) => {
   return (
     <div>
       <div className="legend1" id="legend1" style={{ marginLeft: "12px" }}>
-        <CustomButton>Filter</CustomButton>
+        {/* <CustomButton>Filter</CustomButton> */}
 
         {Object.keys(legendData).map((category) => (
           <div key={category}>

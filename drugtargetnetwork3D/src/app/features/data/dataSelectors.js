@@ -7,3 +7,5 @@ export const selectLegendData = (state) => state.data.legendData;
 export const selectDataStatus = (state) => state.data.status;
 
 export const selectDataError = (state) => state.data.error;
+
+export const selectlegendfilteration = (state) => state.data.legendFilteration;

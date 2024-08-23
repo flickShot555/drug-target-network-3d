@@ -1,7 +1,5 @@
 // src/features/data/dataThunks.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { transformData } from './utils/transformData'; // Adjust the import path as needed
-
 // Define the async thunk for fetching and transforming data
 export const fetchGraphData = createAsyncThunk(
   'data/fetchGraphData',
@@ -13,8 +11,8 @@ export const fetchGraphData = createAsyncThunk(
     let data = await response.json();
     
     // Use the imported transformData function
-    const transformedData = transformData(data);
     
     return data;
+    
   }
 );

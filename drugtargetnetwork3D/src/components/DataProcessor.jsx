@@ -4,7 +4,6 @@ import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
 import {
   selectGraphData,
-  selectLegendData,
   selectDataStatus,
   selectDataError,
   selectlegendfilteration
@@ -15,7 +14,6 @@ const DataProcessor = () => {
   const dispatch = useDispatch();
 
   const graphData = useSelector(selectGraphData);
-  const legendData = useSelector(selectLegendData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters =   useSelector(selectlegendfilteration);
@@ -163,7 +161,7 @@ const DataProcessor = () => {
         <Col xs={24} sm={12} md={6}>
           <Card title="Legend" bordered>
             <div style={{ height: "600px", overflowY: "auto" }}>
-              {legendData ? (
+              {legendData_filters ? (
                 <Legend legendData={legendData_filters} onLegendChange={handleLegendChange} />
               ) : null}
             </div>

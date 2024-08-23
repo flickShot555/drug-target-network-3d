@@ -1,5 +1,3 @@
-// src/features/data/dataSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchGraphData } from './dataThunks';
 import { transformData } from './utils/transformData';
@@ -17,10 +15,10 @@ const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    // You can define synchronous reducers here if needed
     toggleLegendItem: (state, action) => {
       const { category, value } = action.payload;
       state.legendFilteration[category][value].checked = !state.legendFilteration[category][value].checked;
+     
     },
   },
   extraReducers: (builder) => {
@@ -31,15 +29,22 @@ const dataSlice = createSlice({
       .addCase(fetchGraphData.fulfilled, (state, action) => {
         state.status = 'succeeded';
         
-        const transformedData = transformData(action.payload);
-        state.graphData = transformedData; 
-        state.legendData = transformedData; // Modify as needed if legend data is different
-        
         // Generate legendFilteration based on the payload
         state.legendFilteration = generateLegendFilteration(action.payload);
 
-        console.log( 'state.legendFilteration' , state.legendFilteration  )
-      })
+        // Filter the graph data based on the legendFilteration
+        const filteredData = action.payload.filter(item => {
+          return state.legendFilteration.phase[item.Phase]?.checked &&
+                 state.legendFilteration.diseaseClass[item.Disease_class]?.checked &&
+                 state.legendFilteration.maxPhase[item.MAX_PHASE]?.checked &&
+                 state.legendFilteration.oncotreeLineage[item.ONCOTREE_LINEAGE]?.checked &&
+                 state.legendFilteration.metric[item.METRIC]?.checked &&
+                 state.legendFilteration.dataset[item.DATASET]?.checked;
+        });
+
+        // Transform the filtered data
+        state.graphData = transformData(filteredData);
+          })
       .addCase(fetchGraphData.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;

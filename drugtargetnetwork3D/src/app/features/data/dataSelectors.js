@@ -2,7 +2,7 @@
 
 export const selectGraphData = (state) => state.data.graphData;
 
-export const selectLegendData = (state) => state.data.legendData;
+export const selectoriginalData = (state) => state.data.OriginalData;
 
 export const selectDataStatus = (state) => state.data.status;
 

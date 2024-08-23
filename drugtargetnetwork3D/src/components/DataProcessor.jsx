@@ -6,19 +6,22 @@ import {
   selectGraphData,
   selectDataStatus,
   selectDataError,
-  selectlegendfilteration
+  selectlegendfilteration, 
+  selectoriginalData
 } from "../app/features/data/dataSelectors";
 import ForceNetworkGraph from "./ForceNetworkGraph";
+import { toggleLegendItem } from "./../app/features/data/dataSlice";
 import Legend from "./Legend";
 const DataProcessor = () => {
   const dispatch = useDispatch();
 
   const graphData = useSelector(selectGraphData);
+  
+  const originalData = useSelector(selectoriginalData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters =   useSelector(selectlegendfilteration);
 
-  
   const child_colors = [
     "#1f77b4",
     "#ff7f0e",
@@ -151,9 +154,10 @@ const DataProcessor = () => {
 
   // Clone graphData and add color property to nodes
 
-    const handleLegendChange = (category, value) => {
-   
-    };
+  const handleCheckboxChange = (category, value) => {
+    dispatch(toggleLegendItem({ category, value ,originalData }))
+    
+  };
 
     return (
       <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
@@ -162,7 +166,7 @@ const DataProcessor = () => {
           <Card title="Legend" bordered>
             <div style={{ height: "600px", overflowY: "auto" }}>
               {legendData_filters ? (
-                <Legend legendData={legendData_filters} onLegendChange={handleLegendChange} />
+                <Legend legendData={legendData_filters} handleCheckboxChange={handleCheckboxChange} />
               ) : null}
             </div>
           </Card>

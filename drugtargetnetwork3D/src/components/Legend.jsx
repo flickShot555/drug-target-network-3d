@@ -1,15 +1,10 @@
 import React from "react";
 import { Checkbox } from "antd";
-import { useDispatch } from "react-redux";
-import { toggleLegendItem } from "./../app/features/data/dataSlice";
 
-const Legend = ({ legendData}) => {
+const Legend = ({ legendData ,handleCheckboxChange}) => {
   console.log(legendData , "legendData in legnd ")
-  const dispatch = useDispatch();
 
-  const handleCheckboxChange = (category, value) => {
-    dispatch(toggleLegendItem({ category, value }));
-  };
+
   // Function to determine the shape and size based on category and value
   const renderShape = (category, color) => {
     switch (category) {

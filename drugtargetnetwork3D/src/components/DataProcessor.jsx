@@ -10,7 +10,6 @@ import {
   selectoriginalData
 } from "../app/features/data/dataSelectors";
 import ForceNetworkGraph from "./ForceNetworkGraph";
-import { toggleLegendItem } from "./../app/features/data/dataSlice";
 import Legend from "./Legend";
 import CustomButton from "./CustomButton";
 const DataProcessor = () => {
@@ -155,10 +154,6 @@ const DataProcessor = () => {
 
   // Clone graphData and add color property to nodes
 
-  const handleCheckboxChange = (category, value) => {
-    dispatch(toggleLegendItem({ category, value ,originalData }))
-    
-  };
 
     return (
       <Row justify="center" gutter={[16, 16]} style={{ padding: "20px", marginTop: "40px" }}>
@@ -170,7 +165,7 @@ const DataProcessor = () => {
               
   <CustomButton>Apply</CustomButton>
               {legendData_filters ? (
-                <Legend legendData={legendData_filters} handleCheckboxChange={handleCheckboxChange} />
+                <Legend legendData={legendData_filters}/>
               ) : null}
             </div>
           </Card>

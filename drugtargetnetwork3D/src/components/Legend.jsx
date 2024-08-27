@@ -1,7 +1,8 @@
 import React from "react";
 import { Checkbox } from "antd";
+import { toggleLegendItem } from "./../app/features/data/dataSlice";
 
-const Legend = ({ legendData ,handleCheckboxChange}) => {
+const Legend = ({ legendData}) => {
   console.log(legendData , "legendData in legnd ")
 
 
@@ -70,6 +71,11 @@ const Legend = ({ legendData ,handleCheckboxChange}) => {
       default:
         return null;
     }
+  };
+
+  const handleCheckboxChange = (category, value) => {
+    dispatch(toggleLegendItem({ category, value ,originalData }))
+    
   };
 
   return (

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@react-three/fiber": "^8.17.5",
     "react-force-graph": "^1.44.4",
     "three": "^0.167.1"
   }

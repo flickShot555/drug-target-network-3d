@@ -12,6 +12,7 @@ import {
 import ForceNetworkGraph from "./ForceNetworkGraph";
 import { toggleLegendItem } from "./../app/features/data/dataSlice";
 import Legend from "./Legend";
+import CustomButton from "./CustomButton";
 const DataProcessor = () => {
   const dispatch = useDispatch();
 
@@ -164,7 +165,10 @@ const DataProcessor = () => {
         {/* Legend Disease */}
         <Col xs={24} sm={12} md={6}>
           <Card title="Legend" bordered>
+           
             <div style={{ height: "600px", overflowY: "auto" }}>
+              
+  <CustomButton>Apply</CustomButton>
               {legendData_filters ? (
                 <Legend legendData={legendData_filters} handleCheckboxChange={handleCheckboxChange} />
               ) : null}
@@ -175,6 +179,7 @@ const DataProcessor = () => {
         {/* Force Network Graph */}
         <Col xs={24} sm={24} md={18}>
           <Card title="3D Force Network Graph" bordered>
+          
             {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData} getNodeShape={getNodeShape} /> : null}
           </Card>
         </Col>

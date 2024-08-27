@@ -83,10 +83,9 @@ const dataSlice = createSlice({
         });
 
         // Slice the filtered nodes to a maximum of 50 items
-        const slicedNodes = filteredNodes.slice(0, 50);
 
         // Optionally transform the sliced data
-        state.graphData = transformData(slicedNodes);
+        state.graphData = transformData(filteredNodes);
       }
     },
   },

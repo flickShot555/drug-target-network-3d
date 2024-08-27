@@ -24,7 +24,7 @@ const DataProcessor = () => {
   const dataError = useSelector(selectDataError);
   const legendData_filters =   useSelector(selectlegendfilteration);
 
-
+console.log("original "  ,originalData )  ; 
   const child_colors = [
     "#1f77b4",
     "#ff7f0e",
@@ -162,7 +162,6 @@ const DataProcessor = () => {
   // Clone graphData and add color property to nodes
   // Dispatch the filterGraphData action on button click
   const handleApplyClick = () => {
-    alert("click"); // Test if the click event is triggered
     dispatch(filterGraphData());
   };
 

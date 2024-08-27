@@ -8,7 +8,7 @@ const initialState = {
   graphData: null,
   legendData: null,
   legendFilteration: null,
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: "idle",
   error: null,
   maxPhase: null,
   dataset: null,
@@ -26,11 +26,24 @@ const dataSlice = createSlice({
       const { category, value } = action.payload;
       state.legendFilteration[category][value].checked =
         !state.legendFilteration[category][value].checked;
+    },
+    filterGraphData: (state) => {
+      if (state.legendFilteration && state.OriginalData) {
+        // Filter nodes based on legendFilteration
+        const filteredNodes = state.OriginalData.filter(node => {
+         
+          // Assuming legendFilteration contains information to filter by class
+          return node ;
+        });
 
+        // Slice the filtered nodes to a maximum of 50 items
+        const slicedNodes = filteredNodes.slice(0, 50);
+
+        // Optionally transform the sliced data
+        state.graphData = transformData(slicedNodes); 
+      }
     },
   },
-  
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchGraphData.pending, (state) => {
@@ -39,18 +52,9 @@ const dataSlice = createSlice({
       .addCase(fetchGraphData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.OriginalData = action.payload;
-
-        // Generate legendFilteration based on the payload
         state.legendFilteration = generateLegendFilteration(action.payload);
-        // Filter the graph data based on the legendFilteration
-        // Transform the filtered data
+        // Transform the full data initially
         state.graphData = transformData(action.payload);
-        console.log(
-          "check",
-          state.OriginalData,
-          "state.legendFilteration",
-          state.legendFilteration
-        );
       })
       .addCase(fetchGraphData.rejected, (state, action) => {
         state.status = "failed";
@@ -59,5 +63,5 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem } = dataSlice.actions;
+export const { toggleLegendItem, filterGraphData } = dataSlice.actions;
 export default dataSlice.reducer;

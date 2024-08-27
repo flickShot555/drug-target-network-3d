@@ -2,6 +2,8 @@ import React, { useState , useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
+
+import { filterGraphData } from "./../app/features/data/dataSlice";
 import {
   selectGraphData,
   selectDataStatus,
@@ -14,13 +16,14 @@ import Legend from "./Legend";
 import CustomButton from "./CustomButton";
 const DataProcessor = () => {
   const dispatch = useDispatch();
-
+  const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
   
   const originalData = useSelector(selectoriginalData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters =   useSelector(selectlegendfilteration);
+
 
   const child_colors = [
     "#1f77b4",
@@ -131,7 +134,19 @@ const DataProcessor = () => {
     if (dataStatus === "idle") {
       dispatch(fetchGraphData());
     }
-  }, [dataStatus, dispatch]);
+    if (graphData) {
+      const clonedData = {
+        nodes: graphData.nodes.map((node) => ({
+          ...node,
+          color: getNodeColor(node), // Add color property
+        })),
+        links: graphData.links.map((link) => ({ ...link })),
+      };
+      setClonedGraphData(clonedData);
+    } else {
+      setClonedGraphData(null);
+    }
+  }, [dataStatus, graphData ,dispatch]);
 
   if (dataStatus === "loading") {
     return <div>Loading...</div>;
@@ -142,17 +157,14 @@ const DataProcessor = () => {
   }
 
   // Clone graphData and add color property to nodes
-  const clonedGraphData = graphData
-    ? {
-        nodes: graphData.nodes.map((node) => ({
-          ...node,
-          color: getNodeColor(node), // Add color property
-        })),
-        links: graphData.links.map((link) => ({ ...link })),
-      }
-    : null;
+
 
   // Clone graphData and add color property to nodes
+  // Dispatch the filterGraphData action on button click
+  const handleApplyClick = () => {
+    alert("click"); // Test if the click event is triggered
+    dispatch(filterGraphData());
+  };
 
 
     return (
@@ -163,7 +175,7 @@ const DataProcessor = () => {
            
             <div style={{ height: "600px", overflowY: "auto" }}>
               
-  <CustomButton>Apply</CustomButton>
+            <CustomButton onClick={handleApplyClick}>Apply 2 </CustomButton> {/* Attach the handler */}
               {legendData_filters ? (
                 <Legend legendData={legendData_filters}/>
               ) : null}

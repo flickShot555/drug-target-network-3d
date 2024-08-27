@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
 
-const CustomButton = ({ children }) => {
+const CustomButton = ({  onClick,children }) => {
   return (
-    <Button
+    <Button onClick={onClick}
       style={{
         background: 'rgb(27,150,134)' ,
         background: 'linear-gradient(90deg, rgba(141,158,156,1) 9%, rgba(113,214,233,1) 91%)',

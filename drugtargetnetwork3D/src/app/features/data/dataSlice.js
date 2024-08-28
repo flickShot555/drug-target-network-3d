@@ -63,6 +63,12 @@ const dataSlice = createSlice({
       // Optionally, you could also store specific key-value pairs if needed
       // state.pIC50 = state.legendFilteration.metric?.pIC50?.checked ? 'pIC50' : null;
       // console.log('Updated pIC50:', state.pIC50);
+
+
+
+
+
+
     },
 
     filterGraphData: (state) => {
@@ -70,6 +76,8 @@ const dataSlice = createSlice({
         // Filter nodes based on legendFilteration
         const filteredNodes = state.OriginalData.filter((node) => {
           // Assuming legendFilteration contains information to filter by class
+// state.maxPhase = state.maxPhase.slice(1).
+state.maxPhase.splice(1, 1);
 
           if (
             state.maxPhase.includes(node.MAX_PHASE) &&

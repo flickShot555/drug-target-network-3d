@@ -14,7 +14,7 @@ const initialState = {
   dataset: [],
   diseaseClass: [],
   metric: [],
-  // pIC50: [],
+  oncotreeLineage: [],
   phase: [],
 };
 
@@ -76,7 +76,8 @@ const dataSlice = createSlice({
             state.dataset.includes(node.DATASET) &&
             state.diseaseClass.includes(node.Disease_class) &&
             state.metric.includes(node.METRIC) &&
-            state.phase.includes(node.Phase) 
+            state.phase.includes(node.Phase)  &&
+            state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE)
           ) {
             return node;
           }

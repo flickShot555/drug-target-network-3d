@@ -63,8 +63,47 @@ export const generateLegendFilteration = (data) => {
     if (category === "Liver") return child_colors[13];
     return "black"; // Default color for unrecognized categories
   };
+  const getNodeColor_Disease_class = (node) => {
+    const category = node.Disease_class;
+    if (category === "Behavior mechanisms") return "steelblue";
+    if (category === "Cardiovascular") return "red";
+    if (category === "Chemically-Induced disorders") return "orange";
+    if (category === "Congenital and neonatal") return "yellow";
+    if (category === "Digestive system") return "green";
+    if (category === "Endocrine system") return "blue";
+    if (category === "Eye") return "indigo";
+    if (category === "Female urogenital") return "violet";
+    if (category === "Genetic inborn") return "brown";
+    if (category === "Hemic and lymphatic") return "pink";
+    if (category === "Immune system") return "cyan";
+    if (category === "Infections") return "purple";
+    if (category === "Male urogenital") return "teal";
+    if (category === "Mental disorders") return "gray";
+    if (category === "Musculoskeletal") return "lime";
+    if (category === "Neoplasm") return "maroon";
+    if (category === "Nervous system") return "navy";
+    if (category === "Nutritional and Metabolic") return "olive";
+    if (category === "Occupational diseases") return "pink";
+    if (category === "Otorhinolaryngologic") return "salmon";
+    if (category === "Pathological conditions") return "turquoise";
+    if (category === "Respiratory tract") return "sienna";
+    if (category === "Skin and connective tissue") return "gold";
+    if (category === "Stomatognathic") return "plum";
+    if (category === "Wounds and injuries") return "coral";
+    return "black"; // Default color for unrecognized categories
+  };
 
-  
+  const getNodeColor_MAX_PHASE = (node) => {
+    const category = node.MAX_PHASE;
+    if (category === "Approved") return "#0bc00f";
+    if (category === "Phase I") return "#4372c4";
+    if (category === "Phase II") return "#fe0000";
+    if (category === "Phase III") return "#9B35C8";
+    if (category === "" || node.class === "Unknown") return "#fe8f01";
+    return "black"; // Default color for unrecognized categories
+  };
+
+
 
   data.forEach((item) => {
     // Phase
@@ -78,7 +117,7 @@ export const generateLegendFilteration = (data) => {
     // Disease Class
     if (!legendFilteration.diseaseClass[item.Disease_class]) {
       legendFilteration.diseaseClass[item.Disease_class] = {
-        color: "steelblue",
+        color: getNodeColor_Disease_class(item),
         checked: true,
       };
     }
@@ -86,7 +125,7 @@ export const generateLegendFilteration = (data) => {
     // Max Phase
     if (!legendFilteration.maxPhase[item.MAX_PHASE]) {
       legendFilteration.maxPhase[item.MAX_PHASE] = {
-        color: "#0bc00f",
+        color: getNodeColor_MAX_PHASE(item),
         checked: true,
       };
     }

@@ -50,8 +50,8 @@ const Legend = ({ legendData}) => {
         return (
           <div
             style={{
-              width: "10px",  // Circle diameter
-              height: "10px", // Circle diameter
+              width: "15px",  // Circle diameter
+              height: "15px", // Circle diameter
               borderRadius: "50%", // Makes it a circle
               backgroundColor: color,
               marginRight: "8px",

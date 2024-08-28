@@ -174,7 +174,7 @@ console.log("original "  ,originalData )  ;
            
             <div style={{ height: "600px", overflowY: "auto" }}>
               
-            <CustomButton onClick={handleApplyClick}>Apply 2 </CustomButton> {/* Attach the handler */}
+            <CustomButton onClick={handleApplyClick}>Apply</CustomButton> {/* Attach the handler */}
               {legendData_filters ? (
                 <Legend legendData={legendData_filters}/>
               ) : null}

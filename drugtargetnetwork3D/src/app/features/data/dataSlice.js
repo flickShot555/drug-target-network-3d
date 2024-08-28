@@ -16,6 +16,8 @@ const initialState = {
   metric: [],
   oncotreeLineage: [],
   phase: [],
+  sliderData :[] , 
+  sliderValue : 0
 };
 
 function updateCategoryState(legendFilteration, category) {
@@ -97,7 +99,31 @@ const dataSlice = createSlice({
       .addCase(fetchGraphData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.OriginalData = action.payload;
-        state.legendFilteration = generateLegendFilteration(action.payload);
+        const uniqueCompoundNames = Array.from(
+          new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
+        );
+
+        
+        // Save unique values and their count to state
+        state.sliderValue = uniqueCompoundNames.length;
+        // state.sliderData = uniqueCompoundNames;
+
+        state.sliderData = uniqueCompoundNames.slice(0, 1);
+        state.OriginalData =  state.OriginalData.filter(node =>{
+
+          if( state.sliderData.includes(node.COMPOUND_NAME)){
+            return node
+          }
+        })
+
+
+
+        console.log('state.sliderData' ,state.sliderData , state.sliderValue )     
+ 
+ 
+
+ 
+        state.legendFilteration = generateLegendFilteration(state.OriginalData);
         state.phase = updateCategoryState(state.legendFilteration, "phase");
         state.diseaseClass = updateCategoryState(
           state.legendFilteration,
@@ -115,7 +141,7 @@ const dataSlice = createSlice({
         state.dataset = updateCategoryState(state.legendFilteration, "dataset");
         console.log("Updated maxPhase array:", state.maxPhase); 
         // Transform the full data initially
-        state.graphData = transformData(action.payload);
+        state.graphData = transformData( state.OriginalData);
       })
       .addCase(fetchGraphData.rejected, (state, action) => {
         state.status = "failed";

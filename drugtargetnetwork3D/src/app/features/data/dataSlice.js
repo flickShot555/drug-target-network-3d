@@ -156,6 +156,7 @@ const dataSlice = createSlice({
 
         // Save unique values and their count to state
         state.sliderValue = uniqueCompoundNames.length;
+        state.currentSlider = uniqueCompoundNames.length
         // state.sliderData = uniqueCompoundNames;
 
         state.sliderData = uniqueCompoundNames.slice(0, 6);

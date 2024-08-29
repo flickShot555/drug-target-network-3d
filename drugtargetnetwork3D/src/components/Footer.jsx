@@ -28,7 +28,7 @@ const Footer = () => {
     >
       <CustomButton>redraw</CustomButton>
       <div style={{ marginTop: '5px', width: '200px' }}>
-        <Slider  defaultValue={6}  max={6} onChange={handleSliderChange} />
+        <Slider  defaultValue={sliderValue}  max={sliderValue} onChange={handleSliderChange} />
       </div>
       <CustomButton>Export</CustomButton>
     </div>

@@ -4,6 +4,7 @@ import { transformData } from "./utils/transformData";
 import { generateLegendFilteration } from "./utils/generateLegendFilteration";
 
 const initialState = {
+  initailData : null , 
   OriginalData: null,
   graphData: null,
   legendData: null,
@@ -17,7 +18,8 @@ const initialState = {
   oncotreeLineage: [],
   phase: [],
   sliderData :[] , 
-  sliderValue : 0
+  sliderValue : 0 , 
+  currentSlider : 0 , 
 };
 
 function updateCategoryState(legendFilteration, category) {
@@ -90,6 +92,42 @@ const dataSlice = createSlice({
 
       }
     },
+    updateSliderValue: (state, action) => {
+      state.currentSlider = action.payload;
+
+      const uniqueCompoundNames = Array.from(
+        new Set(state.initailData.map((node) => node.COMPOUND_NAME))
+      );
+      // Save unique values and their count to state
+      
+      state.sliderData = uniqueCompoundNames.slice(0,  state.currentSlider);
+      state.OriginalData =  state.initailData.filter(node =>{
+
+        if( state.sliderData.includes(node.COMPOUND_NAME)){
+          return node
+        }
+      })
+      state.legendFilteration = generateLegendFilteration(state.OriginalData);
+      state.phase = updateCategoryState(state.legendFilteration, "phase");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
+      state.maxPhase = updateCategoryState(
+        state.legendFilteration,
+        "maxPhase"
+      );
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
+      state.metric = updateCategoryState(state.legendFilteration, "metric");
+      state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      console.log("Updated maxPhase array:", state.maxPhase); 
+      // Transform the full data initially
+      state.graphData = transformData( state.OriginalData);
+
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -99,6 +137,7 @@ const dataSlice = createSlice({
       .addCase(fetchGraphData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.OriginalData = action.payload;
+        state.initailData = action.payload;
         const uniqueCompoundNames = Array.from(
           new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
         );
@@ -108,21 +147,15 @@ const dataSlice = createSlice({
         state.sliderValue = uniqueCompoundNames.length;
         // state.sliderData = uniqueCompoundNames;
 
-        state.sliderData = uniqueCompoundNames.slice(0, 1);
+        state.sliderData = uniqueCompoundNames.slice(0, 6);
+
         state.OriginalData =  state.OriginalData.filter(node =>{
 
           if( state.sliderData.includes(node.COMPOUND_NAME)){
             return node
           }
         })
-
-
-
-        console.log('state.sliderData' ,state.sliderData , state.sliderValue )     
- 
- 
-
- 
+        console.log('state.sliderData' ,state.sliderData , state.sliderValue);
         state.legendFilteration = generateLegendFilteration(state.OriginalData);
         state.phase = updateCategoryState(state.legendFilteration, "phase");
         state.diseaseClass = updateCategoryState(
@@ -150,5 +183,5 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData } = dataSlice.actions;
+export const { toggleLegendItem, filterGraphData ,updateSliderValue } = dataSlice.actions;
 export default dataSlice.reducer;

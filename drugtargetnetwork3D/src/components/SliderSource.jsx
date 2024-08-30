@@ -14,6 +14,7 @@ const SliderComponent = () => {
 
   return (
     <div style={{ marginTop: "5px", width: "200px" }}>
+        <h5>{sliderCurrent} Connected compound </h5>
     <Slider
       value={sliderCurrent}
       max={sliderValue}

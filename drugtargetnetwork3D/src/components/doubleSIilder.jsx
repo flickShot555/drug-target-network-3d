@@ -12,6 +12,7 @@ const RangeSlider = () => {
 
   return (
     <div>
+       <h5> Drug response (pIC50)</h5> 
       <Slider
         range
         step={10}

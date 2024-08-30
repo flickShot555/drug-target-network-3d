@@ -14,6 +14,8 @@ import {
 import ForceNetworkGraph from "./ForceNetworkGraph";
 import Legend from "./Legend";
 import CustomButton from "./CustomButton";
+import DoubleSlider from "./doubleSIilder";
+import SliderComponent from "./SliderSource";
 const DataProcessor = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
@@ -174,7 +176,12 @@ console.log("original "  ,originalData )  ;
            
             <div style={{ height: "600px", overflowY: "auto" }}>
               
-            <CustomButton onClick={handleApplyClick}>Apply 2 </CustomButton> {/* Attach the handler */}
+            <CustomButton onClick={handleApplyClick}>Apply</CustomButton> {/* Attach the handler */}
+          
+           <SliderComponent/>
+          
+           <DoubleSlider/>
+          
               {legendData_filters ? (
                 <Legend legendData={legendData_filters}/>
               ) : null}

@@ -43,19 +43,16 @@ const dataSlice = createSlice({
       state.phase = updateCategoryState(state.legendFilteration, "phase");
       console.log("Updated phase array:", state.phase);
 
-      state.diseaseClass = updateCategoryState(
-        state.legendFilteration,
-        "diseaseClass"
-      );
+      state.diseaseClass = updateCategoryState(state.legendFilteration,  "diseaseClass" );
+     
       console.log("Updated diseaseClass array:", state.diseaseClass);
 
       state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+    
       console.log("Updated maxPhase array:", state.maxPhase);
 
-      state.oncotreeLineage = updateCategoryState(
-        state.legendFilteration,
-        "oncotreeLineage"
-      );
+      state.oncotreeLineage = updateCategoryState(state.legendFilteration,"oncotreeLineage");
+   
       console.log("Updated oncotreeLineage array:", state.oncotreeLineage);
 
       state.metric = updateCategoryState(state.legendFilteration, "metric");
@@ -68,9 +65,19 @@ const dataSlice = createSlice({
     filterGraphData: (state) => {
       if (state.legendFilteration && state.OriginalData) {
         // Filter nodes based on legendFilteration
+
+        const uniqueCompoundNames = Array.from(
+          new Set(state.initailData.map((node) => node.COMPOUND_NAME))
+        );
+        // Save unique values and their count to state
+  
+        state.sliderData = uniqueCompoundNames.slice(0, state.currentSlider);
+
+           
+            state.sliderValue =uniqueCompoundNames.length;
+
         const filteredNodes = state.OriginalData.filter((node) => {
           // Assuming legendFilteration contains information to filter by class
-
           if (
             state.maxPhase.includes(node.MAX_PHASE) &&
             state.dataset.includes(node.DATASET) &&
@@ -82,10 +89,10 @@ const dataSlice = createSlice({
             return node;
           }
         });
-
-        // Slice the filtered nodes to a maximum of 50 items
+        // Slice the filtered nodes to a maximum of 50 items 
 
         // Optionally transform the sliced data
+
         state.graphData = transformData(filteredNodes);
       }
     },
@@ -104,10 +111,7 @@ const dataSlice = createSlice({
         }
       });
        // Toggle the checked state for the specific category and value
-    
-       
-
-      state.legendFilteration = generateLegendFilteration(state.OriginalData);
+      // state.legendFilteration = generateLegendFilteration(state.OriginalData);
       state.phase = updateCategoryState(state.legendFilteration, "phase");
       state.diseaseClass = updateCategoryState(
         state.legendFilteration,

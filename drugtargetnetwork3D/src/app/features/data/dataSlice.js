@@ -20,6 +20,7 @@ const initialState = {
   sliderData: [],
   sliderValue: 0,
   currentSlider: 0,
+  
 };
 
 function updateCategoryState(legendFilteration, category) {

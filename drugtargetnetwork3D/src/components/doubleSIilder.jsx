@@ -12,11 +12,13 @@ const RangeSlider = () => {
 
   return (
     <div>
-       <h5> Drug response (pIC50)</h5> 
+      <h5>Drug response (pIC50)</h5> 
       <Slider
         range
-        step={10}
-        defaultValue={[0.1, 0.9]}
+        min={4.0}
+        max={9.0}
+        step={0.1}
+        defaultValue={[4.0, 9.0]}
         onChange={onChange}
         onAfterChange={onAfterChange}
       />

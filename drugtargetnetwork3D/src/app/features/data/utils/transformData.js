@@ -16,6 +16,7 @@ export const transformData = (data) => {
         MAX_PHASE,
         ONCOTREE_LINEAGE,
         METRIC,
+        VALUE
       } = item;
   
       // Add unique nodes
@@ -71,12 +72,17 @@ export const transformData = (data) => {
       links.push({
         source: COMPOUND_NAME,
         target: CELL_LINE_NAME,
-        value: 1,
+        value: VALUE,
+        dataset:DATASET ,
+        matric :METRIC
       });
       links.push({
         source: COMPOUND_NAME,
         target: Disease_name,
-        value: 1,
+        value: VALUE,
+        dataset:DATASET ,
+        matric :METRIC ,
+         
       });
     });
   

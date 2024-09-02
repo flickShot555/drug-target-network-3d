@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox } from "antd";
-import { toggleLegendItem } from "./../app/features/data/dataSlice";
-
+import { toggleLegendItem, updateLegendColor } from "./../app/features/data/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
-const Legend = ({ legendData}) => {
-  console.log(legendData , "legendData in legnd ")
+import ColorPicker from "./Colorpicker"
 
+const Legend = ({ legendData }) => {
   const dispatch = useDispatch();
 
-  // Function to determine the shape and size based on category and value
+  const [colorPickerVisible, setColorPickerVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [colorPickerPosition, setColorPickerPosition] = useState({ x: 0, y: 0 });
+
+  const handleColorClick = (category, value, event) => {
+    setSelectedCategory(category);
+    setSelectedValue(value);
+    setColorPickerVisible(true);
+
+    // Set position for the color picker
+    const rect = event.target.getBoundingClientRect();
+    setColorPickerPosition({ x: rect.right + 10, y: rect.top });
+  };
+
+  const handleColorSelect = (color) => {
+    if (selectedCategory && selectedValue) {
+      dispatch(updateLegendColor({ category: selectedCategory, value: selectedValue, color }));
+    }
+    setColorPickerVisible(false);
+  };
+
+  const handleCheckboxChange = (category, value) => {
+    dispatch(toggleLegendItem({ category, value }));
+  };
+
   const renderShape = (category, color) => {
     switch (category) {
       case "phase":
@@ -16,7 +40,7 @@ const Legend = ({ legendData}) => {
           <div
             style={{
               width: "20px",
-              height: "2px", // Line thickness for phases
+              height: "2px",
               backgroundColor: color,
               marginRight: "8px",
             }}
@@ -30,7 +54,7 @@ const Legend = ({ legendData}) => {
               height: "0",
               borderLeft: "10px solid transparent",
               borderRight: "10px solid transparent",
-              borderBottom: `20px solid ${color}`, // Triangle for disease class
+              borderBottom: `20px solid ${color}`,
               marginRight: "8px",
             }}
           />
@@ -39,20 +63,22 @@ const Legend = ({ legendData}) => {
         return (
           <div
             style={{
-              width: "20px",  // Rectangle width
-              height: "10px", // Rectangle height
+              width: "20px",
+              height: "10px",
               backgroundColor: color,
               marginRight: "8px",
+              cursor: "pointer",
             }}
+            onClick={(event) => handleColorClick(category, value, event)}
           />
         );
       case "oncotreeLineage":
         return (
           <div
             style={{
-              width: "15px",  // Circle diameter
-              height: "15px", // Circle diameter
-              borderRadius: "50%", // Makes it a circle
+              width: "15px",
+              height: "15px",
+              borderRadius: "50%",
               backgroundColor: color,
               marginRight: "8px",
             }}
@@ -64,7 +90,7 @@ const Legend = ({ legendData}) => {
           <div
             style={{
               width: "20px",
-              height: "2px", // Line thickness for dataset/metric
+              height: "2px",
               backgroundColor: color,
               marginRight: "8px",
             }}
@@ -75,16 +101,9 @@ const Legend = ({ legendData}) => {
     }
   };
 
-  const handleCheckboxChange = (category, value) => {
-    dispatch(toggleLegendItem({ category, value}))
-    
-  };
-
   return (
     <div>
       <div className="legend1" id="legend1" style={{ marginLeft: "12px" }}>
-        {/* <CustomButton>Filter</CustomButton> */}
-
         {Object.keys(legendData).map((category) => (
           <div key={category}>
             <h5>{category}</h5>
@@ -94,7 +113,7 @@ const Legend = ({ legendData}) => {
                   {renderShape(category, color)}
                   <Checkbox
                     checked={checked}
-                    onChange={() =>  handleCheckboxChange(category, value)}
+                    onChange={() => handleCheckboxChange(category, value)}
                   >
                     {value}
                   </Checkbox>
@@ -104,6 +123,16 @@ const Legend = ({ legendData}) => {
           </div>
         ))}
       </div>
+
+      {colorPickerVisible && (
+        <div style={{ position: "absolute", top: colorPickerPosition.y, left: colorPickerPosition.x }}>
+          <ColorPicker
+            colors={["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"]}
+            onSelectColor={handleColorSelect}
+            onClose={() => setColorPickerVisible(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };

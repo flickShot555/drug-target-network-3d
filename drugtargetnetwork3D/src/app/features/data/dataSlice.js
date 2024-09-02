@@ -96,6 +96,13 @@ const dataSlice = createSlice({
         state.graphData = transformData(filteredNodes);
       }
     },
+    updateLegendColor: (state, action) => {
+      const { category, value, color } = action.payload;
+      if (state.legendData[category] && state.legendData[category][value]) {
+        state.legendData[category][value].color = color;
+      }
+    },
+
     updateSliderValue: (state, action) => {
       state.currentSlider = action.payload;
 
@@ -198,6 +205,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData, updateSliderValue } =
+export const { toggleLegendItem, filterGraphData, updateSliderValue  , updateLegendColor  } =
   dataSlice.actions;
 export default dataSlice.reducer;

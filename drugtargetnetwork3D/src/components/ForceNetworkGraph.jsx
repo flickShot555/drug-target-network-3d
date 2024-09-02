@@ -17,7 +17,6 @@ const ForceNetworkGraph = ({ graphData  ,getNodeShape}) => {
       
     }
   }, [graphData]);
-
   return (
     <div
       style={{

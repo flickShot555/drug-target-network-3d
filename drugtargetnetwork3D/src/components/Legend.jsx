@@ -97,20 +97,45 @@ const Legend = ({ legendData }) => {
       case "metric":
         return (
           <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "2px",
+            marginRight : "8px"
+          }}
+        >
+          <div
             style={{
-              width: "20px",
-              height: "2px",
+              width: "6px",
+              height: "6px",
               backgroundColor: color,
-              marginRight: "8px",
+              borderRadius: "50%",
             }}
           />
+          <div
+            style={{
+              width: "6px",
+              height: "6px",
+              backgroundColor: color,
+              borderRadius: "50%",
+            }}
+          />
+          <div
+            style={{
+              width: "6px",
+              height: "6px",
+              backgroundColor: color,
+              borderRadius: "50%",
+            }}
+          />
+        </div>
         );
       default:
         return null;
     }
   };
 
-  
+
 
   return (
     <div>

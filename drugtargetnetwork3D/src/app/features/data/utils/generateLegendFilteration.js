@@ -102,68 +102,81 @@ export const generateLegendFilteration = (data) => {
     if (category === "" || node.class === "Unknown") return "#fe8f01";
     return "black"; // Default color for unrecognized categories
   };
-  function generateDataSet(link ) {
-    const    category = link.DATASET
-     if (category === "GDSC1") return "#0bc00f";
-     if (category === "GDSC2") return "#4372c4";
-     if (category === "CCLE_NP24") return "#fe0000";
-     if (category === "NCI-60") return "#9B35C8";
-     if (category === "gCSI") return "#fe8f01";
-     if (category === "FIMM") return "#f99cc8";
- 
-   }
- 
+  function generateDataSet(link) {
+    const category = link.DATASET
+    if (category === "GDSC1") return "#0bc00f";
+    if (category === "GDSC2") return "#4372c4";
+    if (category === "CCLE_NP24") return "#fe0000";
+    if (category === "NCI-60") return "#9B35C8";
+    if (category === "gCSI") return "#fe8f01";
+    if (category === "FIMM") return "#f99cc8";
 
-
-  data.forEach((item) => {
-    // Phase
-    if (!legendFilteration.phase[item.Phase]) {
-      legendFilteration.phase[item.Phase] = {
-        color: "black",
-        checked: true,
-      };
+  }
+  function generateMatric(link) {
+    const category = link.METRIC
+    if (category === "pIC50") {
+      return "purple"
     }
-
-    // Disease Class
-    if (!legendFilteration.diseaseClass[item.Disease_class]) {
-      legendFilteration.diseaseClass[item.Disease_class] = {
-        color: getNodeColor_Disease_class(item),
-        checked: true,
-      };
+    else if (category === "pEC50") {
+      return "grey"
+    } else if (category === "pGI50") {
+      return "green"
     }
+  }
 
-    // Max Phase
-    if (!legendFilteration.maxPhase[item.MAX_PHASE]) {
-      legendFilteration.maxPhase[item.MAX_PHASE] = {
-        color: getNodeColor_MAX_PHASE(item),
-        checked: true,
-      };
-    }
 
-    // Oncotree Lineage
-    if (!legendFilteration.oncotreeLineage[item.ONCOTREE_LINEAGE]) {
-      legendFilteration.oncotreeLineage[item.ONCOTREE_LINEAGE] = {
-        color: getNodeColor_ONCOTREE_LINEAGE(item),
-        checked: true,
-      };
-    }
 
-    // Metric
-    if (!legendFilteration.metric[item.METRIC]) {
-      legendFilteration.metric[item.METRIC] = {
-        color: "black",
-        checked: true,
-      };
-    }
 
-    // Dataset
-    if (!legendFilteration.dataset[item.DATASET]) {
-      legendFilteration.dataset[item.DATASET] = {
-        color: generateDataSet(item),
-        checked: true,
-      };
-    }
-  });
 
-  return legendFilteration;
+data.forEach((item) => {
+  // Phase
+  if (!legendFilteration.phase[item.Phase]) {
+    legendFilteration.phase[item.Phase] = {
+      color: "black",
+      checked: true,
+    };
+  }
+
+  // Disease Class
+  if (!legendFilteration.diseaseClass[item.Disease_class]) {
+    legendFilteration.diseaseClass[item.Disease_class] = {
+      color: getNodeColor_Disease_class(item),
+      checked: true,
+    };
+  }
+
+  // Max Phase
+  if (!legendFilteration.maxPhase[item.MAX_PHASE]) {
+    legendFilteration.maxPhase[item.MAX_PHASE] = {
+      color: getNodeColor_MAX_PHASE(item),
+      checked: true,
+    };
+  }
+
+  // Oncotree Lineage
+  if (!legendFilteration.oncotreeLineage[item.ONCOTREE_LINEAGE]) {
+    legendFilteration.oncotreeLineage[item.ONCOTREE_LINEAGE] = {
+      color: getNodeColor_ONCOTREE_LINEAGE(item),
+      checked: true,
+    };
+  }
+
+  // Metric
+  if (!legendFilteration.metric[item.METRIC]) {
+    legendFilteration.metric[item.METRIC] = {
+      color: generateMatric(item),
+      checked: true,
+    };
+  }
+
+  // Dataset
+  if (!legendFilteration.dataset[item.DATASET]) {
+    legendFilteration.dataset[item.DATASET] = {
+      color: generateDataSet(item),
+      checked: true,
+    };
+  }
+});
+
+return legendFilteration;
 };

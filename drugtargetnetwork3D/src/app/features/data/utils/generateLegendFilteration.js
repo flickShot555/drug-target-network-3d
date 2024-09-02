@@ -102,7 +102,17 @@ export const generateLegendFilteration = (data) => {
     if (category === "" || node.class === "Unknown") return "#fe8f01";
     return "black"; // Default color for unrecognized categories
   };
-
+  function generateDataSet(link ) {
+    const    category = link.DATASET
+     if (category === "GDSC1") return "#0bc00f";
+     if (category === "GDSC2") return "#4372c4";
+     if (category === "CCLE_NP24") return "#fe0000";
+     if (category === "NCI-60") return "#9B35C8";
+     if (category === "gCSI") return "#fe8f01";
+     if (category === "FIMM") return "#f99cc8";
+ 
+   }
+ 
 
 
   data.forEach((item) => {
@@ -149,7 +159,7 @@ export const generateLegendFilteration = (data) => {
     // Dataset
     if (!legendFilteration.dataset[item.DATASET]) {
       legendFilteration.dataset[item.DATASET] = {
-        color: "black",
+        color: generateDataSet(item),
         checked: true,
       };
     }

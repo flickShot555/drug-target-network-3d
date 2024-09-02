@@ -139,7 +139,7 @@ console.log("original "  ,originalData )  ;
     if (category === "GDSC2") return "#4372c4";
     if (category === "CCLE_NP24") return "#fe0000";
     if (category === "NCI-60") return "#9B35C8";
-    if (category === "gCSI" || node.class === "Unknown") return "#fe8f01";
+    if (category === "gCSI") return "#fe8f01";
     if (category === "FIMM") return "#f99cc8";
 
   }

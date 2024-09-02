@@ -84,7 +84,16 @@ const Legend = ({ legendData }) => {
             }}
           />
         );
-      case "dataset":
+      case "dataset":   return (
+        <div
+          style={{
+            width: "20px",
+            height: "2px",
+            backgroundColor: color,
+            marginRight: "8px",
+          }}
+        />
+      );
       case "metric":
         return (
           <div
@@ -100,6 +109,8 @@ const Legend = ({ legendData }) => {
         return null;
     }
   };
+
+  
 
   return (
     <div>

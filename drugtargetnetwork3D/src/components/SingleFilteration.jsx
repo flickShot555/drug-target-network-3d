@@ -51,7 +51,6 @@ console.log(selectedCompounds  , 'compoundSearch' , selectedCellLines)
     );
     const handleFilterClick = () => {
         dispatch(updateSingleFilteration([selectedCompounds, selectedCellLines]));
-        setVisible(false); // Optionally close the filter dialog after applying
     };
 
 

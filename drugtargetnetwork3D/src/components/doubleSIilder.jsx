@@ -1,6 +1,6 @@
-import React from 'react';
-import { Slider } from 'antd';
-import { useSelector , useDispatch } from 'react-redux';
+import React from "react";
+import { Slider } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 
 import { updateDoubleSliderValue } from "./../app/features/data/dataSlice";
 const RangeSlider = () => {
@@ -9,19 +9,21 @@ const RangeSlider = () => {
   const sliderMax = useSelector((state) => state.data.silderMax);
   const dispatch = useDispatch();
   const onChange = (value) => {
-    console.log('onChange: ', value);
+    console.log("onChange: ", value);
   };
 
   const onAfterChange = (value) => {
-    console.log('onAfterChange: ', value);
-        // Dispatch the action to update the slider min and max values in Redux store
-        dispatch(updateDoubleSliderValue(value));
+    console.log("onAfterChange: ", value);
+    // Dispatch the action to update the slider min and max values in Redux store
+    dispatch(updateDoubleSliderValue(value));
   };
 
   return (
     <div>
-      <h5>Drug response (pIC50)  MIN-{sliderMin} MAX-{sliderMax} </h5> 
-    
+      <h5>
+        Drug response (pIC50) MIN-{sliderMin} MAX-{sliderMax}{" "}
+      </h5>
+
       <Slider
         range
         min={4.0}

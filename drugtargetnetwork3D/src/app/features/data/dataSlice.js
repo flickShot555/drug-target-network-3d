@@ -21,7 +21,9 @@ const initialState = {
   sliderValue: 0,
   currentSlider: 0,
   sliderMin : 4.0 ,
-  silderMax : 9.0 
+  silderMax : 9.0 ,
+  CompoundNames : [] , 
+  CellineNames : []
   
 };
 
@@ -172,6 +174,27 @@ const dataSlice = createSlice({
       });
       state.graphData = transformData(state.OriginalData);
     },
+    updateSingleFilteration :  (state, action) => {
+      const [compounds, celline] = action.payload;
+
+      // Update the min and max values if they have changed
+      state.OriginalData = state.initailData.filter((node) => {
+        if(compounds.includes(node.COMPOUND_NAME)  ) {
+          return node;
+        }
+      });
+
+      state.CellineNames = Array.from(
+        new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
+      );
+
+      state.OriginalData = state.OriginalData.filter((node) => {
+        if(celline.includes(node.CELL_LINE_NAME)  ) {
+          return node;
+        }
+      });
+      state.graphData = transformData(state.OriginalData);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -185,7 +208,10 @@ const dataSlice = createSlice({
         const uniqueCompoundNames = Array.from(
           new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
         );
-
+state.CompoundNames = uniqueCompoundNames
+ state.CellineNames = Array.from(
+  new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
+);
         // Save unique values and their count to state
         state.sliderValue = uniqueCompoundNames.length;
         state.currentSlider = uniqueCompoundNames.length
@@ -226,6 +252,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData,updateSliderValue,updateLegendColor,updateDoubleSliderValue } =
+export const { toggleLegendItem, filterGraphData,updateSliderValue,updateLegendColor,updateDoubleSliderValue ,updateSingleFilteration } =
   dataSlice.actions;
 export default dataSlice.reducer;

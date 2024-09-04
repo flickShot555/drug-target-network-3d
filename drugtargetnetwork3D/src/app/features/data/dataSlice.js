@@ -20,6 +20,8 @@ const initialState = {
   sliderData: [],
   sliderValue: 0,
   currentSlider: 0,
+  sliderMin : 4.0 ,
+  silderMax : 9.0 
   
 };
 
@@ -152,6 +154,24 @@ const dataSlice = createSlice({
       state.graphData = transformData(filteredNodes);
 
     },
+    updateDoubleSliderValue: (state, action) => {
+      const [newMin, newMax] = action.payload;
+
+      // Update the min and max values if they have changed
+      if (newMin !== state.sliderMin) {
+        state.sliderMin = newMin;
+      }
+    
+      if (newMax !== state.silderMax) {
+        state.silderMax = newMax;
+      }
+      state.OriginalData = state.initailData.filter((node) => {
+        if (node.VALUE > newMin &&  node.VALUE < newMax) {
+          return node;
+        }
+      });
+      state.graphData = transformData(state.OriginalData);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -206,6 +226,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData, updateSliderValue  , updateLegendColor  } =
+export const { toggleLegendItem, filterGraphData,updateSliderValue,updateLegendColor,updateDoubleSliderValue } =
   dataSlice.actions;
 export default dataSlice.reducer;

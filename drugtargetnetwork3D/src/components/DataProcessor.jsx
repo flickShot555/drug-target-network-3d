@@ -16,6 +16,7 @@ import Legend from "./Legend";
 import CustomButton from "./CustomButton";
 import DoubleSlider from "./doubleSIilder";
 import SliderComponent from "./SliderSource";
+import SingleFilteration from "./SingleFilteration";
 const DataProcessor = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
@@ -190,7 +191,7 @@ console.log("original "  ,originalData )  ;
             <div style={{ height: "600px", overflowY: "auto" }}>
               
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton> {/* Attach the handler */}
-          
+          <SingleFilteration/>
            <SliderComponent/>
           
            <DoubleSlider/>

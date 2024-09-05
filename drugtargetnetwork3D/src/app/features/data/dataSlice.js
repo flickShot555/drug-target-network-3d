@@ -24,7 +24,6 @@ const initialState = {
   silderMax: 9.0,
   CompoundNames: [],
   CellineNames: [],
-  updateSliderValue_Data: []
 
 };
 
@@ -124,6 +123,14 @@ const dataSlice = createSlice({
           return node;
         }
       });
+      
+       // FILTERATION OF THE SINGLE FILERATON 
+       state.CompoundNames= Array.from(
+        new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
+      );
+      state.CellineNames = Array.from(
+        new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
+      );
 
       state.graphData = transformData(state.OriginalData);
 
@@ -149,12 +156,24 @@ const dataSlice = createSlice({
       });
 
       // FITLERATION OF THE SINGLE SLIDER THERE 
-      state.sliderData =  state.CompoundNames.slice(0, state.currentSlider);
+      const uniqueCompoundNames = Array.from(
+        new Set(state.initailData.map((node) => node.COMPOUND_NAME))
+      );
+      state.sliderData =  uniqueCompoundNames.slice(0, state.currentSlider);
       state.OriginalData = state.OriginalData.filter((node) => {
         if (state.sliderData.includes(node.COMPOUND_NAME)) {
           return node;
         }
       });
+      // FILTERATION OF THE SINGLE FILERATON 
+      state.CompoundNames= Array.from(
+        new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
+      );
+      state.CellineNames = Array.from(
+        new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
+      );
+
+
       state.graphData = transformData(state.OriginalData);
     },
     updateSingleFilteration: (state, action) => {
@@ -176,6 +195,7 @@ const dataSlice = createSlice({
           return node;
         }
       });
+
       state.graphData = transformData(state.OriginalData);
     },
   },

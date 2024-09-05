@@ -19,7 +19,7 @@ const RangeSlider = () => {
   };
 
   return (
-    <div>
+    <div >
       <h5>
         Drug response (pIC50) MIN-{sliderMin} MAX-{sliderMax}{" "}
       </h5>
@@ -31,7 +31,7 @@ const RangeSlider = () => {
         step={0.1}
         defaultValue={[sliderMin, sliderMax]}
         onChange={onChange}
-        onAfterChange={onAfterChange}
+        onAfterChange={onAfterChange} style={{width:"200px"}}
       />
     </div>
   );

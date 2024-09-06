@@ -1,4 +1,4 @@
-export const generateLegendFilteration = (data) => {
+export const generateLegendFilteration = (data ) => {
   const legendFilteration = {
     phase: {},
     diseaseClass: {},
@@ -123,10 +123,6 @@ export const generateLegendFilteration = (data) => {
       return "green"
     }
   }
-
-
-
-
 
 data.forEach((item) => {
   // Phase

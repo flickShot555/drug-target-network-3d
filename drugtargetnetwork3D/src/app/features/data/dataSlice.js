@@ -2,13 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchGraphData } from "./dataThunks";
 import { transformData } from "./utils/transformData";
 import { generateLegendFilteration } from "./utils/generateLegendFilteration";
-
+import { UpdateLegendFilteration } from "./utils/UpdateLegendFilteration";
 const initialState = {
   initailData: null,
   OriginalData: null,
   graphData: null,
   legendData: null,
   legendFilteration: null,
+  FirstlegendFilteration: null,
   status: "idle",
   error: null,
   maxPhase: [],
@@ -24,6 +25,7 @@ const initialState = {
   silderMax: 9.0,
   CompoundNames: [],
   CellineNames: [],
+
 
 };
 
@@ -43,6 +45,10 @@ const dataSlice = createSlice({
       // Toggle the checked state for the specific category and value
       state.legendFilteration[category][value].checked =
         !state.legendFilteration[category][value].checked;
+
+          // Toggle the checked state for the specific category and value
+      state.FirstlegendFilteration[category][value].checked =
+      !state.FirstlegendFilteration[category][value].checked;
 
       // Update the state properties based on legendFilteration
       state.phase = updateCategoryState(state.legendFilteration, "phase");
@@ -89,10 +95,9 @@ const dataSlice = createSlice({
             return node;
           }
         });
-        // Slice the filtered nodes to a maximum of 50 items 
-        // Optionally transform the sliced data
         state.graphData = transformData(filteredNodes);
       }
+
     },
 
     updateLegendColor: (state, action) => {
@@ -123,27 +128,27 @@ const dataSlice = createSlice({
           return node;
         }
       });
-      
-       // FILTERATION OF THE SINGLE FILERATON 
-       state.CompoundNames= Array.from(
+
+      // FILTERATION OF THE SINGLE FILERATON 
+      state.CompoundNames = Array.from(
         new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
       );
       state.CellineNames = Array.from(
         new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
       );
 
-      state.graphData = transformData(state.OriginalData);
+      state.graphData = transformData(state.OriginalData); 
+      state.legendFilteration  = UpdateLegendFilteration(state.OriginalData , state.FirstlegendFilteration)
+     },
 
-
-    },
     updateDoubleSliderValue: (state, action) => {
 
       const [newMin, newMax] = action.payload;
- 
+
       // Update the min and max values if they have changed
       if (newMin !== state.sliderMin) {
-        state.sliderMin = newMin; 
-  
+        state.sliderMin = newMin;
+
       }
 
       if (newMax !== state.silderMax) {
@@ -159,14 +164,14 @@ const dataSlice = createSlice({
       const uniqueCompoundNames = Array.from(
         new Set(state.initailData.map((node) => node.COMPOUND_NAME))
       );
-      state.sliderData =  uniqueCompoundNames.slice(0, state.currentSlider);
+      state.sliderData = uniqueCompoundNames.slice(0, state.currentSlider);
       state.OriginalData = state.OriginalData.filter((node) => {
         if (state.sliderData.includes(node.COMPOUND_NAME)) {
           return node;
         }
       });
-      // FILTERATION OF THE SINGLE FILERATON 
-      state.CompoundNames= Array.from(
+      // FILTERATION OF THE SINGLE node FILERATON 
+      state.CompoundNames = Array.from(
         new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
       );
       state.CellineNames = Array.from(
@@ -228,7 +233,12 @@ const dataSlice = createSlice({
           }
         });
         console.log("state.sliderData", state.sliderData, state.sliderValue);
+
         state.legendFilteration = generateLegendFilteration(state.OriginalData);
+        state.FirstlegendFilteration = generateLegendFilteration(state.OriginalData);
+
+        console.log(state.legendFilteration , "https://www.youtube.com/watch?v=l3nvibMlFEM")
+
         state.phase = updateCategoryState(state.legendFilteration, "phase");
         state.diseaseClass = updateCategoryState(
           state.legendFilteration,

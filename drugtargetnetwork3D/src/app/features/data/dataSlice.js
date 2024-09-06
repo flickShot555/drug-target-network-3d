@@ -25,8 +25,6 @@ const initialState = {
   silderMax: 9.0,
   CompoundNames: [],
   CellineNames: [],
-
-
 };
 
 function updateCategoryState(legendFilteration, category) {
@@ -46,9 +44,9 @@ const dataSlice = createSlice({
       state.legendFilteration[category][value].checked =
         !state.legendFilteration[category][value].checked;
 
-          // Toggle the checked state for the specific category and value
+      // Toggle the checked state for the specific category and value
       state.FirstlegendFilteration[category][value].checked =
-      !state.FirstlegendFilteration[category][value].checked;
+        !state.FirstlegendFilteration[category][value].checked;
 
       // Update the state properties based on legendFilteration
       state.phase = updateCategoryState(state.legendFilteration, "phase");
@@ -136,10 +134,30 @@ const dataSlice = createSlice({
       state.CellineNames = Array.from(
         new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
       );
-
-      state.graphData = transformData(state.OriginalData); 
-      state.legendFilteration  = UpdateLegendFilteration(state.OriginalData , state.FirstlegendFilteration)
-     },
+    //  LEGEND DATA FILERATION TEHRE 
+      state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
+      state.phase = updateCategoryState(state.legendFilteration, "phase");
+      state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
+      state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+      state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
+      state.metric = updateCategoryState(state.legendFilteration, "metric");
+      state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+         // Assuming legendFilteration contains information to filter by class
+         const filteredNodes = state.OriginalData.filter((node) => {
+          // Assuming legendFilteration contains information to filter by class
+          if (
+            state.maxPhase.includes(node.MAX_PHASE) &&
+            state.dataset.includes(node.DATASET) &&
+            state.metric.includes(node.METRIC) &&
+            state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+            state.phase.includes(node.Phase) &&
+            state.diseaseClass.includes(node.Disease_class)
+          ) {
+            return node;
+          }
+        });
+      state.graphData = transformData(filteredNodes);
+    },
 
     updateDoubleSliderValue: (state, action) => {
 
@@ -178,8 +196,29 @@ const dataSlice = createSlice({
         new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
       );
 
-
-      state.graphData = transformData(state.OriginalData);
+   //  LEGEND DATA FILERATION TEHRE 
+   state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
+   state.phase = updateCategoryState(state.legendFilteration, "phase");
+   state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
+   state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+   state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
+   state.metric = updateCategoryState(state.legendFilteration, "metric");
+   state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      // Assuming legendFilteration contains information to filter by class
+      const filteredNodes = state.OriginalData.filter((node) => {
+       // Assuming legendFilteration contains information to filter by class
+       if (
+         state.maxPhase.includes(node.MAX_PHASE) &&
+         state.dataset.includes(node.DATASET) &&
+         state.metric.includes(node.METRIC) &&
+         state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+         state.phase.includes(node.Phase) &&
+         state.diseaseClass.includes(node.Disease_class)
+       ) {
+         return node;
+       }
+     });
+   state.graphData = transformData(filteredNodes);
     },
     updateSingleFilteration: (state, action) => {
       const [compounds, celline] = action.payload;
@@ -200,8 +239,29 @@ const dataSlice = createSlice({
           return node;
         }
       });
-
-      state.graphData = transformData(state.OriginalData);
+   //  LEGEND DATA FILERATION TEHRE 
+   state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
+   state.phase = updateCategoryState(state.legendFilteration, "phase");
+   state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
+   state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+   state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
+   state.metric = updateCategoryState(state.legendFilteration, "metric");
+   state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      // Assuming legendFilteration contains information to filter by class
+      const filteredNodes = state.OriginalData.filter((node) => {
+       // Assuming legendFilteration contains information to filter by class
+       if (
+         state.maxPhase.includes(node.MAX_PHASE) &&
+         state.dataset.includes(node.DATASET) &&
+         state.metric.includes(node.METRIC) &&
+         state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+         state.phase.includes(node.Phase) &&
+         state.diseaseClass.includes(node.Disease_class)
+       ) {
+         return node;
+       }
+     });
+   state.graphData = transformData(filteredNodes);
     },
   },
   extraReducers: (builder) => {
@@ -237,7 +297,7 @@ const dataSlice = createSlice({
         state.legendFilteration = generateLegendFilteration(state.OriginalData);
         state.FirstlegendFilteration = generateLegendFilteration(state.OriginalData);
 
-        console.log(state.legendFilteration , "https://www.youtube.com/watch?v=l3nvibMlFEM")
+        console.log(state.legendFilteration, "https://www.youtube.com/watch?v=l3nvibMlFEM")
 
         state.phase = updateCategoryState(state.legendFilteration, "phase");
         state.diseaseClass = updateCategoryState(

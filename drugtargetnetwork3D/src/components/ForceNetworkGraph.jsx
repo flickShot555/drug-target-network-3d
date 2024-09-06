@@ -15,12 +15,12 @@ const ForceNetworkGraph = ({ graphData, getNodeShape }) => {
   }, [graphData]);
 
   return (
-    <div
+    <div 
       style={{
         width: "100%",
         height: "600px",
         overflow: "hidden",
-      }}>
+      }}  >
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}

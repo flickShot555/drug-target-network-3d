@@ -17,6 +17,7 @@ import CustomButton from "./CustomButton";
 import DoubleSlider from "./doubleSIilder";
 import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
+import ExportChartModal from "./ExportChartModal";
 const DataProcessor = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
@@ -205,7 +206,13 @@ console.log("original "  ,originalData )  ;
     
         {/* Force Network Graph */}
         <Col xs={24} sm={24} md={18}>
-          <Card title="3D Force Network Graph" bordered>
+          <Card title={
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <span>3D Force Network Graph</span>
+       <ExportChartModal/>
+
+    </div>
+  }  bordered>
           
             {clonedGraphData ? <ForceNetworkGraph graphData={clonedGraphData} getNodeShape={getNodeShape} /> : null}
           </Card>

@@ -97,12 +97,17 @@ const dataSlice = createSlice({
       }
 
     },
-
     updateLegendColor: (state, action) => {
       const { category, value, color } = action.payload;
-      if (state.legendData[category] && state.legendData[category][value]) {
-        state.legendData[category][value].color = color;
+      if (state.legendFilteration[ category] && state.legendFilteration[ category][value]) {
+        state.legendFilteration[ category][value].color = color;
+        state.FirstlegendFilteration[ category][value].color = color;
+    
       }
+      if (state.FirstlegendFilteration[ category] && state.FirstlegendFilteration[ category][value]) {
+        state.FirstlegendFilteration[ category][value].color = color;
+      }
+      
     },
 
     updateSliderValue: (state, action) => {

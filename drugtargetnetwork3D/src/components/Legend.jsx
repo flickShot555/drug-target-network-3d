@@ -1,8 +1,9 @@
+// Legend.js
 import React, { useState } from "react";
 import { Checkbox } from "antd";
 import { toggleLegendItem, updateLegendColor } from "./../app/features/data/dataSlice";
-import { useDispatch, useSelector } from "react-redux";
-import ColorPicker from "./Colorpicker"
+import { useDispatch } from "react-redux";
+import ColorPicker from "./ColorPickers"; // Import the ColorPicker component
 
 const Legend = ({ legendData }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Legend = ({ legendData }) => {
 
     // Set position for the color picker
     const rect = event.target.getBoundingClientRect();
-    setColorPickerPosition({ x: rect.right + 10, y: rect.top });
+    setColorPickerPosition({ x: rect.right, y: rect.top });
   };
 
   const handleColorSelect = (color) => {
@@ -33,7 +34,7 @@ const Legend = ({ legendData }) => {
     dispatch(toggleLegendItem({ category, value }));
   };
 
-  const renderShape = (category, color) => {
+  const renderShape = (category, color, value) => {
     switch (category) {
       case "phase":
         return (
@@ -84,58 +85,57 @@ const Legend = ({ legendData }) => {
             }}
           />
         );
-      case "dataset":   return (
-        <div
-          style={{
-            width: "20px",
-            height: "2px",
-            backgroundColor: color,
-            marginRight: "8px",
-          }}
-        />
-      );
+      case "dataset":
+        return (
+          <div
+            style={{
+              width: "20px",
+              height: "2px",
+              backgroundColor: color,
+              marginRight: "8px",
+            }}
+          />
+        );
       case "metric":
         return (
           <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "2px",
-            marginRight : "8px"
-          }}
-        >
-          <div
             style={{
-              width: "6px",
-              height: "6px",
-              backgroundColor: color,
-              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+              marginRight: "8px",
             }}
-          />
-          <div
-            style={{
-              width: "6px",
-              height: "6px",
-              backgroundColor: color,
-              borderRadius: "50%",
-            }}
-          />
-          <div
-            style={{
-              width: "6px",
-              height: "6px",
-              backgroundColor: color,
-              borderRadius: "50%",
-            }}
-          />
-        </div>
+          >
+            <div
+              style={{
+                width: "6px",
+                height: "6px",
+                backgroundColor: color,
+                borderRadius: "50%",
+              }}
+            />
+            <div
+              style={{
+                width: "6px",
+                height: "6px",
+                backgroundColor: color,
+                borderRadius: "50%",
+              }}
+            />
+            <div
+              style={{
+                width: "6px",
+                height: "6px",
+                backgroundColor: color,
+                borderRadius: "50%",
+              }}
+            />
+          </div>
         );
       default:
         return null;
     }
   };
-
-
 
   return (
     <div>
@@ -146,7 +146,7 @@ const Legend = ({ legendData }) => {
             <ul>
               {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
                 <li key={value} style={{ display: "flex", alignItems: "center" }}>
-                  {renderShape(category, color)}
+                  {renderShape(category, color, value)}
                   <Checkbox
                     checked={checked}
                     onChange={() => handleCheckboxChange(category, value)}
@@ -161,7 +161,7 @@ const Legend = ({ legendData }) => {
       </div>
 
       {colorPickerVisible && (
-        <div style={{ position: "absolute", top: colorPickerPosition.y, left: colorPickerPosition.x }}>
+        <div style={{ position: "absolute", top: colorPickerPosition.y-140, left: colorPickerPosition.x-20 }}>
           <ColorPicker
             colors={["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"]}
             onSelectColor={handleColorSelect}

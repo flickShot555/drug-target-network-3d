@@ -29,11 +29,7 @@ console.log(sliderValue , 'sliderValue')
       <CustomButton>redraw</CustomButton>
       
       <div style={{ marginTop: "5px", width: "500px" }}>
-        <Slider
-          value={sliderCurrent}
-          max={sliderValue}
-          onChange={handleSliderChange}
-        />
+        
       </div>
 
       <CustomButton>Export</CustomButton>

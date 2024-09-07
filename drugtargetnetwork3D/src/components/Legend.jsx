@@ -90,10 +90,11 @@ const Legend = ({ legendData }) => {
           <div
             style={{
               width: "20px",
-              height: "2px",
+              height: "5px",
               backgroundColor: color,
               marginRight: "8px",
             }}
+            onClick={(event) => handleColorClick(category, value, event)}
           />
         );
       case "metric":

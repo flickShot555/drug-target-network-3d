@@ -107,12 +107,10 @@ const DataProcessor = () => {
 
   function generateDataSet(link) {
     const category = link.dataset;
-    if (category === "GDSC1") return "#0bc00f";
-    if (category === "GDSC2") return "#4372c4";
-    if (category === "CCLE_NP24") return "#fe0000";
-    if (category === "NCI-60") return "#9B35C8";
-    if (category === "gCSI") return "#fe8f01";
-    if (category === "FIMM") return "#f99cc8";
+    if (legendData_filters.dataset && legendData_filters.dataset[category]) {
+      return legendData_filters.dataset[category].color;
+    }
+
   }
 
   useEffect(() => {
@@ -192,6 +190,7 @@ const DataProcessor = () => {
             <ForceNetworkGraph
               graphData={clonedGraphData}
               getNodeShape={getNodeShape}
+              generateDataSet = {generateDataSet}
             />
           ) : null}
         </Card>

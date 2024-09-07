@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { ForceGraph3D } from "react-force-graph";
 
-const ForceNetworkGraph = ({ graphData, getNodeShape }) => {
+const ForceNetworkGraph = ({ graphData, getNodeShape , generateDataSet }) => {
   const fgRef = useRef();
 
   useEffect(() => {
@@ -27,6 +27,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape }) => {
         nodeThreeObject={getNodeShape} // Custom node shape
         nodeLabel="id"
         linkDirectionalParticles={2}
+        linkWidth={3}
         linkDirectionalParticleSpeed={(d) => 0.01}
         linkDirectionalParticleWidth={1.5} // Set the particle width
         linkDirectionalParticleColor={(link) => {
@@ -38,7 +39,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape }) => {
             return "green";
           }
         }} // Set the particle color
-        linkColor={(link) => link.color || "black"} // Use the color property from the link data
+        linkColor={generateDataSet|| "black"} // Use the color property from the link data
         // width={window.innerWidth * 0.6}
         height={600}
         backgroundColor="white"

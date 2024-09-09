@@ -7,7 +7,6 @@ export const UpdateLegendFilteration = (data, currentLegendFilteration) => {
       metric: {},
       dataset: {},
     };
-  
     // Loop through the new data and update the legend filteration
     data.forEach((item) => {
       // Phase

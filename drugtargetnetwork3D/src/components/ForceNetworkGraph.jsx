@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { ForceGraph3D } from "react-force-graph";
 
-const ForceNetworkGraph = ({ graphData, getNodeShape , generateDataSet }) => {
+const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   const fgRef = useRef();
 
   useEffect(() => {
@@ -14,13 +14,20 @@ const ForceNetworkGraph = ({ graphData, getNodeShape , generateDataSet }) => {
     }
   }, [graphData]);
 
+  // Function to handle node dragging and prevent the node from moving back
+  const handleNodeDragEnd = (node) => {
+    node.fx = node.x; // Fix the node's x position
+    node.fy = node.y; // Fix the node's y position
+    node.fz = node.z; // Fix the node's z position
+  };
+
   return (
     <div 
       style={{
         width: "100%",
         height: "600px",
         overflow: "hidden",
-      }}  >
+      }}>
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}
@@ -39,10 +46,10 @@ const ForceNetworkGraph = ({ graphData, getNodeShape , generateDataSet }) => {
             return "green";
           }
         }} // Set the particle color
-        linkColor={generateDataSet|| "black"} // Use the color property from the link data
-        // width={window.innerWidth * 0.6}
+        linkColor={generateDataSet || "black"} // Use the color property from the link data
         height={600}
         backgroundColor="white"
+        onNodeDragEnd={handleNodeDragEnd} // Add drag end event to fix node position
       />
     </div>
   );

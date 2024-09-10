@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
-
 import { filterGraphData } from "./../app/features/data/dataSlice";
 import {
   selectGraphData,
@@ -18,17 +17,18 @@ import DoubleSlider from "./doubleSIilder";
 import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
+
 const DataProcessor = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
-
   const originalData = useSelector(selectoriginalData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters = useSelector(selectlegendfilteration);
 
-  console.log("original ", originalData);
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+
   const child_colors = [
     "#1f77b4",
     "#ff7f0e",
@@ -48,45 +48,31 @@ const DataProcessor = () => {
     "#00CED1",
   ];
 
-  // Function to determine node color based on its category
   const getNodeColor = (node, legendFilteration) => {
     const category = node.class;
-  
-    // Check 'maxPhase' categories
+
     if (legendData_filters.maxPhase && legendData_filters.maxPhase[category]) {
       return legendData_filters.maxPhase[category].color;
     }
-  
-    // Check 'diseaseClass' categories
     if (legendData_filters.diseaseClass && legendData_filters.diseaseClass[category]) {
       return legendData_filters.diseaseClass[category].color;
     }
-  
-    // Check 'oncotreeLineage' categories
     if (legendData_filters.oncotreeLineage && legendData_filters.oncotreeLineage[category]) {
       return legendData_filters.oncotreeLineage[category].color;
     }
-  
-    // Check 'metric' categories
     if (legendData_filters.metric && legendData_filters.metric[category]) {
       return legendData_filters.metric[category].color;
     }
-  
-    // Check 'dataset' categories
     if (legendData_filters.dataset && legendData_filters.dataset[category]) {
       return legendData_filters.dataset[category].color;
     }
-  
-    // Check 'phase' categories
     if (legendData_filters.phase && legendData_filters.phase[category]) {
       return legendData_filters.phase[category].color;
     }
-  
-    // Default color if category not found
-    return "black";
+
+    return isDarkMode ? "#ffffff" : "#000000"; // Default color based on theme
   };
 
-  // Function to return a custom 3D object for each node based on its type
   const getNodeShape = (node) => {
     const color = getNodeColor(node);
 
@@ -105,13 +91,12 @@ const DataProcessor = () => {
     return new THREE.Mesh(geometry, material);
   };
 
-  function generateDataSet(link) {
+  const generateDataSet = (link) => {
     const category = link.dataset;
     if (legendData_filters.dataset && legendData_filters.dataset[category]) {
       return legendData_filters.dataset[category].color;
     }
-
-  }
+  };
 
   useEffect(() => {
     if (dataStatus === "idle") {
@@ -142,10 +127,6 @@ const DataProcessor = () => {
     return <div>Error: {dataError}</div>;
   }
 
-  // Clone graphData and add color property to nodes
-
-  // Clone graphData and add color property to nodes
-  // Dispatch the filterGraphData action on button click
   const handleApplyClick = () => {
     dispatch(filterGraphData());
   };
@@ -154,13 +135,12 @@ const DataProcessor = () => {
     <Row
       justify="center"
       gutter={[16, 16]}
-      style={{ padding: "20px", marginTop: "40px" }}>
-      {/* Legend Disease */}
+      style={{ padding: "20px", marginTop: "40px" }}
+    >
       <Col xs={24} sm={12} md={6}>
         <Card title="Legend" bordered>
           <div style={{ height: "600px", overflowY: "auto" }}>
-            <CustomButton onClick={handleApplyClick}>Apply</CustomButton>{" "}
-            {/* Attach the handler */}
+            <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
             <SingleFilteration />
             <SliderComponent />
             <DoubleSlider />
@@ -171,7 +151,6 @@ const DataProcessor = () => {
         </Card>
       </Col>
 
-      {/* Force Network Graph */}
       <Col xs={24} sm={24} md={18}>
         <Card
           title={
@@ -180,20 +159,21 @@ const DataProcessor = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-              }}>
+              }}
+            >
               <span>3D Force Network Graph</span>
               <div>
-
-              <ExportChartModal />
+                <ExportChartModal />
               </div>
             </div>
           }
-          bordered>
+          bordered
+        >
           {clonedGraphData ? (
             <ForceNetworkGraph
               graphData={clonedGraphData}
               getNodeShape={getNodeShape}
-              generateDataSet = {generateDataSet}
+              generateDataSet={generateDataSet}
             />
           ) : null}
         </Card>

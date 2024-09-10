@@ -1,12 +1,12 @@
-// Legend.js
 import React, { useState } from "react";
-import { Checkbox } from "antd";
-import { toggleLegendItem, updateLegendColor } from "./../app/features/data/dataSlice";
-import { useDispatch } from "react-redux";
+import { Checkbox, ConfigProvider } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleLegendItem, updateLegendColor } from "../app/features/data/dataSlice";
 import ColorPicker from "./ColorPickers"; // Import the ColorPicker component
 
 const Legend = ({ legendData }) => {
   const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get the current theme
 
   const [colorPickerVisible, setColorPickerVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -139,38 +139,77 @@ const Legend = ({ legendData }) => {
   };
 
   return (
-    <div>
-      <div className="legend1" id="legend1" style={{ marginLeft: "12px" }}>
-        {Object.keys(legendData).map((category) => (
-          <div key={category}>
-            <h5>{category}</h5>
-            <ul>
-              {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
-                <li key={value} style={{ display: "flex", alignItems: "center" }}>
-                  {renderShape(category, color, value)}
-                  <Checkbox
-                    checked={checked}
-                    onChange={() => handleCheckboxChange(category, value)}
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: isDarkMode ? '#001529' : '#1890ff', // Change primary color based on theme
+          colorTextBase: isDarkMode ? '#fff' : '#000', // Change text color based on theme
+          colorBgBase: isDarkMode ? '#333' : '#f9f9f9', // Change background color based on theme
+        },
+      }}
+    >
+      <div>
+        <div
+          className="legend1"
+          id="legend1"
+          style={{
+            marginLeft: "12px",
+            color: isDarkMode ? 'white' : 'black',
+            backgroundColor: isDarkMode ? '#222' : '#f9f9f9',
+            padding: '10px',
+            borderRadius: '4px',
+          }}
+        >
+          {Object.keys(legendData).map((category) => (
+            <div key={category}>
+              <h5 style={{ color: isDarkMode ? 'white' : 'black' }}>{category}</h5>
+              <ul>
+                {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
+                  <li
+                    key={value}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: isDarkMode ? 'white' : 'black',
+                    }}
                   >
-                    {value}
-                  </Checkbox>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      {colorPickerVisible && (
-        <div style={{ position: "absolute", top: colorPickerPosition.y-140, left: colorPickerPosition.x-20 }}>
-          <ColorPicker
-            colors={["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"]}
-            onSelectColor={handleColorSelect}
-            onClose={() => setColorPickerVisible(false)}
-          />
+                    {renderShape(category, color, value)}
+                    <Checkbox
+                      checked={checked}
+                      onChange={() => handleCheckboxChange(category, value)}
+                      style={{ color: isDarkMode ? 'white' : 'black' }}
+                    >
+                      {value}
+                    </Checkbox>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      )}
-    </div>
+
+        {colorPickerVisible && (
+          <div
+            style={{
+              position: "absolute",
+              top: colorPickerPosition.y - 140,
+              left: colorPickerPosition.x - 20,
+              zIndex: 1000,
+              background: isDarkMode ? '#333' : '#fff',
+              border: `1px solid ${isDarkMode ? '#555' : '#d9d9d9'}`,
+              padding: '10px',
+              borderRadius: '4px',
+            }}
+          >
+            <ColorPicker
+              colors={["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"]}
+              onSelectColor={handleColorSelect}
+              onClose={() => setColorPickerVisible(false)}
+            />
+          </div>
+        )}
+      </div>
+    </ConfigProvider>
   );
 };
 

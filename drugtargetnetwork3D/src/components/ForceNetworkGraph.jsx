@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
 
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   const fgRef = useRef();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   useEffect(() => {
     if (fgRef.current) {
@@ -14,20 +16,15 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
     }
   }, [graphData]);
 
-  // Function to handle node dragging and prevent the node from moving back
-  const handleNodeDragEnd = (node) => {
-    node.fx = node.x; // Fix the node's x position
-    node.fy = node.y; // Fix the node's y position
-    node.fz = node.z; // Fix the node's z position
-  };
-
   return (
-    <div 
+    <div
       style={{
         width: "100%",
         height: "600px",
         overflow: "hidden",
-      }}>
+        backgroundColor: isDarkMode ? "#000000" : "#ffffff", // Background color based on theme
+      }}
+    >
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}
@@ -39,17 +36,16 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         linkDirectionalParticleWidth={1.5} // Set the particle width
         linkDirectionalParticleColor={(link) => {
           if (link.matric === "pIC50") {
-            return "purple";
+            return isDarkMode ? "lightpurple" : "purple"; // Adjust color based on theme
           } else if (link.matric === "pEC50") {
-            return "grey";
+            return isDarkMode ? "lightgrey" : "grey"; // Adjust color based on theme
           } else if (link.matric === "pGI50") {
-            return "green";
+            return isDarkMode ? "lightgreen" : "green"; // Adjust color based on theme
           }
-        }} // Set the particle color
-        linkColor={generateDataSet || "black"} // Use the color property from the link data
+        }}
+        linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")} // Use the color property from the link data
         height={600}
-        backgroundColor="white"
-        onNodeDragEnd={handleNodeDragEnd} // Add drag end event to fix node position
+        backgroundColor={isDarkMode ? "#000000" : "#ffffff"} // Background color based on theme
       />
     </div>
   );

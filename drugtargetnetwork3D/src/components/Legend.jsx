@@ -139,15 +139,7 @@ const Legend = ({ legendData }) => {
   };
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: isDarkMode ? '#001529' : '#1890ff', // Change primary color based on theme
-          colorTextBase: isDarkMode ? '#fff' : '#000', // Change text color based on theme
-          colorBgBase: isDarkMode ? '#333' : '#f9f9f9', // Change background color based on theme
-        },
-      }}
-    >
+  
       <div>
         <div
           className="legend1"
@@ -155,7 +147,6 @@ const Legend = ({ legendData }) => {
           style={{
             marginLeft: "12px",
             color: isDarkMode ? 'white' : 'black',
-            backgroundColor: isDarkMode ? '#222' : '#f9f9f9',
             padding: '10px',
             borderRadius: '4px',
           }}
@@ -209,7 +200,6 @@ const Legend = ({ legendData }) => {
           </div>
         )}
       </div>
-    </ConfigProvider>
   );
 };
 

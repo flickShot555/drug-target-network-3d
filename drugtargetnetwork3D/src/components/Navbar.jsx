@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Row, Col ,Switch ,ConfigProvider} from "antd";
+import { Layout, Row, Col ,Switch } from "antd";
 import SelectComponent from "./SelectComponent"; // Ensure correct path
 import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
@@ -296,11 +296,6 @@ const Drug_class_Categories = [
   { value: 'Wounds and injuries', label: 'Wounds and injuries' }
 ];
 
-
-
-
-
-
 const Navbar = () => {
 
 
@@ -316,13 +311,7 @@ const Navbar = () => {
   };
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: isDarkMode ? '#001529' : '#1890ff', // Change primary color based on theme
-        },
-      }}
-    >
+   
       <header className={isDarkMode ? 'header-dark' : 'header-light'}>
         <Row className={isDarkMode ? 'navrow-dark' : 'navrow-light'}>
           <Col style={{ display: 'flex', alignItems: 'center' }}>
@@ -399,7 +388,6 @@ const Navbar = () => {
           </Col>
         </Row>
       </header>
-    </ConfigProvider>
   );
 };
 

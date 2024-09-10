@@ -1,31 +1,68 @@
 /* App.css */
-.header {
-  /* background: rgba(174, 174, 174, 0); Dark background color */
-  /* padding: 0 20px; Horizontal padding */
-  width: 100%;
-  padding: 0%;
 
+/* Default dark theme */
+.header-dark {
+  background: rgba(174, 174, 174, 0); /* Dark background color */
+  padding: 0;
 }
-.navrow{
+
+.navrow-dark {
   margin: 0px;
   padding: 0px;
   width: 100%;
-  background: rgb(255, 255, 255);
-  /* box-shadow: 0px 4px 8px rgba(146, 25, 25, 0.5); */
+  background:#808080;
   z-index: 999;
 }
 
-.header .ant-row {
+.header-dark .ant-row {
   align-items: center; /* Center items vertically */
 }
 
-.header .ant-select {
+.header-dark .ant-select {
   width: 100%;
   max-width: 150px; /* Adjust dropdown width as needed */
   margin: 0 10px; /* Space between dropdowns */
 }
 
-.header .ant-col {
+.header-dark .ant-col {
+  padding: 0; /* Remove padding from columns */
+}
+
+.ant-select-selection-item {
+  line-height: 28px; /* Adjust to make sure text fits within the 30px height */
+  margin: 0 4px;
+}
+
+.ant-select-selection-overflow {
+  height: 30px; /* Force the height to match your requirement */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+/* Light theme */
+.header-light {
+  background: #f5f5f5; /* Light background color */
+  padding: 0;
+}
+
+.navrow-light {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+}
+
+.header-light .ant-row {
+  align-items: center; /* Center items vertically */
+}
+
+.header-light .ant-select {
+  width: 100%;
+  max-width: 150px; /* Adjust dropdown width as needed */
+  margin: 0 10px; /* Space between dropdowns */
+}
+
+.header-light .ant-col {
   padding: 0; /* Remove padding from columns */
 }
 

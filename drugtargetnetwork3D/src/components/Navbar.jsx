@@ -1,9 +1,10 @@
 import React from "react";
-import { Layout, Row, Col } from "antd";
+import { Layout, Row, Col ,Switch ,ConfigProvider} from "antd";
 import SelectComponent from "./SelectComponent"; // Ensure correct path
 import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
-
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from './../app/features/data/themeSlice';
 const { Header } = Layout;
 
 // Sample Data for Dropdowns
@@ -298,82 +299,107 @@ const Drug_class_Categories = [
 
 
 
-const handleChange = (value) => {
-  console.log("Selected:", value);
-};
+
 
 const Navbar = () => {
-  return (
-    <Header className="header">
-      <Row className="navrow">
-      <Col style={{ display: 'flex', alignItems: 'center' }}>
-  <p style={{ marginRight: '10px' , color:"" }}>Add More</p>
-  <CustomButton>200+</CustomButton>
-  <CustomButton>200+</CustomButton>
-</Col>
 
-        <Col>
-          <SelectComponent
-            options={Tissues}
-            placeholder="Tissues"
-            handleChange={handleChange}
-            dropwidth="100px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={Max_clinical}
-            placeholder="Max clinical phase"
-            handleChange={handleChange}
-            dropwidth="150px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={GDSC1}
-            placeholder="GDSC1"
-            handleChange={handleChange}
-            dropwidth="100px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={PIC50}
-            placeholder="PIC50"
-            handleChange={handleChange}
-            dropwidth="90px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={Cell_line}
-            placeholder="Cell line lineage"
-            handleChange={handleChange}
-            dropwidth="150px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={Drug_class_Categories}
-            placeholder="Disease class"
-            handleChange={handleChange}
-            dropwidth="120px"
-          />
-        </Col>
-        <Col>
-          <SelectComponent
-            options={Compound_class}
-            placeholder="Compound class"
-            handleChange={handleChange}
-            dropwidth="150px"
-          />
-        </Col>
-        <Col>
-          <CustomButton>Soon</CustomButton>
-          <CustomButton>Apply Filter</CustomButton>
-        </Col>
-      </Row>
-    </Header>
+
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get the current theme
+
+  const dispatch = useDispatch();
+  const handleChange = (value) => {
+    console.log("Selected:", value);
+  };
+  
+  const handleThemeToggle = () => {
+    dispatch(toggleTheme()); // Dispatch the action to toggle the theme
+  };
+
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: isDarkMode ? '#001529' : '#1890ff', // Change primary color based on theme
+        },
+      }}
+    >
+      <header className={isDarkMode ? 'header-dark' : 'header-light'}>
+        <Row className={isDarkMode ? 'navrow-dark' : 'navrow-light'}>
+          <Col style={{ display: 'flex', alignItems: 'center' }}>
+            <p style={{ marginRight: '10px', color: isDarkMode ? 'white' : 'black' }}>Add More</p>
+            <CustomButton>200+</CustomButton>
+            <CustomButton>200+</CustomButton>
+          </Col>
+
+          <Col>
+            <SelectComponent
+              options={Tissues}
+              placeholder="Tissues"
+              handleChange={handleChange}
+              dropwidth="100px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={Max_clinical}
+              placeholder="Max clinical phase"
+              handleChange={handleChange}
+              dropwidth="150px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={GDSC1}
+              placeholder="GDSC1"
+              handleChange={handleChange}
+              dropwidth="100px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={PIC50}
+              placeholder="PIC50"
+              handleChange={handleChange}
+              dropwidth="90px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={Cell_line}
+              placeholder="Cell line lineage"
+              handleChange={handleChange}
+              dropwidth="150px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={Drug_class_Categories}
+              placeholder="Disease class"
+              handleChange={handleChange}
+              dropwidth="120px"
+            />
+          </Col>
+          <Col>
+            <SelectComponent
+              options={Compound_class}
+              placeholder="Compound class"
+              handleChange={handleChange}
+              dropwidth="150px"
+            />
+          </Col>
+          <Col>
+            <Switch
+              checkedChildren="Dark"
+              unCheckedChildren="Light"
+              checked={isDarkMode} // Bind the switch to the current theme mode
+              onChange={handleThemeToggle} // Call the toggle handler when switched
+            />
+            <CustomButton>Soon</CustomButton>
+            <CustomButton>Apply Filter</CustomButton>
+          </Col>
+        </Row>
+      </header>
+    </ConfigProvider>
   );
 };
 

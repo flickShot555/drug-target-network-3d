@@ -182,7 +182,10 @@ const DataProcessor = () => {
                 alignItems: "center",
               }}>
               <span>3D Force Network Graph</span>
+              <div>
+
               <ExportChartModal />
+              </div>
             </div>
           }
           bordered>

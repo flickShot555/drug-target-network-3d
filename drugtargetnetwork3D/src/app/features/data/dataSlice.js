@@ -37,6 +37,9 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    toggleTheme: (state) => {
+      state.isDarkMode = !state.isDarkMode;
+    },
     toggleLegendItem: (state, action) => {
       const { category, value } = action.payload;
 
@@ -330,6 +333,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData, updateSliderValue, updateLegendColor, updateDoubleSliderValue, updateSingleFilteration } =
+export const { toggleLegendItem, filterGraphData, updateSliderValue, updateLegendColor, updateDoubleSliderValue, updateSingleFilteration ,toggleTheme  } =
   dataSlice.actions;
 export default dataSlice.reducer;

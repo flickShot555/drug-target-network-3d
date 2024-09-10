@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import html2canvas from 'html2canvas';
+import CustomButton from './CustomButton';
 
 const ExportChartModal = ({ graphData, getNodeShape }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -19,9 +20,9 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <CustomButton type="primary" onClick={showModal}>
         Export
-      </Button>
+      </CustomButton>
       <Modal
         title="Export Chart as"
         visible={isModalVisible}
@@ -29,18 +30,22 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
         footer={null}
         centered
       >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('png')}>
+        <div 
+          style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.6)' // Add your desired white shadow here
+          }}
+        >
+          <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('png')}>
             Download PNG
-          </Button>
-          <Button type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('jpeg')}>
+          </CustomButton>
+          <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('jpeg')}>
             Download JPEG
-          </Button>
+          </CustomButton>
         </div>
       </Modal>
-
-      {/* Render the graph component inside a div with a ref */}
-    
     </>
   );
 };

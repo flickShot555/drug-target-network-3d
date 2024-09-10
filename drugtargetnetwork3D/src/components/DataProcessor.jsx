@@ -130,7 +130,12 @@ const DataProcessor = () => {
   const handleApplyClick = () => {
     dispatch(filterGraphData());
   };
-
+  const scrollbarStyle = {
+    height: "600px",
+    overflowY: "auto",
+    scrollbarWidth: isDarkMode ? 'thin' : 'auto', // For Firefox
+    scrollbarColor: isDarkMode ? '#555 #333' : '#ddd #f1f1f1', // For Firefox
+  };
   return (
     <Row
       justify="center"
@@ -139,7 +144,7 @@ const DataProcessor = () => {
     >
       <Col xs={24} sm={12} md={6}>
         <Card title="Legend" bordered>
-          <div style={{ height: "600px", overflowY: "auto" }}>
+          <div style={scrollbarStyle}>
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
             <SingleFilteration />
             <SliderComponent />

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import html2canvas from 'html2canvas';
 import CustomButton from './CustomButton';
+import { useSelector } from 'react-redux';
+import * as XLSX from 'xlsx';
 
 const ExportChartModal = ({ graphData, getNodeShape }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const OriginalData = useSelector((state) => state.data.OriginalData); // Get OriginalData from Redux
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -15,6 +18,17 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
   };
 
   const captureScreenshot = async (format) => {
+    setIsModalVisible(false);
+    // Implement PNG or JPEG capture logic here
+  };
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(OriginalData); // Convert OriginalData to a worksheet
+    const workbook = XLSX.utils.book_new(); // Create a new workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data'); // Append worksheet to workbook
+
+    // Write the workbook to an Excel file
+    XLSX.writeFile(workbook, 'graph_data.xlsx');
     setIsModalVisible(false);
   };
 
@@ -30,12 +44,12 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
         footer={null}
         centered
       >
-        <div 
-          style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.6)' // Add your desired white shadow here
+            boxShadow: '0 4px 8px rgba(255, 255, 255, 0.6)', // Add your desired white shadow here
           }}
         >
           <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('png')}>
@@ -43,6 +57,9 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
           </CustomButton>
           <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('jpeg')}>
             Download JPEG
+          </CustomButton>
+          <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={exportToExcel}>
+            Download Excel
           </CustomButton>
         </div>
       </Modal>

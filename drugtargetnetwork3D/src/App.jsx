@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 
 const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get dark mode state from Redux
-
+  const OriginalData = useSelector((state) => state.data.OriginalData); // Get dark mode state from Redux
+console.log(OriginalData , 'OriginalData')
   return (
     <ConfigProvider
       theme={{
@@ -23,7 +24,7 @@ const App = () => {
       <Layout>
         <Navbar />
         <DataProcessor />
-        <Footer />
+        {/* <Footer /> */}
       </Layout>
     </ConfigProvider>
   );

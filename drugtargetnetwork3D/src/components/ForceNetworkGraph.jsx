@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import  { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
 
+// eslint-disable-next-line react/prop-types
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   const fgRef = useRef();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
@@ -11,7 +12,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       const fg = fgRef.current;
 
       // Customize force layout here, if needed
-      fg.d3Force("link").distance((link) => 30);
+      fg.d3Force("link").distance(() => 30);
       fg.d3Force("charge").strength(-120);
     }
   }, [graphData]);
@@ -32,7 +33,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         nodeLabel="id"
         linkDirectionalParticles={2}
         linkWidth={3}
-        linkDirectionalParticleSpeed={(d) => 0.01}
+        linkDirectionalParticleSpeed={() => 0.01}
         linkDirectionalParticleWidth={1.5} // Set the particle width
         linkDirectionalParticleColor={(link) => {
           if (link.matric === "pIC50") {

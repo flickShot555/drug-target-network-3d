@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable no-undef */
+import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
@@ -8,7 +9,7 @@ import {
   selectDataStatus,
   selectDataError,
   selectlegendfilteration,
-  selectoriginalData,
+  
 } from "../app/features/data/dataSelectors";
 import ForceNetworkGraph from "./ForceNetworkGraph";
 import Legend from "./Legend";
@@ -22,33 +23,13 @@ const DataProcessor = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
-  const originalData = useSelector(selectoriginalData);
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters = useSelector(selectlegendfilteration);
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
-  const child_colors = [
-    "#1f77b4",
-    "#ff7f0e",
-    "#2ca02c",
-    "#d62728",
-    "#9467bd",
-    "#8c564b",
-    "#e377c2",
-    "#7f7f7f",
-    "#17becf",
-    "#E75480",
-    "#ff9896",
-    "#98df8a",
-    "#aec7e8",
-    "#ffbb78",
-    "#FFD700",
-    "#00CED1",
-  ];
-
-  const getNodeColor = (node, legendFilteration) => {
+  const getNodeColor = (node) => {
     const category = node.class;
 
     if (legendData_filters.maxPhase && legendData_filters.maxPhase[category]) {
@@ -78,6 +59,7 @@ const DataProcessor = () => {
 
     let geometry;
     if (node.type === "parent_source") {
+      // eslint-disable-next-line no-undef
       geometry = new THREE.BoxGeometry(10, 10, 20);
     } else if (node.type === "protein_child") {
       geometry = new THREE.SphereGeometry(5);

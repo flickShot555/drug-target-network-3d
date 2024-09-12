@@ -1,18 +1,14 @@
-import React from "react";
-import { Layout, Row, Col ,Switch } from "antd";
+// import React from "react";
+import { Row, Col ,Switch } from "antd";
 import SelectComponent from "./SelectComponent"; // Ensure correct path
 import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './../app/features/data/themeSlice';
-const { Header } = Layout;
+
 
 // Sample Data for Dropdowns
-const dropdownOptions = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "cherry", label: "Cherry" },
-];
+
 const Tissues = [
   { value: "Bone", label: "Bone" },
   { value: "Skin", label: "Skin" },

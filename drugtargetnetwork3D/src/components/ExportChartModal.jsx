@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import html2canvas from 'html2canvas';
+import  { useState } from 'react';
+import { Modal } from 'antd';
 import CustomButton from './CustomButton';
 import { useSelector } from 'react-redux';
 import * as XLSX from 'xlsx';
 
-const ExportChartModal = ({ graphData, getNodeShape }) => {
+const ExportChartModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const OriginalData = useSelector((state) => state.data.OriginalData); // Get OriginalData from Redux
 
@@ -17,7 +16,7 @@ const ExportChartModal = ({ graphData, getNodeShape }) => {
     setIsModalVisible(false);
   };
 
-  const captureScreenshot = async (format) => {
+  const captureScreenshot = async ( ) => {
     setIsModalVisible(false);
     // Implement PNG or JPEG capture logic here
   };

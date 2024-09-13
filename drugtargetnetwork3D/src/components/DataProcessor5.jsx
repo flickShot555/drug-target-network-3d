@@ -19,7 +19,7 @@ import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
 
-const DataProcessor4 = () => {
+const DataProcessor5 = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
@@ -169,4 +169,4 @@ const DataProcessor4 = () => {
   );
 };
 
-export default DataProcessor4;
+export default DataProcessor5;

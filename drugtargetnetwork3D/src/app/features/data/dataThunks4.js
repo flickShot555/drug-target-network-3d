@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchGraphData4 = createAsyncThunk(
   'data/fetchGraphData',
   async () => {
-    const response = await fetch('/sampledata2.json');
+    const response = await fetch('/sampledata6.json');
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }

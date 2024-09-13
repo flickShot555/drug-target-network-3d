@@ -32,9 +32,9 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         nodeThreeObject={getNodeShape} // Custom node shape
         nodeLabel="id"
         linkDirectionalParticles={2}
-        linkWidth={3}
+        linkWidth={1.5}
         linkDirectionalParticleSpeed={( ) => 0.01}
-        linkDirectionalParticleWidth={1.5} // Set the particle width
+        linkDirectionalParticleWidth={1} // Set the particle width
         linkDirectionalParticleColor={(link) => {
           if (link.matric === "pIC50") {
             return isDarkMode ? "lightpurple" : "purple"; // Adjust color based on theme

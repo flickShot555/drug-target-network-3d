@@ -2,7 +2,7 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
-import { fetchGraphData3 } from "../app/features/data/dataThunks3";
+import { fetchGraphData4 } from "../app/features/data/dataThunks4";
 import { filterGraphData } from "./../app/features/data/dataSlice";
 import {
   selectGraphData,
@@ -19,7 +19,7 @@ import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
 
-const DataProcessor3 = () => {
+const DataProcessor4 = () => {
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
@@ -82,7 +82,7 @@ const DataProcessor3 = () => {
 
   useEffect(() => {
     if (dataStatus === "idle") {
-      dispatch(fetchGraphData3());
+      dispatch(fetchGraphData4());
     }
     if (graphData) {
       const clonedData = {
@@ -169,4 +169,4 @@ const DataProcessor3 = () => {
   );
 };
 
-export default DataProcessor3;
+export default DataProcessor4;

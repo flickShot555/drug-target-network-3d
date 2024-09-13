@@ -33,7 +33,9 @@ const App = () => {
             <Route path="/" element={<DataProcessor />} /> {/* Default route */}
             <Route path="/data" element={<DataProcessor2 />} /> {/* /data route */}
             <Route path="/data2" element={<DataProcessor3 />} /> {/* /data route */}
-            <Route path="*" element={<p>404 Page Not Found</p>} /> {/* Fallback for unknown routes */}
+            <Route path="/data3" element={<DataProcessor />} /> {/* /data route */}
+            <Route path="/data4" element={<DataProcessor3 />} /> {/* /data route */}
+           <Route path="*" element={<p>404 Page Not Found</p>} /> {/* Fallback for unknown routes */}
           </Routes>
 
           {/* Footer could go here */}

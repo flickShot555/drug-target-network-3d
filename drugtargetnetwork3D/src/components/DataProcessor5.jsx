@@ -2,8 +2,8 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
-import { fetchGraphData } from "../app/features/data/dataThunks";
-import { filterGraphData } from "./../app/features/data/dataSlice";
+import { fetchGraphData5 } from "../app/features/data/dataThunks5";
+import { filterGraphData } from "../app/features/data/dataSlice";
 import {
   selectGraphData,
   selectDataStatus,
@@ -82,7 +82,7 @@ const DataProcessor4 = () => {
 
   useEffect(() => {
     if (dataStatus === "idle") {
-      dispatch(fetchGraphData());
+      dispatch(fetchGraphData5());
     }
     if (graphData) {
       const clonedData = {

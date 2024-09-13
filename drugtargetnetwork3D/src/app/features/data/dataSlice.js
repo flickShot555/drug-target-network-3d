@@ -25,6 +25,7 @@ const initialState = {
   silderMax: 9.0,
   CompoundNames: [],
   CellineNames: [],
+  version: null,
 };
 
 function updateCategoryState(legendFilteration, category) {
@@ -37,6 +38,11 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    updateVersion: (state, action) => {
+      state.version = action.payload;
+    },
+
+
     toggleTheme: (state) => {
       state.isDarkMode = !state.isDarkMode;
     },
@@ -333,6 +339,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { toggleLegendItem, filterGraphData, updateSliderValue, updateLegendColor, updateDoubleSliderValue, updateSingleFilteration ,toggleTheme  } =
+export const { updateVersion ,toggleLegendItem, filterGraphData, updateSliderValue, updateLegendColor, updateDoubleSliderValue, updateSingleFilteration ,toggleTheme  } =
   dataSlice.actions;
 export default dataSlice.reducer;

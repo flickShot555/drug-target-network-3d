@@ -1,14 +1,19 @@
-// import React from "react";
 import { Layout, ConfigProvider } from "antd";
 import Navbar from "./components/Navbar"; // Ensure correct path
-import "./App.css"; // Import the CSS file
 import DataProcessor from "./components/DataProcessor";
 import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css"; // Import the CSS file
+import DataProcessor2 from "./components/DataProcessor2";
+import DataProcessor3 from "./components/DataProcessor3";
 
 const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get dark mode state from Redux
-  const OriginalData = useSelector((state) => state.data.OriginalData); // Get dark mode state from Redux
+  const OriginalData = useSelector((state) => state.data.OriginalData); // Get OriginalData from Redux
+
+  // Log the OriginalData for debugging
   console.log(OriginalData, "OriginalData");
+
   return (
     <ConfigProvider
       theme={{
@@ -19,11 +24,21 @@ const App = () => {
           colorBorder: isDarkMode ? "#444" : "#d9d9d9",
         },
       }}>
-      <Layout>
-        <Navbar />
-        <DataProcessor />
-        {/* <Footer /> */}
-      </Layout>
+      <Router>
+        <Layout>
+          <Navbar />
+
+          {/* Define Routes */}
+          <Routes>
+            <Route path="/" element={<DataProcessor />} /> {/* Default route */}
+            <Route path="/data" element={<DataProcessor2 />} /> {/* /data route */}
+            <Route path="/data2" element={<DataProcessor3 />} /> {/* /data route */}
+            <Route path="*" element={<p>404 Page Not Found</p>} /> {/* Fallback for unknown routes */}
+          </Routes>
+
+          {/* Footer could go here */}
+        </Layout>
+      </Router>
     </ConfigProvider>
   );
 };

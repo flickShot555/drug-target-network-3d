@@ -33,7 +33,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         nodeLabel="id"
         linkDirectionalParticles={2}
         linkWidth={3}
-        linkDirectionalParticleSpeed={() => 0.01}
+        linkDirectionalParticleSpeed={( ) => 0.01}
         linkDirectionalParticleWidth={1.5} // Set the particle width
         linkDirectionalParticleColor={(link) => {
           if (link.matric === "pIC50") {

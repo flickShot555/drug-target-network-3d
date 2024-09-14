@@ -5,7 +5,7 @@ import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from './../app/features/data/themeSlice';
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 // Sample Data for Dropdowns
 
@@ -293,7 +293,11 @@ const Drug_class_Categories = [
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate(); // Initialize navigate
 
+  const handleNavigate = (path) => {
+    navigate(path); // Navigate to the provided path
+  };
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get the current theme
 
@@ -312,8 +316,10 @@ const Navbar = () => {
         <Row className={isDarkMode ? 'navrow-dark' : 'navrow-light'}>
           <Col style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginRight: '10px', color: isDarkMode ? 'white' : 'black' }}>Add More</p>
-            <CustomButton>200+</CustomButton>
-            <CustomButton>200+</CustomButton>
+            <CustomButton onClick={() => handleNavigate('/data3')}>200+</CustomButton>
+          
+          {/* Button to navigate to /data4 */}
+          <CustomButton onClick={() => handleNavigate('/data4')}>200-</CustomButton>
           </Col>
 
           <Col>

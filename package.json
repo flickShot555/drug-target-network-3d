@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@react-three/fiber": "^8.17.5",
-    "react-force-graph": "^1.44.4",
-    "react-router-dom": "^6.26.2",
-    "three": "^0.167.1"
-  }
-}

@@ -153,7 +153,7 @@ const Legend = ({ legendData }) => {
         >
           {Object.keys(legendData).map((category) => (
             <div key={category}>
-              <h5 style={{ color: isDarkMode ? 'white' : 'black' }}>{category}</h5>
+              <h5 style={{ color: isDarkMode ? 'white' : 'black' , marginTop: "1px"}}>{category}</h5>
               <ul style={{   padding: '5px'}}>
                 {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
                   <li

@@ -1,4 +1,4 @@
-import  { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
 
@@ -17,6 +17,20 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
     }
   }, [graphData]);
 
+  // Add node drag event handler
+  const handleNodeDrag = (node) => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z;
+  };
+
+  // Add node drag end event handler to stop forces after dragging
+  const handleNodeDragEnd = (node) => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z;
+  };
+
   return (
     <div
       style={{
@@ -33,7 +47,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         nodeLabel="id"
         linkDirectionalParticles={2}
         linkWidth={1.5}
-        linkDirectionalParticleSpeed={( ) => 0.01}
+        linkDirectionalParticleSpeed={() => 0.01}
         linkDirectionalParticleWidth={1} // Set the particle width
         linkDirectionalParticleColor={(link) => {
           if (link.matric === "pIC50") {
@@ -47,6 +61,10 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")} // Use the color property from the link data
         height={600}
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"} // Background color based on theme
+
+        // Add event handlers for node dragging
+        onNodeDrag={handleNodeDrag}
+        onNodeDragEnd={handleNodeDragEnd}
       />
     </div>
   );

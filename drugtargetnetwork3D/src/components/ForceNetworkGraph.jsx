@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
+import { Button } from "antd"; // Assuming you're using Ant Design for buttons
 
 // eslint-disable-next-line react/prop-types
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
@@ -31,6 +32,19 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
     node.fz = node.z;
   };
 
+  // Function to reset the nodes so they move freely again
+  const resetNodePositions = () => {
+    graphData.nodes.forEach((node) => {
+      // Reset fixed positions, allowing nodes to move freely again
+      node.fx = null;
+      node.fy = null;
+      node.fz = null;
+    });
+
+    // Restart the force simulation so nodes can move to new positions based on the layout
+    fgRef.current.d3ReheatSimulation();
+  };
+
   return (
     <div
       style={{
@@ -40,6 +54,11 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         backgroundColor: isDarkMode ? "#000000" : "#ffffff", // Background color based on theme
       }}
     >
+      {/* Reset Button */}
+      <Button onClick={resetNodePositions} style={{ marginBottom: '10px' }}>
+        Reset Nodes
+      </Button>
+
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}

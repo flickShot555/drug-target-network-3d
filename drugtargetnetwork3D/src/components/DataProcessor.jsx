@@ -124,7 +124,7 @@ const DataProcessor = () => {
       gutter={[16, 16]}
       style={{ padding: "20px", marginTop: "40px" }}
     >
-      <Col xs={24} sm={12} md={6}>
+      <Col xs={24} sm={12} md={5}>
         <Card title="Legend" bordered>
           <div style={scrollbarStyle}>
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
@@ -138,7 +138,7 @@ const DataProcessor = () => {
         </Card>
       </Col>
 
-      <Col xs={24} sm={24} md={18}>
+      <Col xs={24} sm={24} md={19}>
         <Card
           title={
             <div

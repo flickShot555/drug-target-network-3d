@@ -8,7 +8,7 @@ const CustomButton = ({ onClick, children }) => {
   const buttonStyle = {
     background: isDarkMode 
       ? 'grey' 
-      : 'linear-gradient(90deg, rgba(141,158,156,1) 9%, rgba(113,214,233,1) 91%)',
+      : '#28a5fb',
     color: 'white', // Text color remains white for both themes
     border: 'none',
     textAlign: 'center',

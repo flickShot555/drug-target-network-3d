@@ -32,10 +32,12 @@ const RangeSlider = () => {
         },
       }}
     >
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: "10px" }}>
         <h5 style={{ color: isDarkMode ? 'white' : 'black' }}>
-          Drug response (pIC50) MIN-{sliderMin} MAX-{sliderMax}
+          Drug response (pIC50)
+         
         </h5>
+        <h5 style={{padding :"2px" , margin :"1px"}}>  MIN-{sliderMin} MAX-{sliderMax}</h5>
         <Slider
           range
           min={4.0}

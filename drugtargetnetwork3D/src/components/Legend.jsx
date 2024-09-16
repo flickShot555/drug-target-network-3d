@@ -43,7 +43,7 @@ const Legend = ({ legendData }) => {
               width: "20px",
               height: "2px",
               backgroundColor: color,
-              marginRight: "8px",
+              marginRight: "5px",
             }}
           />
         );
@@ -56,7 +56,7 @@ const Legend = ({ legendData }) => {
               borderLeft: "10px solid transparent",
               borderRight: "10px solid transparent",
               borderBottom: `20px solid ${color}`,
-              marginRight: "8px",
+              marginRight: "5px",
             }}
           />
         );
@@ -67,7 +67,7 @@ const Legend = ({ legendData }) => {
               width: "20px",
               height: "10px",
               backgroundColor: color,
-              marginRight: "8px",
+              marginRight: "5px",
               cursor: "pointer",
             }}
             onClick={(event) => handleColorClick(category, value, event)}
@@ -81,7 +81,7 @@ const Legend = ({ legendData }) => {
               height: "15px",
               borderRadius: "50%",
               backgroundColor: color,
-              marginRight: "8px",
+              marginRight: "5px",
             }}
           />
         );
@@ -92,7 +92,7 @@ const Legend = ({ legendData }) => {
               width: "20px",
               height: "5px",
               backgroundColor: color,
-              marginRight: "8px",
+              marginRight: "5px",
             }}
             onClick={(event) => handleColorClick(category, value, event)}
           />
@@ -104,7 +104,7 @@ const Legend = ({ legendData }) => {
               display: "flex",
               alignItems: "center",
               gap: "2px",
-              marginRight: "8px",
+              marginRight: "5px",
             }}
           >
             <div
@@ -145,7 +145,7 @@ const Legend = ({ legendData }) => {
           className="legend1"
           id="legend1"
           style={{
-            marginLeft: "12px",
+            marginLeft: "2px",
             color: isDarkMode ? 'white' : 'black',
             padding: '10px',
             borderRadius: '4px',
@@ -154,7 +154,7 @@ const Legend = ({ legendData }) => {
           {Object.keys(legendData).map((category) => (
             <div key={category}>
               <h5 style={{ color: isDarkMode ? 'white' : 'black' }}>{category}</h5>
-              <ul>
+              <ul style={{   padding: '5px'}}>
                 {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
                   <li
                     key={value}
@@ -170,7 +170,7 @@ const Legend = ({ legendData }) => {
                       onChange={() => handleCheckboxChange(category, value)}
                       style={{ color: isDarkMode ? 'white' : 'black' }}
                     >
-                      {value}
+                      {category === "phase" ? `phase ${value}` : value}
                     </Checkbox>
                   </li>
                 ))}

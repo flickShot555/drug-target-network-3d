@@ -14,8 +14,9 @@ const SliderComponent = () => {
 
   return (
     <div style={{ marginTop: "5px", width: "200px" }}>
-        <h5>{sliderCurrent} Connected compound </h5>
+        <h5 style={{ padding: "2px", margin: "1px"}} > {sliderCurrent} Connected compound </h5>
     <Slider
+    style={{ padding: "2px", margin: "1px"}}
       value={sliderCurrent}
       max={sliderValue}
       onChange={handleSliderChange}

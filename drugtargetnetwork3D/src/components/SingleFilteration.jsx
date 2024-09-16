@@ -100,7 +100,7 @@ const SingleFilteration = () => {
         }}
       >
         <div>
-            <a onClick={toggleVisibility} style={{ color: isDarkMode ? '#fff' : '#000' }}>
+            <a onClick={toggleVisibility} style={{ color: isDarkMode ? '#fff' : 'blue' }}>
                 Filter Compounds/Celline
             </a>
             {visible && (

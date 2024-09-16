@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Card } from "antd";
 import { fetchGraphData } from "../app/features/data/dataThunks";
@@ -9,7 +9,6 @@ import {
   selectDataStatus,
   selectDataError,
   selectlegendfilteration,
-  
 } from "../app/features/data/dataSelectors";
 import ForceNetworkGraph from "./ForceNetworkGraph";
 import Legend from "./Legend";
@@ -35,10 +34,16 @@ const DataProcessor = () => {
     if (legendData_filters.maxPhase && legendData_filters.maxPhase[category]) {
       return legendData_filters.maxPhase[category].color;
     }
-    if (legendData_filters.diseaseClass && legendData_filters.diseaseClass[category]) {
+    if (
+      legendData_filters.diseaseClass &&
+      legendData_filters.diseaseClass[category]
+    ) {
       return legendData_filters.diseaseClass[category].color;
     }
-    if (legendData_filters.oncotreeLineage && legendData_filters.oncotreeLineage[category]) {
+    if (
+      legendData_filters.oncotreeLineage &&
+      legendData_filters.oncotreeLineage[category]
+    ) {
       return legendData_filters.oncotreeLineage[category].color;
     }
     if (legendData_filters.metric && legendData_filters.metric[category]) {
@@ -115,15 +120,14 @@ const DataProcessor = () => {
   const scrollbarStyle = {
     height: "600px",
     overflowY: "auto",
-    scrollbarWidth: isDarkMode ? 'thin' : 'auto', // For Firefox
-    scrollbarColor: isDarkMode ? '#555 #333' : '#ddd #f1f1f1', // For Firefox
+    scrollbarWidth: isDarkMode ? "thin" : "auto", // For Firefox
+    scrollbarColor: isDarkMode ? "#555 #333" : "#ddd #f1f1f1", // For Firefox
   };
   return (
     <Row
       justify="center"
       gutter={[16, 16]}
-      style={{ padding: "20px", marginTop: "40px" }}
-    >
+      style={{ padding: "10px", marginTop: "1px" }}>
       <Col xs={24} sm={12} md={5}>
         <Card title="Legend" bordered>
           <div style={scrollbarStyle}>
@@ -145,17 +149,16 @@ const DataProcessor = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+
                 alignItems: "center",
-              }}
-            >
+              }}>
               <span>3D Force Network Graph</span>
               <div>
                 <ExportChartModal />
               </div>
             </div>
           }
-          bordered
-        >
+          bordered>
           {clonedGraphData ? (
             <ForceNetworkGraph
               graphData={clonedGraphData}

@@ -1,11 +1,11 @@
 // import React from "react";
-import { Row, Col ,Switch } from "antd";
+import { Row, Col} from "antd";
 import SelectComponent from "./SelectComponent"; // Ensure correct path
 import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from './../app/features/data/themeSlice';
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import DarkModeEnabler from "./DarkModeEnabler";
 
 // Sample Data for Dropdowns
 
@@ -305,10 +305,7 @@ const Navbar = () => {
   const handleChange = (value) => {
     console.log("Selected:", value);
   };
-  
-  const handleThemeToggle = () => {
-    dispatch(toggleTheme()); // Dispatch the action to toggle the theme
-  };
+ 
 
   return (
    
@@ -379,12 +376,7 @@ const Navbar = () => {
             />
           </Col>
           <Col>
-            <Switch
-              checkedChildren="Dark"
-              unCheckedChildren="Light"
-              checked={isDarkMode} // Bind the switch to the current theme mode
-              onChange={handleThemeToggle} // Call the toggle handler when switched
-            />
+          <DarkModeEnabler/>
             <CustomButton>Soon</CustomButton>
             <CustomButton>Apply Filter</CustomButton>
           </Col>

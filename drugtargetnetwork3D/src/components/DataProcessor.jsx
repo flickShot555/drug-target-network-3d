@@ -17,6 +17,7 @@ import DoubleSlider from "./doubleSIilder";
 import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
+import DarkModeEnabler from "./DarkModeEnabler";
 
 const DataProcessor = () => {
   const dispatch = useDispatch();
@@ -130,6 +131,7 @@ const DataProcessor = () => {
       style={{ padding: "10px", marginTop: "1px" }}>
       <Col xs={24} sm={12} md={5}>
         <Card title="Legend" bordered>
+        <DarkModeEnabler/>
           <div style={scrollbarStyle}>
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
             <SingleFilteration />
@@ -153,7 +155,8 @@ const DataProcessor = () => {
                 alignItems: "center",
               }}>
               <span>3D Force Network Graph</span>
-              <div>
+              <div >
+               
                 <ExportChartModal />
               </div>
             </div>

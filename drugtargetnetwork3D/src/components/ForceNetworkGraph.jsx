@@ -60,31 +60,33 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       </Button>
 
       <ForceGraph3D
-        ref={fgRef}
-        graphData={graphData}
-        nodeThreeObject={getNodeShape} // Custom node shape
-        nodeLabel="id"
-        linkDirectionalParticles={2}
-        linkWidth={1.5}
-        linkDirectionalParticleSpeed={() => 0.01}
-        linkDirectionalParticleWidth={1} // Set the particle width
-        linkDirectionalParticleColor={(link) => {
-          if (link.matric === "pIC50") {
-            return isDarkMode ? "lightpurple" : "purple"; // Adjust color based on theme
-          } else if (link.matric === "pEC50") {
-            return isDarkMode ? "lightgrey" : "grey"; // Adjust color based on theme
-          } else if (link.matric === "pGI50") {
-            return isDarkMode ? "lightgreen" : "green"; // Adjust color based on theme
-          }
-        }}
-        linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")} // Use the color property from the link data
-        height={600}
-        backgroundColor={isDarkMode ? "#000000" : "#ffffff"} // Background color based on theme
+  ref={fgRef}
+  graphData={graphData}
+  nodeThreeObject={getNodeShape}
+  nodeLabel={(node) => {
+    // This returns a custom HTML structure
+    return `<div style="background-color: black; color: white; padding: 5px; border-radius: 4px;">${node.id}</div>`;
+  }}
+  linkDirectionalParticles={2}
+  linkWidth={1.5}
+  linkDirectionalParticleSpeed={() => 0.01}
+  linkDirectionalParticleWidth={1}
+  linkDirectionalParticleColor={(link) => {
+    if (link.matric === "pIC50") {
+      return isDarkMode ? "lightpurple" : "purple";
+    } else if (link.matric === "pEC50") {
+      return isDarkMode ? "lightgrey" : "grey";
+    } else if (link.matric === "pGI50") {
+      return isDarkMode ? "lightgreen" : "green";
+    }
+  }}
+  linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")}
+  height={600}
+  backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
+  onNodeDrag={handleNodeDrag}
+  onNodeDragEnd={handleNodeDragEnd}
+/>
 
-        // Add event handlers for node dragging
-        onNodeDrag={handleNodeDrag}
-        onNodeDragEnd={handleNodeDragEnd}
-      />
     </div>
   );
 };

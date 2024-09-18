@@ -18,6 +18,7 @@ import SliderComponent from "./SliderSource";
 import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
 import DarkModeEnabler from "./DarkModeEnabler";
+import useColorShape from "./ColorShape";
 
 const DataProcessor = () => {
   const dispatch = useDispatch();
@@ -26,65 +27,9 @@ const DataProcessor = () => {
   const dataStatus = useSelector(selectDataStatus);
   const dataError = useSelector(selectDataError);
   const legendData_filters = useSelector(selectlegendfilteration);
-
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
-  const getNodeColor = (node) => {
-    const category = node.class;
-
-    if (legendData_filters.maxPhase && legendData_filters.maxPhase[category]) {
-      return legendData_filters.maxPhase[category].color;
-    }
-    if (
-      legendData_filters.diseaseClass &&
-      legendData_filters.diseaseClass[category]
-    ) {
-      return legendData_filters.diseaseClass[category].color;
-    }
-    if (
-      legendData_filters.oncotreeLineage &&
-      legendData_filters.oncotreeLineage[category]
-    ) {
-      return legendData_filters.oncotreeLineage[category].color;
-    }
-    if (legendData_filters.metric && legendData_filters.metric[category]) {
-      return legendData_filters.metric[category].color;
-    }
-    if (legendData_filters.dataset && legendData_filters.dataset[category]) {
-      return legendData_filters.dataset[category].color;
-    }
-    if (legendData_filters.phase && legendData_filters.phase[category]) {
-      return legendData_filters.phase[category].color;
-    }
-
-    return isDarkMode ? "#ffffff" : "#000000"; // Default color based on theme
-  };
-
-  const getNodeShape = (node) => {
-    const color = getNodeColor(node);
-
-    let geometry;
-    if (node.type === "parent_source") {
-      // eslint-disable-next-line no-undef
-      geometry = new THREE.BoxGeometry(10, 10, 20);
-    } else if (node.type === "protein_child") {
-      geometry = new THREE.SphereGeometry(5);
-    } else if (node.type === "disease_child") {
-      geometry = new THREE.ConeGeometry(7, 12, 3);
-    } else {
-      geometry = new THREE.SphereGeometry(5); // Default shape
-    }
-
-    const material = new THREE.MeshBasicMaterial({ color });
-    return new THREE.Mesh(geometry, material);
-  };
-
-  const generateDataSet = (link) => {
-    const category = link.dataset;
-    if (legendData_filters.dataset && legendData_filters.dataset[category]) {
-      return legendData_filters.dataset[category].color;
-    }
-  };
+  const { getNodeColor, getNodeShape, generateDataSet } = useColorShape();
 
   useEffect(() => {
     if (dataStatus === "idle") {
@@ -105,6 +50,7 @@ const DataProcessor = () => {
     } else {
       setClonedGraphData(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataStatus, graphData, dispatch]);
 
   if (dataStatus === "loading") {
@@ -131,7 +77,7 @@ const DataProcessor = () => {
       style={{ padding: "10px", marginTop: "1px" }}>
       <Col xs={24} sm={12} md={5}>
         <Card title="Legend" bordered>
-        <DarkModeEnabler/>
+          <DarkModeEnabler />
           <div style={scrollbarStyle}>
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
             <SingleFilteration />
@@ -155,8 +101,7 @@ const DataProcessor = () => {
                 alignItems: "center",
               }}>
               <span>3D Force Network Graph</span>
-              <div >
-               
+              <div>
                 <ExportChartModal />
               </div>
             </div>

@@ -183,8 +183,8 @@ const Legend = ({ legendData }) => {
           <div
             style={{
               position: "absolute",
-              top: colorPickerPosition.y - 140,
-              left: colorPickerPosition.x - 20,
+              top: colorPickerPosition.y ,
+              left: colorPickerPosition.x ,
               zIndex: 1000,
               background: isDarkMode ? '#333' : '#fff',
               border: `1px solid ${isDarkMode ? '#555' : '#d9d9d9'}`,

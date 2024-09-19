@@ -24,7 +24,7 @@ export const fetchGraphData = createAsyncThunk(
       jsonFile = '/sampledata5.json';
     }
     else if (dataParam === '6') {
-      jsonFile = '/sampledata7.json';
+      jsonFile = '/sampledata6.json';
     }
 
 

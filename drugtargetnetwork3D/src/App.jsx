@@ -4,10 +4,7 @@ import DataProcessor from "./components/DataProcessor";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css"; // Import the CSS file
-import DataProcessor2 from "./components/DataProcessor2";
-import DataProcessor3 from "./components/DataProcessor3";
-import DataProcessor4 from "./components/DataProcessor4";
-import DataProcessor5 from "./components/DataProcessor5";
+
 
 const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get dark mode state from Redux
@@ -33,10 +30,7 @@ const App = () => {
           {/* Define Routes */}
           <Routes>
             <Route path="/" element={<DataProcessor />} /> {/* Default route */}
-            <Route path="/data2" element={<DataProcessor2 />} /> {/* /data route */}
-            <Route path="/data3" element={<DataProcessor3 />} /> {/* /data route */}
-            <Route path="/data4" element={<DataProcessor4 />} /> {/* /data route */}
-            <Route path="/data5" element={<DataProcessor5 />} /> {/* /data route */}
+ 
            <Route path="*" element={<p>ENter the current path</p>} /> {/* Fallback for unknown routes */}
           </Routes>
 

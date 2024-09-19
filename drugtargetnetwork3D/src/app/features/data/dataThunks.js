@@ -17,7 +17,16 @@ export const fetchGraphData = createAsyncThunk(
       jsonFile = '/sampledata2.json';
     } else if (dataParam === '3') {
       jsonFile = '/sampledata_c.json';
+    } else if (dataParam === '4') {
+      jsonFile = '/sampledata4.json';
     }
+    else if (dataParam === '5') {
+      jsonFile = '/sampledata5.json';
+    }
+    else if (dataParam === '6') {
+      jsonFile = '/sampledata7.json';
+    }
+
 
     console.log(window.location.href ,"dataParam" ,dataParam) ;
     

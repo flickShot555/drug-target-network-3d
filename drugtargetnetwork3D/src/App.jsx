@@ -23,7 +23,7 @@ const App = () => {
       }}>
       <Router>
         <Layout>
-          {/* <Navbar /> */}
+          <Navbar />
 
           {/* Define Routes */}
           <Routes>

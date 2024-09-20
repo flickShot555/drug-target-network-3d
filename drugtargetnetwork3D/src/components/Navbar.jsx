@@ -6,6 +6,7 @@ import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import DarkModeEnabler from "./DarkModeEnabler";
+import SinglePIC50 from "./singlePIC50";
 
 // Sample Data for Dropdowns
 
@@ -344,12 +345,8 @@ const Navbar = () => {
             />
           </Col>
           <Col>
-            <SelectComponent
-              options={PIC50}
-              placeholder="PIC50"
-              handleChange={handleChange}
-              dropwidth="90px"
-            />
+          <SinglePIC50/>
+    
           </Col>
           <Col>
             <SelectComponent
@@ -377,7 +374,7 @@ const Navbar = () => {
           </Col>
           <Col>
           <DarkModeEnabler/>
-            <CustomButton>Soon</CustomButton>
+            {/* <CustomButton>Soon</CustomButton> */}
             <CustomButton>Apply Filter</CustomButton>
           </Col>
         </Row>

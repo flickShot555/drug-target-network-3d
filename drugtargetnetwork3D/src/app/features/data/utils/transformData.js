@@ -74,7 +74,8 @@ export const transformData = (data) => {
         target: CELL_LINE_NAME,
         value: VALUE,
         dataset:DATASET ,
-        matric :METRIC
+        matric :METRIC ,
+      
       });
       links.push({
         source: COMPOUND_NAME,
@@ -82,7 +83,7 @@ export const transformData = (data) => {
         value: VALUE,
         dataset:DATASET ,
         matric :METRIC ,
-         
+        phase: Phase,
       });
     });
   

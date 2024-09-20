@@ -16,6 +16,52 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       fg.d3Force("link").distance(() => 30);
       fg.d3Force("charge").strength(-120);
     }
+    console.log("graphData" , graphData)
+    let match = graphData.links.filter(link => 
+      link.target.id === "MSTO-211H" && link.source.id === "Pyrimethamine"
+    );
+    console.log(match , "here is the match")
+
+
+     // const findSameSourceTargetDifferentMatricOrDataset = (links) => {
+    //   const map = new Map();
+    //   const result = [];
+    
+    //   // Step 1: Group links by their source and target combination
+    //   links.forEach((link) => {
+    //     const key = `${link.source.id}-${link.target.id}`;
+        
+    //     if (!map.has(key)) {
+    //       map.set(key, []);
+    //     }
+    //     map.get(key).push(link);
+    //   });
+    
+    //   // Step 2: Iterate over each group and find links with different matric or dataset
+    //   map.forEach((group) => {
+    //     if (group.length > 1) {
+    //       for (let i = 0; i < group.length; i++) {
+    //         for (let j = i + 1; j < group.length; j++) {
+    //           const link1 = group[i];
+    //           const link2 = group[j];
+              
+    //           // Check if matric or dataset are different
+    //           if (link1.matric !== link2.matric || link1.dataset !== link2.dataset) {
+    //             result.push({ link1, link2 });
+    //           }
+    //         }
+    //       }
+    //     }
+    //   });
+    
+    //   return result;
+    // };
+    
+    // const matchingLinks = findSameSourceTargetDifferentMatricOrDataset(graphData.links);
+    // console.log(matchingLinks ,"matchingLinks" );
+
+
+
   }, [graphData]);
 
   // Add node drag event handler

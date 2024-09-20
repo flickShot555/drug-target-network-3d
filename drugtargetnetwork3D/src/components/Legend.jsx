@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, ConfigProvider } from "antd";
+import { Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLegendItem, updateLegendColor } from "../app/features/data/dataSlice";
 import ColorPicker from "./ColorPickers"; // Import the ColorPicker component

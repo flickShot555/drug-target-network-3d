@@ -71,7 +71,7 @@ const dataSlice = createSlice({
 
       state.legendFilteration = generateLegendFilteration(state.OriginalData);
       state.FirstlegendFilteration = generateLegendFilteration(
-        state.OriginalData
+        state.OriginalData  
       );
       state.phase = updateCategoryState(state.legendFilteration, "phase");
       state.diseaseClass = updateCategoryState(

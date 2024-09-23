@@ -10,10 +10,10 @@ const GetTheData = () => {
   const dispatch = useDispatch(); // Use Redux dispatch
   // Assuming your data values are stored in Redux state
   const selectedFilters = useSelector((state) => ({
-    Chembl_id1: state.data.selectedTissues,         // Example: Change based on your actual Redux state structure
+    oncotree_change1   : state.data.selectedTissues,         // Example: Change based on your actual Redux state structure
     MaxPhase1: state.data.selectedMaxClinical,
     pic50: state.data.selectedpic50,
-    oncotree_change1: state.data.selectedCellLine,
+    Chembl_id1: state.data.selectedCellLine,
     DataPlatform: state.data.selectedDataPlatform,
     disease_class1: state.data.selectedDiseaseClass,
     compound_class1: state.data.selectedCompoundClass,

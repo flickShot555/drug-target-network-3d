@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import DarkModeEnabler from "./DarkModeEnabler";
 import SinglePIC50 from "./singlePIC50";
+import { updateSelection } from "./../app/features/data/dataSlice";
+import GetTheData from "./GetTheData";
 
 // Sample Data for Dropdowns
 
@@ -58,13 +60,6 @@ const GDSC1 = [
   { value: "NCI-60", label: "NCI-60" },
   { value: "gCSI", label: "gCSI" },
   { value: "FIMM", label: "FIMM" },
-];
-const PIC50 = [
-  { value: "4", label: "4-9" },
-  { value: "5", label: "5-9" },
-  { value: "6", label: "6-9" },
-  { value: "7", label: "7-9" },
-  { value: "8", label: "8-9" },
 ];
 
 const Compound_class = [
@@ -303,8 +298,8 @@ const Navbar = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get the current theme
 
   const dispatch = useDispatch();
-  const handleChange = (value) => {
-    console.log("Selected:", value);
+  const handleChange = (name , value   ) => {
+  dispatch(updateSelection({ name, value }));
   };
  
 
@@ -321,61 +316,60 @@ const Navbar = () => {
           </Col>
 
           <Col>
-            <SelectComponent
-              options={Tissues}
-              placeholder="Tissues"
-              handleChange={handleChange}
-              dropwidth="100px"
-            />
-          </Col>
-          <Col>
-            <SelectComponent
-              options={Max_clinical}
-              placeholder="Max clinical phase"
-              handleChange={handleChange}
-              dropwidth="150px"
-            />
-          </Col>
-          <Col>
-            <SelectComponent
-              options={GDSC1}
-              placeholder="GDSC1"
-              handleChange={handleChange}
-              dropwidth="100px"
-            />
-          </Col>
-          <Col>
-          <SinglePIC50/>
-    
-          </Col>
-          <Col>
-            <SelectComponent
-              options={Cell_line}
-              placeholder="Cell line lineage"
-              handleChange={handleChange}
-              dropwidth="150px"
-            />
-          </Col>
-          <Col>
-            <SelectComponent
-              options={Drug_class_Categories}
-              placeholder="Disease class"
-              handleChange={handleChange}
-              dropwidth="120px"
-            />
-          </Col>
-          <Col>
-            <SelectComponent
-              options={Compound_class}
-              placeholder="Compound class"
-              handleChange={handleChange}
-              dropwidth="150px"
-            />
-          </Col>
+        <SelectComponent
+          options={Tissues}
+          placeholder="Tissues"
+          handleChange={(value) => handleChange('selectedTissues', value)}
+          dropwidth="100px"
+        />
+      </Col>
+      <Col>
+        <SelectComponent
+          options={Max_clinical}
+          placeholder="Max clinical phase"
+          handleChange={(value) => handleChange('selectedMaxClinical', value)}
+          dropwidth="150px"
+        />
+      </Col>
+      <Col>
+        <SelectComponent
+          options={GDSC1}
+          placeholder="GDSC1"
+          handleChange={(value) => handleChange('selectedDataPlatform', value)}
+          dropwidth="100px"
+        />
+      </Col>
+      <Col>
+        <SinglePIC50 />
+      </Col>
+      <Col>
+        <SelectComponent
+          options={Cell_line}
+          placeholder="Cell line lineage"
+          handleChange={(value) => handleChange('selectedCellLine', value)}
+          dropwidth="150px"
+        />
+      </Col>
+      <Col>
+        <SelectComponent
+          options={Drug_class_Categories}
+          placeholder="Disease class"
+          handleChange={(value) => handleChange('selectedDiseaseClass', value)}
+          dropwidth="120px"
+        />
+      </Col>
+      <Col>
+        <SelectComponent
+          options={Compound_class}
+          placeholder="Compound class"
+          handleChange={(value) => handleChange('selectedCompoundClass', value)}
+          dropwidth="150px"
+        />
+      </Col>
           <Col>
           <DarkModeEnabler/>
             {/* <CustomButton>Soon</CustomButton> */}
-            <CustomButton>Apply Filter</CustomButton>
+           <GetTheData/>
           </Col>
         </Row>
       </header>

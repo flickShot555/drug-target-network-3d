@@ -26,6 +26,13 @@ const initialState = {
   CompoundNames: [],
   CellineNames: [],
   version: null,
+  selectedTissues: [],
+  selectedMaxClinical: [],
+  selectedDataPlatform: [],
+  selectedCellLine: [],
+  selectedDiseaseClass: [],
+  selectedCompoundClass: [],
+  selectedpic50: [],
 };
 
 function updateCategoryState(legendFilteration, category) {
@@ -38,14 +45,71 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    setInitialData: (state, action) => {
+      state.OriginalData = action.payload;
+      state.initailData = action.payload;
+      const uniqueCompoundNames = Array.from(
+        new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
+      );
+      state.CompoundNames = uniqueCompoundNames;
+      state.CellineNames = Array.from(
+        new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
+      );
+      // Save unique values and their count to state
+      state.sliderValue = uniqueCompoundNames.length;
+      state.currentSlider = uniqueCompoundNames.length;
+      // state.sliderData = uniqueCompoundNames;
+
+      state.sliderData = uniqueCompoundNames.slice(0, 6);
+
+      state.OriginalData = state.OriginalData.filter((node) => {
+        if (state.sliderData.includes(node.COMPOUND_NAME)) {
+          return node;
+        }
+      });
+      console.log("state.sliderData", state.sliderData, state.sliderValue);
+
+      state.legendFilteration = generateLegendFilteration(state.OriginalData);
+      state.FirstlegendFilteration = generateLegendFilteration(
+        state.OriginalData
+      );
+      state.phase = updateCategoryState(state.legendFilteration, "phase");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
+      state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
+      state.metric = updateCategoryState(state.legendFilteration, "metric");
+      state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      console.log("Updated maxPhase array:", state.maxPhase);
+      // Transform the full data initially
+      state.graphData = transformData(state.OriginalData);
+    },
+
     updateVersion: (state, action) => {
       state.version = action.payload;
     },
 
-
     toggleTheme: (state) => {
       state.isDarkMode = !state.isDarkMode;
     },
+    updateSelection: (state, action) => {
+      const { name, value } = action.payload;
+      console.log(action.payload, "action.payload");
+
+      // Check if the property exists and is an array
+      if (Array.isArray(state[name])) {
+        state[name] = value;
+      } else {
+        // If it's not an array, just set the value
+        state[name] = value;
+      }
+    },
+
     toggleLegendItem: (state, action) => {
       const { category, value } = action.payload;
 
@@ -61,7 +125,10 @@ const dataSlice = createSlice({
       state.phase = updateCategoryState(state.legendFilteration, "phase");
       console.log("Updated phase array:", state.phase);
 
-      state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
 
       console.log("Updated diseaseClass array:", state.diseaseClass);
 
@@ -69,7 +136,10 @@ const dataSlice = createSlice({
 
       console.log("Updated maxPhase array:", state.maxPhase);
 
-      state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
 
       console.log("Updated oncotreeLineage array:", state.oncotreeLineage);
 
@@ -104,19 +174,22 @@ const dataSlice = createSlice({
         });
         state.graphData = transformData(filteredNodes);
       }
-
     },
     updateLegendColor: (state, action) => {
       const { category, value, color } = action.payload;
-      if (state.legendFilteration[ category] && state.legendFilteration[ category][value]) {
-        state.legendFilteration[ category][value].color = color;
-        state.FirstlegendFilteration[ category][value].color = color;
-    
+      if (
+        state.legendFilteration[category] &&
+        state.legendFilteration[category][value]
+      ) {
+        state.legendFilteration[category][value].color = color;
+        state.FirstlegendFilteration[category][value].color = color;
       }
-      if (state.FirstlegendFilteration[ category] && state.FirstlegendFilteration[ category][value]) {
-        state.FirstlegendFilteration[ category][value].color = color;
+      if (
+        state.FirstlegendFilteration[category] &&
+        state.FirstlegendFilteration[category][value]
+      ) {
+        state.FirstlegendFilteration[category][value].color = color;
       }
-      
     },
 
     updateSliderValue: (state, action) => {
@@ -126,7 +199,6 @@ const dataSlice = createSlice({
         new Set(state.initailData.map((node) => node.COMPOUND_NAME))
       );
 
-
       //Save unique values and their count to state
       state.sliderData = uniqueCompoundNames.slice(0, state.currentSlider);
       state.OriginalData = state.initailData.filter((node) => {
@@ -134,53 +206,60 @@ const dataSlice = createSlice({
           return node;
         }
       });
-      // filter the double silder data there 
+      // filter the double silder data there
       state.OriginalData = state.OriginalData.filter((node) => {
         if (node.VALUE > state.sliderMin && node.VALUE < state.silderMax) {
           return node;
         }
       });
 
-      // FILTERATION OF THE SINGLE FILERATON 
+      // FILTERATION OF THE SINGLE FILERATON
       state.CompoundNames = Array.from(
         new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
       );
       state.CellineNames = Array.from(
         new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
       );
-    //  LEGEND DATA FILERATION TEHRE 
-      state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
+      //  LEGEND DATA FILERATION TEHRE
+      state.legendFilteration = UpdateLegendFilteration(
+        state.OriginalData,
+        state.FirstlegendFilteration
+      );
       state.phase = updateCategoryState(state.legendFilteration, "phase");
-      state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
       state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
-      state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
       state.metric = updateCategoryState(state.legendFilteration, "metric");
       state.dataset = updateCategoryState(state.legendFilteration, "dataset");
-         // Assuming legendFilteration contains information to filter by class
-         const filteredNodes = state.OriginalData.filter((node) => {
-          // Assuming legendFilteration contains information to filter by class
-          if (
-            state.maxPhase.includes(node.MAX_PHASE) &&
-            state.dataset.includes(node.DATASET) &&
-            state.metric.includes(node.METRIC) &&
-            state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
-            state.phase.includes(node.Phase) &&
-            state.diseaseClass.includes(node.Disease_class)
-          ) {
-            return node;
-          }
-        });
+      // Assuming legendFilteration contains information to filter by class
+      const filteredNodes = state.OriginalData.filter((node) => {
+        // Assuming legendFilteration contains information to filter by class
+        if (
+          state.maxPhase.includes(node.MAX_PHASE) &&
+          state.dataset.includes(node.DATASET) &&
+          state.metric.includes(node.METRIC) &&
+          state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+          state.phase.includes(node.Phase) &&
+          state.diseaseClass.includes(node.Disease_class)
+        ) {
+          return node;
+        }
+      });
       state.graphData = transformData(filteredNodes);
     },
 
     updateDoubleSliderValue: (state, action) => {
-
       const [newMin, newMax] = action.payload;
 
       // Update the min and max values if they have changed
       if (newMin !== state.sliderMin) {
         state.sliderMin = newMin;
-
       }
 
       if (newMax !== state.silderMax) {
@@ -192,7 +271,7 @@ const dataSlice = createSlice({
         }
       });
 
-      // FITLERATION OF THE SINGLE SLIDER THERE 
+      // FITLERATION OF THE SINGLE SLIDER THERE
       const uniqueCompoundNames = Array.from(
         new Set(state.initailData.map((node) => node.COMPOUND_NAME))
       );
@@ -202,7 +281,7 @@ const dataSlice = createSlice({
           return node;
         }
       });
-      // FILTERATION OF THE SINGLE node FILERATON 
+      // FILTERATION OF THE SINGLE node FILERATON
       state.CompoundNames = Array.from(
         new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
       );
@@ -210,29 +289,38 @@ const dataSlice = createSlice({
         new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
       );
 
-   //  LEGEND DATA FILERATION TEHRE 
-   state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
-   state.phase = updateCategoryState(state.legendFilteration, "phase");
-   state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
-   state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
-   state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
-   state.metric = updateCategoryState(state.legendFilteration, "metric");
-   state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      //  LEGEND DATA FILERATION TEHRE
+      state.legendFilteration = UpdateLegendFilteration(
+        state.OriginalData,
+        state.FirstlegendFilteration
+      );
+      state.phase = updateCategoryState(state.legendFilteration, "phase");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
+      state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
+      state.metric = updateCategoryState(state.legendFilteration, "metric");
+      state.dataset = updateCategoryState(state.legendFilteration, "dataset");
       // Assuming legendFilteration contains information to filter by class
       const filteredNodes = state.OriginalData.filter((node) => {
-       // Assuming legendFilteration contains information to filter by class
-       if (
-         state.maxPhase.includes(node.MAX_PHASE) &&
-         state.dataset.includes(node.DATASET) &&
-         state.metric.includes(node.METRIC) &&
-         state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
-         state.phase.includes(node.Phase) &&
-         state.diseaseClass.includes(node.Disease_class)
-       ) {
-         return node;
-       }
-     });
-   state.graphData = transformData(filteredNodes);
+        // Assuming legendFilteration contains information to filter by class
+        if (
+          state.maxPhase.includes(node.MAX_PHASE) &&
+          state.dataset.includes(node.DATASET) &&
+          state.metric.includes(node.METRIC) &&
+          state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+          state.phase.includes(node.Phase) &&
+          state.diseaseClass.includes(node.Disease_class)
+        ) {
+          return node;
+        }
+      });
+      state.graphData = transformData(filteredNodes);
     },
     updateSingleFilteration: (state, action) => {
       const [compounds, celline] = action.payload;
@@ -253,29 +341,38 @@ const dataSlice = createSlice({
           return node;
         }
       });
-   //  LEGEND DATA FILERATION TEHRE 
-   state.legendFilteration = UpdateLegendFilteration(state.OriginalData, state.FirstlegendFilteration)
-   state.phase = updateCategoryState(state.legendFilteration, "phase");
-   state.diseaseClass = updateCategoryState(state.legendFilteration, "diseaseClass");
-   state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
-   state.oncotreeLineage = updateCategoryState(state.legendFilteration, "oncotreeLineage");
-   state.metric = updateCategoryState(state.legendFilteration, "metric");
-   state.dataset = updateCategoryState(state.legendFilteration, "dataset");
+      //  LEGEND DATA FILERATION TEHRE
+      state.legendFilteration = UpdateLegendFilteration(
+        state.OriginalData,
+        state.FirstlegendFilteration
+      );
+      state.phase = updateCategoryState(state.legendFilteration, "phase");
+      state.diseaseClass = updateCategoryState(
+        state.legendFilteration,
+        "diseaseClass"
+      );
+      state.maxPhase = updateCategoryState(state.legendFilteration, "maxPhase");
+      state.oncotreeLineage = updateCategoryState(
+        state.legendFilteration,
+        "oncotreeLineage"
+      );
+      state.metric = updateCategoryState(state.legendFilteration, "metric");
+      state.dataset = updateCategoryState(state.legendFilteration, "dataset");
       // Assuming legendFilteration contains information to filter by class
       const filteredNodes = state.OriginalData.filter((node) => {
-       // Assuming legendFilteration contains information to filter by class
-       if (
-         state.maxPhase.includes(node.MAX_PHASE) &&
-         state.dataset.includes(node.DATASET) &&
-         state.metric.includes(node.METRIC) &&
-         state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
-         state.phase.includes(node.Phase) &&
-         state.diseaseClass.includes(node.Disease_class)
-       ) {
-         return node;
-       }
-     });
-   state.graphData = transformData(filteredNodes);
+        // Assuming legendFilteration contains information to filter by class
+        if (
+          state.maxPhase.includes(node.MAX_PHASE) &&
+          state.dataset.includes(node.DATASET) &&
+          state.metric.includes(node.METRIC) &&
+          state.oncotreeLineage.includes(node.ONCOTREE_LINEAGE) &&
+          state.phase.includes(node.Phase) &&
+          state.diseaseClass.includes(node.Disease_class)
+        ) {
+          return node;
+        }
+      });
+      state.graphData = transformData(filteredNodes);
     },
   },
   extraReducers: (builder) => {
@@ -290,13 +387,13 @@ const dataSlice = createSlice({
         const uniqueCompoundNames = Array.from(
           new Set(state.OriginalData.map((node) => node.COMPOUND_NAME))
         );
-        state.CompoundNames = uniqueCompoundNames
+        state.CompoundNames = uniqueCompoundNames;
         state.CellineNames = Array.from(
           new Set(state.OriginalData.map((node) => node.CELL_LINE_NAME))
         );
         // Save unique values and their count to state
         state.sliderValue = uniqueCompoundNames.length;
-        state.currentSlider = uniqueCompoundNames.length
+        state.currentSlider = uniqueCompoundNames.length;
         // state.sliderData = uniqueCompoundNames;
 
         state.sliderData = uniqueCompoundNames.slice(0, 6);
@@ -309,9 +406,9 @@ const dataSlice = createSlice({
         console.log("state.sliderData", state.sliderData, state.sliderValue);
 
         state.legendFilteration = generateLegendFilteration(state.OriginalData);
-        state.FirstlegendFilteration = generateLegendFilteration(state.OriginalData);
-
-        console.log(state.legendFilteration, "https://www.youtube.com/watch?v=l3nvibMlFEM")
+        state.FirstlegendFilteration = generateLegendFilteration(
+          state.OriginalData
+        );
 
         state.phase = updateCategoryState(state.legendFilteration, "phase");
         state.diseaseClass = updateCategoryState(
@@ -339,6 +436,16 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateVersion ,toggleLegendItem, filterGraphData, updateSliderValue, updateLegendColor, updateDoubleSliderValue, updateSingleFilteration ,toggleTheme  } =
-  dataSlice.actions;
+export const {
+  updateVersion,
+  toggleLegendItem,
+  filterGraphData,
+  updateSliderValue,
+  updateLegendColor,
+  updateDoubleSliderValue,
+  updateSingleFilteration,
+  toggleTheme,
+  updateSelection,
+  setInitialData,
+} = dataSlice.actions;
 export default dataSlice.reducer;

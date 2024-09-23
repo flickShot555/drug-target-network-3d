@@ -1,5 +1,6 @@
-
 import { Select, Space } from 'antd';
+import { useDispatch } from 'react-redux';
+import { updateSelection } from './../app/features/data/dataSlice';
 
 const PIC50 = [
   { value: '4', label: '4-9' },
@@ -9,22 +10,24 @@ const PIC50 = [
   { value: '8', label: '8-9' },
 ];
 
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
+const SinglePIC50 = () => {
+  const dispatch = useDispatch();
+
+  const handleChange = (value) => {
+    dispatch(updateSelection({ name: 'selectedpic50', value }));
+  };
+
+  return (
+    <Space wrap>
+      <Select
+        style={{ width: 120 }}
+        allowClear
+        options={PIC50}
+        placeholder="PIC50"
+        onChange={handleChange} // Use onChange instead of handleChange
+      />
+    </Space>
+  );
 };
-
-const SinglePIC50 = () => (
-  <Space wrap>
-
-    <Select
-      style={{
-        width: 120,
-      }}
-      allowClear
-      options={PIC50}
-      placeholder="PIC50"
-    />
-  </Space>
-);
 
 export default SinglePIC50;

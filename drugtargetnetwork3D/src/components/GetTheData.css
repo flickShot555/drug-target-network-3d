@@ -1,0 +1,40 @@
+.get-the-data-wrapper {
+    position: relative;
+  }
+  
+  .loading-overlay .ant-spin-spinning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensures the spinner is in front of everything */
+  }
+  
+  .loading-overlay .ant-spin {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dark-mode .ant-spin {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background for dark mode */
+  }
+  
+  .light-mode .ant-spin {
+    background-color: rgba(255, 255, 255, 0.8); /* Lighter background for light mode */
+  }
+  
+  .ant-spin-spinning .ant-spin-dot {
+    color: #fff; /* Set the spinner color for dark mode */
+  }
+  
+  .light-mode .ant-spin-spinning .ant-spin-dot {
+    color: #000; /* Set the spinner color for light mode */
+  }
+  

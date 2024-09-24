@@ -2,3 +2,34 @@ body{
     width: 100%;
     height: 100vph;
 }
+/* Default light mode styles */
+.app-layout {
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+/* Dark mode styles */
+.app-layout.dark-mode {
+  background-color: #000; 
+  color: #fff;
+}
+
+/* Optional: loader overlay styling */
+.loader-overlay  {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.loader-overlay .ant-spin-text {
+    font-size: 24px; /* Larger font size */
+    font-weight: bold;
+    color: red; /* Ensure the text is visible */
+    margin-top: 20px; /* Space between spinner and text */
+  }

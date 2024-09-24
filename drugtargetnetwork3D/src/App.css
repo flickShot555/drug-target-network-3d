@@ -33,3 +33,8 @@ body{
     color: red; /* Ensure the text is visible */
     margin-top: 20px; /* Space between spinner and text */
   }
+.font-size{
+  margin: 0px;
+  padding: 0px;
+  font-size: 12px;
+}

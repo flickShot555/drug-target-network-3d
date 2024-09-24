@@ -19,6 +19,11 @@ import SingleFilteration from "./SingleFilteration";
 import ExportChartModal from "./ExportChartModal";
 import DarkModeEnabler from "./DarkModeEnabler";
 import useColorShape from "./ColorShape";
+import NodeCountUpdater from "./NodeCountUpdater";
+import {
+  selectProteinChildCount,
+  selectParentSourceCount,
+} from "./../app/features/countSlice";
 
 const DataProcessor = () => {
   const dispatch = useDispatch();
@@ -28,8 +33,11 @@ const DataProcessor = () => {
   const dataError = useSelector(selectDataError);
   const legendData_filters = useSelector(selectlegendfilteration);
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-
+  const ProteinChildCount = useSelector(selectProteinChildCount); // Get node counts from Redux
+  const ParentSourceCount = useSelector(selectParentSourceCount); // Get node counts from Redux
+ 
   const { getNodeColor, getNodeShape, generateDataSet } = useColorShape();
+
 
   useEffect(() => {
     if (dataStatus === "idle") {
@@ -64,17 +72,23 @@ const DataProcessor = () => {
   const handleApplyClick = () => {
     dispatch(filterGraphData());
   };
+
   const scrollbarStyle = {
     height: "600px",
     overflowY: "auto",
     scrollbarWidth: isDarkMode ? "thin" : "auto", // For Firefox
     scrollbarColor: isDarkMode ? "#555 #333" : "#ddd #f1f1f1", // For Firefox
   };
+
+  // Check if nodeCounts is defined and has the expected structure
+
+
   return (
     <Row
       justify="center"
       gutter={[16, 16]}
-      style={{ padding: "10px", marginTop: "1px" }}>
+      style={{ padding: "10px", marginTop: "1px" }}
+    >
       <Col xs={24} sm={12} md={5}>
         <Card title="Legend" bordered>
           <DarkModeEnabler />
@@ -97,22 +111,32 @@ const DataProcessor = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-
                 alignItems: "center",
-              }}>
+              }}
+            >
               <span>3D Force Network Graph</span>
+              <p className="font-size">
+                Total compounds visible: {ParentSourceCount}
+              </p>
+              <p className="font-size">
+                Total cell lines visible: {ProteinChildCount}
+              </p>
               <div>
                 <ExportChartModal />
               </div>
             </div>
           }
-          bordered>
+          bordered
+        >
           {clonedGraphData ? (
-            <ForceNetworkGraph
-              graphData={clonedGraphData}
-              getNodeShape={getNodeShape}
-              generateDataSet={generateDataSet}
-            />
+            <>
+              <ForceNetworkGraph
+                graphData={clonedGraphData}
+                getNodeShape={getNodeShape}
+                generateDataSet={generateDataSet}
+              />
+              <NodeCountUpdater graphData={clonedGraphData} />
+            </>
           ) : null}
         </Card>
       </Col>

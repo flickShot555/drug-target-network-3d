@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
 import { Button } from "antd"; // Assuming you're using Ant Design for buttons
-
+import "../components/Stylesfiles/forceGraph.css"
 // eslint-disable-next-line react/prop-types
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   const fgRef = useRef();

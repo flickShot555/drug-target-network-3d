@@ -41,7 +41,6 @@ const useColorShape = () => {
   };
 
   let getNodeShape = (node) => {
-    console.log(node, "node ");
     const color = getNodeColor(node, legendData_filters);
   
     let geometry;

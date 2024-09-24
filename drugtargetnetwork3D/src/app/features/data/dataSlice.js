@@ -33,6 +33,7 @@ const initialState = {
   selectedDiseaseClass: [],
   selectedCompoundClass: [],
   selectedpic50: [],
+
 };
 
 function updateCategoryState(legendFilteration, category) {

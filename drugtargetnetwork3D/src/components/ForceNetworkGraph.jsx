@@ -38,6 +38,21 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
     }
   };
 
+  // Handle Node Dragging
+  const handleNodeDrag = (node) => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z;
+  };
+
+  const handleNodeDragEnd = (node) => {
+    // Node remains fixed at the position where the drag ended
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z;
+  };
+
+  // Handle Node Click (for opening the popup modal)
   const handleNodeClick = (node) => {
     setSelectedNode(node.id);
     // Dummy table data for now, replace with PHP call later
@@ -76,6 +91,8 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         graphData={graphData}
         nodeThreeObject={getNodeShape}
         onNodeClick={handleNodeClick}
+        onNodeDrag={handleNodeDrag}
+        onNodeDragEnd={handleNodeDragEnd}
         nodeLabel={(node) => {
           return `<div style="background-color: black; color: white; padding: 5px; border-radius: 4px;">${node.id}</div>`;
         }}

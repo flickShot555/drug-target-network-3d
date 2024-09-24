@@ -690,7 +690,14 @@ const Navbar = () => {
           />
         </Col>
         <Col>
-          {/* <CustomButton style = {{padding:'2px'}} >    <img width={30}  src="/images/tableimg_white.png" alt="Logo" /></CustomButton> */}
+        <CustomButton 
+  style={{ padding: '5px'  }} 
+  onClick={() => window.open("https://entertainmentbuz.com/drug_target_network/table.php?arr1=[%22Lung%22,%22Breast%22,%22Ovary%22]&arr2=[]&arr3=[%22GDSC1%22]&arr4=[]&singleValue=undefined#", "_blank")}
+>
+  {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
+  Table
+</CustomButton>
+
           <GetTheData
             type="apply"
             after="Applying Filter..."

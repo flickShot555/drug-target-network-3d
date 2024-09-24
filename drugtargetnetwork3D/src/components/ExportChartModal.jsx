@@ -51,12 +51,12 @@ const ExportChartModal = () => {
             boxShadow: '0 4px 8px rgba(255, 255, 255, 0.6)', // Add your desired white shadow here
           }}
         >
-          <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('png')}>
+          {/* <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('png')}>
             Download PNG
           </CustomButton>
           <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={() => captureScreenshot('jpeg')}>
             Download JPEG
-          </CustomButton>
+          </CustomButton> */}
           <CustomButton type="primary" style={{ marginBottom: 10 }} onClick={exportToExcel}>
             Download Excel
           </CustomButton>

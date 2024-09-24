@@ -41,23 +41,62 @@ const useColorShape = () => {
   };
 
   let getNodeShape = (node) => {
+    console.log(node, "node ");
     const color = getNodeColor(node, legendData_filters);
-
+  
     let geometry;
     if (node.type === "parent_source") {
-      // eslint-disable-next-line no-undef
       geometry = new THREE.BoxGeometry(10, 10, 20);
     } else if (node.type === "protein_child") {
-      geometry = new THREE.SphereGeometry(5);
+      geometry = new THREE.SphereGeometry(5); // Sphere for protein_child
     } else if (node.type === "disease_child") {
       geometry = new THREE.ConeGeometry(7, 12, 3);
     } else {
       geometry = new THREE.SphereGeometry(5); // Default shape
     }
-
+  
     const material = new THREE.MeshBasicMaterial({ color });
-    return new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material);
+  
+    // Create the text sprite for the node ID
+    const textSprite = createTextSprite(node.id);
+    // Adjust Y position for the sphere geometry
+    textSprite.position.set(0, -7, -10); // Slightly lower than the bottom of the sphere
+    mesh.add(textSprite); // Add the text sprite as a child of the mesh
+  
+    return mesh;
   };
+  
+  // Helper function to create a text sprite
+  function createTextSprite(message) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const fontSize = 30;
+    
+    // Set canvas size based on text
+    context.font = `${fontSize}px Arial`;
+    const textWidth = context.measureText(message).width;
+    canvas.width = textWidth;
+    canvas.height = fontSize * 1.2; // Height for font size
+  
+    // Draw text on canvas
+    context.font = `${fontSize}px Arial`;
+    context.fillStyle = isDarkMode ? "white" : "black"; // Set the text color
+    context.fillText(message, 0, fontSize); // Draw the text
+  
+    const texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true; // Ensure the texture updates
+  
+    const spriteMaterial = new THREE.SpriteMaterial({ map: texture, depthTest: false });
+    const sprite = new THREE.Sprite(spriteMaterial);
+    
+    // Set the scale of the sprite based on text length
+    sprite.scale.set(textWidth / 10, fontSize / 10, 1); // Scale the sprite for visibility
+  
+    return sprite;
+  }
+  
+  
 
   let generateDataSet = (link) => {
     const category = link.dataset;

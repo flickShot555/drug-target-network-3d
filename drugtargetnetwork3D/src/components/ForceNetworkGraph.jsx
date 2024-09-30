@@ -55,6 +55,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   // Handle Node Click (for opening the popup modal)
   const handleNodeClick = (node) => {
     setSelectedNode(node.id);
+
     // Dummy table data for now, replace with PHP call later
     setTableData([
       { key: "1", field: "CELL_LINE_NAME", value: "NCI-H720" },
@@ -66,6 +67,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       { key: "7", field: "ONCOTREE_CODE", value: "LUCA" },
       { key: "8", field: "ONCOTREE_LINEAGE", value: "Lung" },
     ]);
+
     setIsModalVisible(true); // Open Modal
   };
 

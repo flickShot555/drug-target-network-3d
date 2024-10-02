@@ -40,7 +40,7 @@ const GetTheData = ({ type, before, after, count, setCount }) => {
 
     try {
       // Sending filters and count in the POST request
-      const response = await axios.post('http://localhost/React_php/getData.php', {
+      const response = await axios.post('https://entertainmentbuz.com/drug_target_network/getDataFor3d.php', {
         Chembl_id1: selectedFilters.Chembl_id1,
         MaxPhase1: selectedFilters.MaxPhase1,
         pic50: selectedFilters.pic50,

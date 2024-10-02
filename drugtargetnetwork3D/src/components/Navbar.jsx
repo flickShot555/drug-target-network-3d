@@ -5,7 +5,7 @@ import CustomButton from "./CustomButton"; // Ensure correct path
 import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import SinglePIC50 from "./singlePIC50";
+import SinglePIC50 from "./SinglePIC50";
 import { updateSelection } from "./../app/features/data/dataSlice";
 import GetTheData from "./GetTheData";
 

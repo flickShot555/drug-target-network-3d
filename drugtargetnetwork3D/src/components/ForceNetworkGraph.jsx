@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch  } from "react-redux";
 import { ForceGraph3D } from "react-force-graph";
-import { Button } from "antd";
+import { Button ,message} from "antd";
 import PopupTable from "./PopupTable"; // Assuming PopupTable is in the same directory
 import "../components/Stylesfiles/forceGraph.css";
+import axios from "axios";
+import { setLoading } from "./../app/features/loaderSlice"; // Import loader actions
 
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
+  
+  const dispatch = useDispatch();
   const fgRef = useRef();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
@@ -53,22 +57,56 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   };
 
   // Handle Node Click (for opening the popup modal)
-  const handleNodeClick = (node) => {
+  const handleNodeClick = async (node) => {
+    if (node.type === "parent_source") {
+      try {
+        dispatch(setLoading(true)); // Start global loading
+        const response = await axios.post(
+          "https://entertainmentbuz.com/drug_target_network/getDataForCompoundTable.php",
+          {
+            drugName: node.id,
+          }
+        );
+        
+      console.log(response.data, "response ");
+      
+      message.success("success to fetch data.");
+      setTableData(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        message.error("Failed to fetch data.");
+      } finally {
+        dispatch(setLoading(false)); // Stop global loading
+        
+    setIsModalVisible(true); // Open Modal
+      }
+    } else if (node.type === "protein_child") {
+      try {
+        dispatch(setLoading(true)); // Start global loading
+        const response = await axios.post(
+          "https://entertainmentbuz.com/drug_target_network/getDataFor3d.php",
+          {
+            drugName2: node.id,
+          }
+        );
+        
+      message.success("success to fetch data.");
+      console.log(response.data[0], "response ");
+      setTableData(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        message.error("Failed to fetch data.");
+      } finally {
+        dispatch(setLoading(false)); // Stop global loading
+        
+    setIsModalVisible(true); // Open Modal
+      }
+
+    }
     setSelectedNode(node.id);
 
-    // Dummy table data for now, replace with PHP call later
-    setTableData([
-      { key: "1", field: "CELL_LINE_NAME", value: "NCI-H720" },
-      { key: "2", field: "CELL_LINE_SYNONYM", value: "H720; H-720; NCIH720" },
-      { key: "3", field: "RRID", value: "CVCL_1583" },
-      { key: "4", field: "COSMIC_ID", value: "687600" },
-      { key: "5", field: "SANGER_MODEL_ID", value: "SIDM01120" },
-      { key: "6", field: "TCGA_STUDY_CODE", value: "UNCLASSIFIED" },
-      { key: "7", field: "ONCOTREE_CODE", value: "LUCA" },
-      { key: "8", field: "ONCOTREE_LINEAGE", value: "Lung" },
-    ]);
+    console.log(node, "node");
 
-    setIsModalVisible(true); // Open Modal
   };
 
   const handleModalClose = () => {

@@ -599,6 +599,15 @@ const Navbar = () => {
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get the current theme
 
+  const oncotreeLineage = useSelector((state) => state.data.selectedTissues); // Get the current theme
+  const selectedDataPlatform = useSelector((state) => state.data.selectedDataPlatform); // Get the current theme
+  const selectedMaxClinical = useSelector((state) => state.data.selectedMaxClinical); // Get the current theme
+  const selectedDiseaseClass = useSelector((state) => state.data.selectedDiseaseClass); // Get the current theme
+  const selectedpic50 = useSelector((state) => state.data.selectedpic50); // Get the current theme
+ 
+ console.log(oncotreeLineage ,selectedDataPlatform , selectedMaxClinical , selectedDiseaseClass ,selectedpic50 , "table maxPhase");
+  
+ 
   const dispatch = useDispatch();
   const handleChange = (name, value) => {
     dispatch(updateSelection({ name, value }));
@@ -690,9 +699,21 @@ const Navbar = () => {
           />
         </Col>
         <Col>
+        
         <CustomButton 
-  style={{ padding: '5px'  }} 
-  onClick={() => window.open("https://entertainmentbuz.com/drug_target_network/table.php?arr1=[%22Lung%22,%22Breast%22,%22Ovary%22]&arr2=[]&arr3=[%22GDSC1%22]&arr4=[]&singleValue=undefined#", "_blank")}
+  style={{ padding: '5px' }} 
+  onClick={() => {
+    const encodedArr1 = encodeURIComponent(JSON.stringify(oncotreeLineage));
+    const encodedArr2 = encodeURIComponent(JSON.stringify(selectedDataPlatform));
+    const encodedArr3 = encodeURIComponent(JSON.stringify(selectedDataPlatform));
+    const encodedArr4 = encodeURIComponent(JSON.stringify(selectedDiseaseClass));
+    const encodedSingleValue = encodeURIComponent(selectedpic50);
+
+    window.open(
+      `https://entertainmentbuz.com/drug_target_network/table.php?arr1=${encodedArr1}&arr2=${encodedArr2}&arr3=${encodedArr3}&arr4=${encodedArr4}&singleValue=${encodedSingleValue}`,
+      "_blank"
+    );
+  }}
 >
   {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
   Table

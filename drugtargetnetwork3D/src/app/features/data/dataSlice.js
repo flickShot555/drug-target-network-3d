@@ -32,7 +32,7 @@ const initialState = {
   selectedCellLine: [],
   selectedDiseaseClass: [],
   selectedCompoundClass: [],
-  selectedpic50: [],
+  selectedpic50: 0,
 
 };
 

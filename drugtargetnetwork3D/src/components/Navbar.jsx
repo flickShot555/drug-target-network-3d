@@ -699,25 +699,32 @@ const Navbar = () => {
           />
         </Col>
         <Col>
-        
         <CustomButton 
   style={{ padding: '5px' }} 
   onClick={() => {
-    const encodedArr1 = encodeURIComponent(JSON.stringify(oncotreeLineage));
-    const encodedArr2 = encodeURIComponent(JSON.stringify(selectedDataPlatform));
-    const encodedArr3 = encodeURIComponent(JSON.stringify(selectedDataPlatform));
-    const encodedArr4 = encodeURIComponent(JSON.stringify(selectedDiseaseClass));
-    const encodedSingleValue = encodeURIComponent(selectedpic50);
+    // Sending arrays as they are (empty or filled) without encoding the array itself
+    const arr1 = JSON.stringify(oncotreeLineage);  // Example: ["Bone", "Lung"]
+    const arr2 = JSON.stringify(selectedDataPlatform);  // Empty array: []
+    const arr3 = JSON.stringify(selectedDiseaseClass);  // Same as arr2
+    const arr4 = JSON.stringify(selectedDiseaseClass);  // Example: []
 
-    window.open(
-      `https://entertainmentbuz.com/drug_target_network/table.php?arr1=${encodedArr1}&arr2=${encodedArr2}&arr3=${encodedArr3}&arr4=${encodedArr4}&singleValue=${encodedSingleValue}`,
-      "_blank"
-    );
+    // If selectedpic50 is 0 or undefined, return 'undefined'; otherwise, use its value
+    const singleValue = selectedpic50 !== 0 && selectedpic50 
+      ? encodeURIComponent(selectedpic50) 
+      : 'undefined';
+
+    // Construct the URL with arrays and the singleValue parameter
+    const url = `https://entertainmentbuz.com/drug_target_network/table.php?arr1=${arr1}&arr2=${arr2}&arr3=${arr3}&arr4=${arr4}&singleValue=${singleValue}`;
+
+    window.open(url, "_blank");
   }}
 >
   {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
   Table
 </CustomButton>
+
+
+
 
           <GetTheData
             type="apply"

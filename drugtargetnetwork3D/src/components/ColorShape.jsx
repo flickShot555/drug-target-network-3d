@@ -61,7 +61,7 @@ const useColorShape = () => {
     const textSprite = createTextSprite(node.id);
     // Adjust Y position for the sphere geometry
     textSprite.position.set(0, -7, -10); // Slightly lower than the bottom of the sphere
-    mesh.add(textSprite); // Add the text sprite as a child of the mesh
+    // mesh.add(textSprite); // Add the text sprite as a child of the mesh
   
     return mesh;
   };

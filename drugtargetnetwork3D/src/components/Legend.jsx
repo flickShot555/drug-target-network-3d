@@ -104,7 +104,8 @@ const Legend = ({ legendData }) => {
               display: "flex",
               alignItems: "center",
               gap: "2px",
-              marginRight: "5px",
+              marginRight: "5px", 
+             
             }}
           >
             <div
@@ -149,6 +150,7 @@ const Legend = ({ legendData }) => {
             color: isDarkMode ? 'white' : 'black',
             padding: '10px',
             borderRadius: '4px',
+            
           }}
         >
           {Object.keys(legendData).map((category) => (

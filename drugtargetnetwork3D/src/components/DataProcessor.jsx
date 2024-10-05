@@ -74,7 +74,7 @@ const DataProcessor = () => {
   };
 
   const scrollbarStyle = {
-    height: "600px",
+    height: "75vh",
     overflowY: "auto",
     scrollbarWidth: isDarkMode ? "thin" : "auto", // For Firefox
     scrollbarColor: isDarkMode ? "#555 #333" : "#ddd #f1f1f1", // For Firefox
@@ -87,10 +87,10 @@ const DataProcessor = () => {
     <Row
       justify="center"
       gutter={[16, 16]}
-      style={{ padding: "10px", marginTop: "1px" }}
+      style={{ padding: "10px", marginTop: "1px"  , height :"100vh"  }}
     >
-      <Col xs={24} sm={12} md={5}>
-        <Card title="Legend" bordered>
+      <Col xs={24} sm={12} md={5} >
+        <Card title="Legend" bordered  style={{height :"90vh"}}>
           <DarkModeEnabler />
           <div style={scrollbarStyle}>
             <CustomButton onClick={handleApplyClick}>Apply</CustomButton>
@@ -104,14 +104,15 @@ const DataProcessor = () => {
         </Card>
       </Col>
 
-      <Col xs={24} sm={24} md={19}>
-        <Card
+      <Col xs={24} sm={24} md={19} >
+        <Card style={{height :"90vh"}}
           title={
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "center",
+                alignItems: "center", 
+                
               }}
             >
               <span>3D Force Network Graph</span>
@@ -129,14 +130,15 @@ const DataProcessor = () => {
           bordered
         >
           {clonedGraphData ? (
-            <>
+        
+            <div      >
               <ForceNetworkGraph
                 graphData={clonedGraphData}
                 getNodeShape={getNodeShape}
                 generateDataSet={generateDataSet}
               />
               <NodeCountUpdater graphData={clonedGraphData} />
-            </>
+            </div>
           ) : null}
         </Card>
       </Col>

@@ -117,7 +117,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
     <div
       style={{
         width: "100%",
-        height: "600px",
+        height: "75vh",
         overflow: "hidden",
         backgroundColor: isDarkMode ? "#000000" : "#ffffff",
       }}>
@@ -141,7 +141,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         linkDirectionalParticleSpeed={() => 0.01}
         linkDirectionalParticleWidth={1}
         linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")}
-        height={600}
+        height={650}
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
       />
 

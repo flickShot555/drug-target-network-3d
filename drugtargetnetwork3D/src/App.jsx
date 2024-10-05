@@ -25,7 +25,7 @@ const App = () => {
       }}
     >
       <Router>
-        <Layout>
+        <Layout style={{background:"",  height:"100%" }}>
           {/* Conditionally render the loader */}
           {isLoading && (
             <div className="loader-overlay">

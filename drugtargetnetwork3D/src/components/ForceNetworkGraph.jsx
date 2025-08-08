@@ -23,8 +23,8 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       const fg = fgRef.current;
 
       // Customize force layout
-      fg.d3Force("link").distance(() => 30);
-      fg.d3Force("charge").strength(-120);
+      fg.d3Force("link").distance(() => 1000);
+      fg.d3Force("charge").strength(-200);
     }
   }, [graphData]);
 
@@ -137,7 +137,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
           return `<div style="background-color: black; color: white; padding: 5px; border-radius: 4px;">${node.id}</div>`;
         }}
         linkDirectionalParticles={2}
-        linkWidth={1.5}
+        linkWidth={3}
         linkDirectionalParticleSpeed={() => 0.01}
         linkDirectionalParticleWidth={1}
         linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")}

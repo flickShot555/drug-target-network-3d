@@ -16,6 +16,7 @@
     "antd": "^5.20.1",
     "axios": "^1.7.7",
     "canvas-toBlob": "^1.0.0",
+    "d3-force-3d": "^3.0.6",
     "dom-to-image": "^2.6.0",
     "html2canvas": "^1.4.1",
     "react": "^18.3.1",

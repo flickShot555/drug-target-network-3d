@@ -43,15 +43,19 @@ const useColorShape = () => {
   let getNodeShape = (node) => {
     const color = getNodeColor(node, legendData_filters);
   
+    //code update by Abbas Khan
+    //goal is to increase the size of node by a factor of 10
+
+    let scaleFactor = 5;
     let geometry;
     if (node.type === "parent_source") {
-      geometry = new THREE.BoxGeometry(10, 10, 20);
+      geometry = new THREE.BoxGeometry(10*scaleFactor, 10*scaleFactor, 20*scaleFactor);
     } else if (node.type === "protein_child") {
-      geometry = new THREE.SphereGeometry(5); // Sphere for protein_child
+      geometry = new THREE.SphereGeometry(5*scaleFactor); // Sphere for protein_child
     } else if (node.type === "disease_child") {
-      geometry = new THREE.ConeGeometry(7, 12, 3);
+      geometry = new THREE.ConeGeometry(7*scaleFactor, 12*scaleFactor, 3*scaleFactor);
     } else {
-      geometry = new THREE.SphereGeometry(5); // Default shape
+      geometry = new THREE.SphereGeometry(5*scaleFactor); // Default shape
     }
   
     const material = new THREE.MeshBasicMaterial({ color });

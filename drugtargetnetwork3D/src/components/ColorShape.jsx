@@ -46,7 +46,7 @@ const useColorShape = () => {
     //code update by Abbas Khan
     //goal is to increase the size of node by a factor of 10
 
-    let scaleFactor = 5;
+    let scaleFactor = 3;
     let geometry;
     if (node.type === "parent_source") {
       geometry = new THREE.BoxGeometry(10*scaleFactor, 10*scaleFactor, 20*scaleFactor);

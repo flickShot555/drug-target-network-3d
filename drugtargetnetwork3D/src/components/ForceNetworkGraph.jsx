@@ -6,6 +6,9 @@ import PopupTable from "./PopupTable"; // Assuming PopupTable is in the same dir
 import "../components/Stylesfiles/forceGraph.css";
 import axios from "axios";
 import { setLoading } from "./../app/features/loaderSlice"; // Import loader actions
+//update by abbas khan
+import * as d3 from 'd3-force-3d';
+//import { forceLink, forceManyBody, forceX, forceY, forceZ, forceCollide } from 'd3-force-3d';
 
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   
@@ -23,8 +26,35 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       const fg = fgRef.current;
 
       // Customize force layout
-      fg.d3Force("link").distance(() => 1000);
-      fg.d3Force("charge").strength(-200);
+      fg.d3Force("link").distance(() => 900);
+      fg.d3Force("charge").strength(-50);
+      // Add more separation between clusters
+      fg.d3Force("collision", d3.forceCollide(60));
+
+      // Gentle centering so clusters don't drift off screen
+      fg.d3Force("center", d3.forceCenter(0, 0));
+      // Set a boundary box size (adjust as needed)
+
+      const BOUNDARY = 450; // This is half the width/height of the visible cube
+
+      // Add a custom force to keep nodes in range
+      fg.d3Force('bound', () => {
+        return (alpha) => {
+          fg.graphData().nodes.forEach(node => {
+            // X boundaries
+            if (node.x > BOUNDARY) node.vx -= (node.x - BOUNDARY) * alpha;
+            if (node.x < -BOUNDARY) node.vx -= (node.x + BOUNDARY) * alpha;
+
+            // Y boundaries
+            if (node.y > BOUNDARY) node.vy -= (node.y - BOUNDARY) * alpha;
+            if (node.y < -BOUNDARY) node.vy -= (node.y + BOUNDARY) * alpha;
+
+            // Z boundaries (since it's 3D)
+            if (node.z > BOUNDARY) node.vz -= (node.z - BOUNDARY) * alpha;
+            if (node.z < -BOUNDARY) node.vz -= (node.z + BOUNDARY) * alpha;
+          });
+        };
+      });
     }
   }, [graphData]);
 

@@ -11,7 +11,7 @@ const App = () => {
   const isLoading = useSelector((state) => state.loader.isLoading); // Get the loader state from Redux
 
   // Log the OriginalData for debugging
-  console.log(OriginalData, "OriginalData");
+  //console.log(OriginalData, "OriginalData");
 
   return (
     <ConfigProvider

@@ -605,7 +605,7 @@ const Navbar = () => {
   const selectedDiseaseClass = useSelector((state) => state.data.selectedDiseaseClass); // Get the current theme
   const selectedpic50 = useSelector((state) => state.data.selectedpic50); // Get the current theme
  
- console.log(oncotreeLineage ,selectedDataPlatform , selectedMaxClinical , selectedDiseaseClass ,selectedpic50 , "table maxPhase");
+ console.log(oncotreeLineage ,selectedMaxClinical ,selectedDataPlatform ,selectedpic50 ,  selectedDiseaseClass , "table maxPhase");
   
  
   const dispatch = useDispatch();
@@ -615,10 +615,12 @@ const Navbar = () => {
 
   return (
     <header className={isDarkMode ? "header-dark" : "header-light"}>
-      <Row className={isDarkMode ? "navrow-dark" : "navrow-light"}>
+      <Row className={isDarkMode ? "navrow-dark" : "navrow-light"} style={{ display: "flex", alignItems: "center" }}>
         <Col style={{ display: "flex", alignItems: "center" }}>
           <p
             style={{
+              paddingLeft:"20px",
+              paddingRight:"20px",
               marginRight: "10px",
               color: isDarkMode ? "white" : "black",
             }}>
@@ -630,6 +632,7 @@ const Navbar = () => {
             before="2000+"
             count={CountIncrement}
             setCount={setCountIncrement}
+            
           />
 
           <GetTheData
@@ -641,98 +644,106 @@ const Navbar = () => {
           />
         </Col>
 
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={Tissues}
             placeholder="Tissues"
             handleChange={(value) => handleChange("selectedTissues", value)}
-            dropwidth="100px"
+            dropwidth="180px"
+            
           />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={Max_clinical}
             placeholder="Max clinical phase"
             handleChange={(value) => handleChange("selectedMaxClinical", value)}
-            dropwidth="150px"
+            dropwidth="180px"
           />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={GDSC1}
             placeholder="GDSC1"
             handleChange={(value) =>
               handleChange("selectedDataPlatform", value)
             }
-            dropwidth="100px"
+            dropwidth="180px"
           />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SinglePIC50 />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={Cell_line}
             placeholder="Cell line lineage"
             handleChange={(value) => handleChange("selectedCellLine", value)}
-            dropwidth="150px"
+            dropwidth="180px"
           />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={Drug_class_Categories}
             placeholder="Disease class"
             handleChange={(value) =>
               handleChange("selectedDiseaseClass", value)
             }
-            dropwidth="120px"
+            dropwidth="180px"
           />
         </Col>
-        <Col>
+        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
           <SelectComponent
             options={Compound_class}
             placeholder="Compound class"
             handleChange={(value) =>
               handleChange("selectedCompoundClass", value)
             }
-            dropwidth="150px"
+            dropwidth="180px"
           />
         </Col>
         <Col>
         <CustomButton 
-  style={{ padding: '5px' }} 
-  onClick={() => {
-    // Sending arrays as they are (empty or filled) without encoding the array itself
-    const arr1 = JSON.stringify(oncotreeLineage);  // Example: ["Bone", "Lung"]
-    const arr2 = JSON.stringify(selectedDataPlatform);  // Empty array: []
-    const arr3 = JSON.stringify(selectedDiseaseClass);  // Same as arr2
-    const arr4 = JSON.stringify(selectedDiseaseClass);  // Example: []
+          style={{ padding: '5px' }} 
+          onClick={() => {
+            // Sending arrays as they are (empty or filled) without encoding the array itself
+            const arr1 = JSON.stringify(oncotreeLineage);  // Example: ["Bone", "Lung"]
+            const arr2 = JSON.stringify(selectedMaxClinical);  // Empty array: []
+            const arr3 = JSON.stringify(selectedDataPlatform);  // Same as arr2
+            const arr4 = JSON.stringify(selectedDiseaseClass);  // Example: []
 
-    // If selectedpic50 is 0 or undefined, return 'undefined'; otherwise, use its value
-    const singleValue = selectedpic50 !== 0 && selectedpic50 
-      ? encodeURIComponent(selectedpic50) 
-      : 'undefined';
+            // If selectedpic50 is 0 or undefined, return 'undefined'; otherwise, use its value
+            /*const singleValue = selectedpic50 !== 0 && selectedpic50 
+              ? encodeURIComponent(selectedpic50) 
+              : 'undefined';*/
+              const singlevalue = 8;
+              var url = 'https://bioicawtech.com/drugtargetnetwork/table.php?arr1=' + arr1 +
+              '&arr2=' + arr2 +
+              '&arr3=' + arr3 +
 
-    // Construct the URL with arrays and the singleValue parameter
-    const url = `https://entertainmentbuz.com/drug_target_network/table.php?arr1=${arr1}&arr2=${arr2}&arr3=${arr3}&arr4=${arr4}&singleValue=${singleValue}`;
+              '&arr4=' + arr4 +
+              '&singleValue=' + singlevalue;
 
-    window.open(url, "_blank");
-  }}
->
-  {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
-  Table
-</CustomButton>
+            // Construct the URL with arrays and the singleValue parameter
+            //const url = `https://bioicawtech.com/drugtargetnetwork/table.php?arr1=${encodeURIComponent(arr1)}&arr2=${encodeURIComponent(arr2)}&arr3=${encodeURIComponent(arr3)}&arr4=${encodeURIComponent(arr4)}&singleValue=${singleValue}`;
+
+            window.open(url, "_blank");
+          }}
+        >
+          {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
+          Table
+        </CustomButton>
 
 
 
 
-          <GetTheData
-            type="apply"
-            after="Applying Filter..."
-            before="Apply Filter"
-            count={CountIncrement}
-            setCount={setCountIncrement}
-          />
+        <GetTheData
+          type="apply"
+          after="Applying Filter..."
+          before="Apply Filter"
+          count={CountIncrement}
+          setCount={setCountIncrement}
+        />
         </Col>
       </Row>
     </header>

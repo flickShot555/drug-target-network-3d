@@ -92,7 +92,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       try {
         dispatch(setLoading(true)); // Start global loading
         const response = await axios.post(
-          "https://entertainmentbuz.com/drug_target_network/getDataForCompoundTable.php",
+          "https://bioicawtech.com/drugtargetnetwork/getDataForCompoundTable.php",
           {
             drugName: node.id,
           }
@@ -114,7 +114,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       try {
         dispatch(setLoading(true)); // Start global loading
         const response = await axios.post(
-          "https://entertainmentbuz.com/drug_target_network/getDataFor3d.php",
+          "https://bioicawtech.com/drugtargetnetwork/getDataFor3d.php",
           {
             drugName2: node.id,
           }

@@ -10,6 +10,7 @@ const PIC50 = [
   { value: '8', label: '8-9' },
 ];
 
+//commented sytle prop for <select style={{ width: 360 }}></select>
 const SinglePIC50 = () => {
   const dispatch = useDispatch();
 
@@ -18,15 +19,15 @@ const SinglePIC50 = () => {
   };
 
   return (
-    <Space wrap>
+    <div style={{ width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
       <Select
-        style={{ width: 120 }}
         allowClear
         options={PIC50}
         placeholder="PIC50"
-        onChange={handleChange} // Use onChange instead of handleChange
+        onChange={handleChange}
+        style={{ width: '100%' }}   // <-- ensures Select fills wrapper
       />
-    </Space>
+    </div>
   );
 };
 

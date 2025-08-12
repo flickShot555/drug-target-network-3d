@@ -615,8 +615,8 @@ const Navbar = () => {
 
   return (
     <header className={isDarkMode ? "header-dark" : "header-light"}>
-      <Row className={isDarkMode ? "navrow-dark" : "navrow-light"} style={{ display: "flex", alignItems: "center" }}>
-        <Col style={{ display: "flex", alignItems: "center" }}>
+      <Row className={isDarkMode ? "navrow-dark" : "navrow-light"} style={{ display: "flex", alignItems: "center", maxWidth:"100%" }}>
+        <Col style={{ display: "flex", alignItems: "center",  width: "11.11%"}}>
           <p
             style={{
               paddingLeft:"20px",
@@ -644,7 +644,7 @@ const Navbar = () => {
           />
         </Col>
 
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={Tissues}
             placeholder="Tissues"
@@ -653,7 +653,8 @@ const Navbar = () => {
             
           />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={Max_clinical}
             placeholder="Max clinical phase"
@@ -661,7 +662,8 @@ const Navbar = () => {
             dropwidth="180px"
           />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={GDSC1}
             placeholder="GDSC1"
@@ -671,10 +673,12 @@ const Navbar = () => {
             dropwidth="180px"
           />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SinglePIC50 />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+        
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={Cell_line}
             placeholder="Cell line lineage"
@@ -682,7 +686,8 @@ const Navbar = () => {
             dropwidth="180px"
           />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+        
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={Drug_class_Categories}
             placeholder="Disease class"
@@ -692,7 +697,8 @@ const Navbar = () => {
             dropwidth="180px"
           />
         </Col>
-        <Col style={{paddingLeft:"10px", paddingRight:"10px",}}>
+        
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
           <SelectComponent
             options={Compound_class}
             placeholder="Compound class"
@@ -702,9 +708,10 @@ const Navbar = () => {
             dropwidth="180px"
           />
         </Col>
-        <Col>
+        
+        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
         <CustomButton 
-          style={{ padding: '5px' }} 
+          style={{ paddingLeft:"1%", paddingRight:"1%" }} 
           onClick={() => {
             // Sending arrays as they are (empty or filled) without encoding the array itself
             const arr1 = JSON.stringify(oncotreeLineage);  // Example: ["Bone", "Lung"]

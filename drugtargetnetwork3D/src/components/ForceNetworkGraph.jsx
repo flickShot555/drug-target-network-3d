@@ -151,7 +151,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         overflow: "hidden",
         backgroundColor: isDarkMode ? "#000000" : "#ffffff",
       }}>
-      <Button onClick={resetNodePositions} style={{ marginBottom: "10px" }}>
+      <Button id="resetNodesBtn" onClick={resetNodePositions} style={{ marginBottom: "10px" }}>
         Reset Nodes
       </Button>
 
@@ -173,6 +173,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")}
         height={650}
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
+        rendererConfig={{ preserveDrawingBuffer: true }}   // <- add this
       />
 
       {/* Popup Table */}

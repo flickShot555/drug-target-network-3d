@@ -615,144 +615,138 @@ const Navbar = () => {
 
   return (
     <header className={isDarkMode ? "header-dark" : "header-light"}>
-      <Row className={isDarkMode ? "navrow-dark" : "navrow-light"} style={{ display: "flex", alignItems: "center", maxWidth:"100%" }}>
-        <Col style={{ display: "flex", alignItems: "center",  width: "11.11%"}}>
-          <p
-            style={{
-              paddingLeft:"20px",
-              paddingRight:"20px",
-              marginRight: "10px",
-              color: isDarkMode ? "white" : "black",
-            }}>
-            Add More
-          </p>
-          <GetTheData
-            type="addmoredata"
-            after="wait"
-            before="2000+"
-            count={CountIncrement}
-            setCount={setCountIncrement}
-            
-          />
+      <Row
+  className={isDarkMode ? "navrow-dark" : "navrow-light"}
+  gutter={[12, 12]}
+  style={{ display: "flex", alignItems: "center", width: "100%" }}
+>
+  {/* Left group: Add More + two small buttons */}
+  <Col xs={24} sm={12} md={6} lg={3} style={{ boxSizing: "border-box" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <p style={{ paddingLeft: 10, paddingRight: 10, margin: 0, color: isDarkMode ? "white" : "black" }}>
+        Add More
+      </p>
 
-          <GetTheData
-            type="lessdata"
-            after="wait"
-            before="2000-"
-            count={CountIncrement}
-            setCount={setCountIncrement}
-          />
-        </Col>
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center",paddingLeft: 10}}>
+      <GetTheData
+        style={{marginRight: 9}}
+        type="addmoredata"
+        after="wait"
+        before="2000+"
+        count={CountIncrement}
+        setCount={setCountIncrement}
+      />
 
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={Tissues}
-            placeholder="Tissues"
-            handleChange={(value) => handleChange("selectedTissues", value)}
-            dropwidth="180px"
-            
-          />
-        </Col>
+      <GetTheData
+        style={{paddingLeft: 2}}
+        type="lessdata"
+        after="wait"
+        before="2000-"
+        count={CountIncrement}
+        setCount={setCountIncrement}
+      />
+      </div>
+    </div>
+  </Col>
 
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={Max_clinical}
-            placeholder="Max clinical phase"
-            handleChange={(value) => handleChange("selectedMaxClinical", value)}
-            dropwidth="180px"
-          />
-        </Col>
+  {/* Filters — 7 items */}
+  <Col xs={24} sm={12} md={8} lg={3} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={Tissues}
+      placeholder="Tissues"
+      handleChange={(value) => handleChange("selectedTissues", value)}
+      // make select full width inside column
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={GDSC1}
-            placeholder="GDSC1"
-            handleChange={(value) =>
-              handleChange("selectedDataPlatform", value)
-            }
-            dropwidth="180px"
-          />
-        </Col>
+  <Col xs={24} sm={12} md={8} lg={3} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={Max_clinical}
+      placeholder="Max clinical phase"
+      handleChange={(value) => handleChange("selectedMaxClinical", value)}
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SinglePIC50 />
-        </Col>
-        
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={Cell_line}
-            placeholder="Cell line lineage"
-            handleChange={(value) => handleChange("selectedCellLine", value)}
-            dropwidth="180px"
-          />
-        </Col>
-        
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={Drug_class_Categories}
-            placeholder="Disease class"
-            handleChange={(value) =>
-              handleChange("selectedDiseaseClass", value)
-            }
-            dropwidth="180px"
-          />
-        </Col>
-        
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-          <SelectComponent
-            options={Compound_class}
-            placeholder="Compound class"
-            handleChange={(value) =>
-              handleChange("selectedCompoundClass", value)
-            }
-            dropwidth="180px"
-          />
-        </Col>
-        
-        <Col style={{paddingLeft:"1.1%", paddingRight:"1.1%",width: "11.11%"}}>
-        <CustomButton 
-          style={{ paddingLeft:"1%", paddingRight:"1%" }} 
-          onClick={() => {
-            // Sending arrays as they are (empty or filled) without encoding the array itself
-            const arr1 = JSON.stringify(oncotreeLineage);  // Example: ["Bone", "Lung"]
-            const arr2 = JSON.stringify(selectedMaxClinical);  // Empty array: []
-            const arr3 = JSON.stringify(selectedDataPlatform);  // Same as arr2
-            const arr4 = JSON.stringify(selectedDiseaseClass);  // Example: []
+  <Col xs={24} sm={12} md={8} lg={3} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={GDSC1}
+      placeholder="GDSC1"
+      handleChange={(value) => handleChange("selectedDataPlatform", value)}
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
-            // If selectedpic50 is 0 or undefined, return 'undefined'; otherwise, use its value
-            /*const singleValue = selectedpic50 !== 0 && selectedpic50 
-              ? encodeURIComponent(selectedpic50) 
-              : 'undefined';*/
-              const singlevalue = 8;
-              var url = 'https://bioicawtech.com/drugtargetnetwork/table.php?arr1=' + arr1 +
-              '&arr2=' + arr2 +
-              '&arr3=' + arr3 +
+  <Col xs={24} sm={12} md={8} lg={3} style={{ boxSizing: "border-box" }}>
+    <SinglePIC50 style={{ width: "100%" }} />
+  </Col>
 
-              '&arr4=' + arr4 +
-              '&singleValue=' + singlevalue;
+  <Col xs={24} sm={12} md={8} lg={2} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={Cell_line}
+      placeholder="Cell line lineage"
+      handleChange={(value) => handleChange("selectedCellLine", value)}
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
-            // Construct the URL with arrays and the singleValue parameter
-            //const url = `https://bioicawtech.com/drugtargetnetwork/table.php?arr1=${encodeURIComponent(arr1)}&arr2=${encodeURIComponent(arr2)}&arr3=${encodeURIComponent(arr3)}&arr4=${encodeURIComponent(arr4)}&singleValue=${singleValue}`;
+  <Col xs={24} sm={12} md={8} lg={2} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={Drug_class_Categories}
+      placeholder="Disease class"
+      handleChange={(value) => handleChange("selectedDiseaseClass", value)}
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
-            window.open(url, "_blank");
-          }}
-        >
-          {/* <img width={30} src="/images/tableimg_white.png" alt="Logo" /> */}
-          Table
-        </CustomButton>
+  <Col xs={24} sm={12} md={8} lg={2} style={{ boxSizing: "border-box" }}>
+    <SelectComponent
+      options={Compound_class}
+      placeholder="Compound class"
+      handleChange={(value) => handleChange("selectedCompoundClass", value)}
+      style={{ width: "100%" }}
+      dropwidth="100%"
+    />
+  </Col>
 
+  {/* Right group: Table + Apply */}
+  <Col xs={24} sm={12} md={8} lg={3} style={{ boxSizing: "border-box", display: "flex", gap: 8, alignItems: "center", justifyContent: "flex-end", flexWrap: "wrap" }}>
+    <CustomButton
+      style={{ paddingLeft: "1%", paddingRight: "1%" }}
+      onClick={() => {
+        const arr1 = JSON.stringify(oncotreeLineage);
+        const arr2 = JSON.stringify(selectedMaxClinical);
+        const arr3 = JSON.stringify(selectedDataPlatform);
+        const arr4 = JSON.stringify(selectedDiseaseClass);
+        const singlevalue = 8;
+        const url =
+          'https://bioicawtech.com/drugtargetnetwork/table.php?arr1=' +
+          encodeURIComponent(arr1) +
+          '&arr2=' + encodeURIComponent(arr2) +
+          '&arr3=' + encodeURIComponent(arr3) +
+          '&arr4=' + encodeURIComponent(arr4) +
+          '&singleValue=' + singlevalue;
+        window.open(url, "_blank");
+      }}
+    >
+      Table
+    </CustomButton>
 
-
-
-        <GetTheData
-          type="apply"
-          after="Applying Filter..."
-          before="Apply Filter"
-          count={CountIncrement}
-          setCount={setCountIncrement}
-        />
-        </Col>
-      </Row>
+    <GetTheData
+      type="apply"
+      after="Applying Filter..."
+      before="Apply Filter"
+      count={CountIncrement}
+      setCount={setCountIncrement}
+    />
+  </Col>
+</Row>
     </header>
   );
 };

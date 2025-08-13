@@ -75,6 +75,103 @@ const DataProcessor = () => {
     return <div>Error: {dataError}</div>;
   }
 
+  /**
+    useEffect(() => {
+      // grab elements after mount
+      const overlay = document.getElementById("modalOverlay_predict");
+      const closeBtn = document.getElementById("closeBtn_predict");
+      const submitBtn = document.getElementById("submitModal_predict");
+      const predictBtnEl = document.getElementById("predictBtn"); // your CustomButton has this id already
+    
+      // guard helpers
+      const openModal = () => {
+        if (overlay) overlay.style.display = "flex";
+      };
+      const closeModal = () => {
+        if (overlay) overlay.style.display = "none";
+      };
+      const submitModal = () => {
+        const input = document.getElementById("inputText_predict");
+        const text = input ? input.value : "";
+        // debug
+        console.log("Predict Modal Input:", text);
+        const encoded = encodeURIComponent(text);
+        console.log("encoded Predict Modal Input:", encoded);
+        window.location.href = `https://bioicawtech.com/drugtargetnetwork/smilies_table.php?text=${encoded}`;
+        // optionally close overlay after submit:
+        // if (overlay) overlay.style.display = 'none';
+      };
+    
+      // attach listeners (only if nodes exist)
+      if (predictBtnEl) predictBtnEl.addEventListener("click", openModal);
+      if (closeBtn) closeBtn.addEventListener("click", closeModal);
+      if (submitBtn) submitBtn.addEventListener("click", submitModal);
+    
+      // cleanup
+      return () => {
+        if (predictBtnEl) predictBtnEl.removeEventListener("click", openModal);
+        if (closeBtn) closeBtn.removeEventListener("click", closeModal);
+        if (submitBtn) submitBtn.removeEventListener("click", submitModal);
+      };
+    }, []); // run once after mount
+  */
+
+    const styles = {
+      overlay: {
+        display: "none",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1000,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      modalBox: {
+        background: "white",
+        padding: "20px",
+        width: "550px",
+        maxWidth: "95%",
+        position: "relative",
+        borderRadius: "8px",
+        boxShadow: "0 0 15px rgba(0,0,0,0.3)",
+      },
+      closeBtn: {
+        position: "absolute",
+        top: "10px",
+        right: "15px",
+        fontSize: "24px",
+        cursor: "pointer",
+        border: "none",
+        background: "transparent",
+        color: "black",
+      },
+      textarea: {
+        width: "100%",
+        height: "150px",
+        marginTop: "20px",
+        padding: "10px",
+        fontSize: "16px",
+      },
+      submitWrapper: {
+        display: "flex",
+        justifyContent: "center",
+      },
+      submitBtn: {
+        marginTop: "15px",
+        padding: "10px 20px",
+        fontSize: "16px",
+        cursor: "pointer",
+        backgroundColor: "#28a5fb",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+      },
+    };
+
+    
   const handleApplyClick = () => {
     dispatch(filterGraphData());
   };
@@ -96,6 +193,45 @@ const DataProcessor = () => {
 
   return (
     <div ref={exportRef} data-export-ref="1" style={{ height: "100vh" }}>
+      {/* Smilies Prediction Modal (JSX) */}
+      {showPredictModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            ...styles.overlay,
+            display: "flex", // ensure overlay is visible when showPredictModal is true
+          }}
+        >
+          <div style={styles.modalBox}>
+            <button
+              type="button"
+              aria-label="Close predict modal"
+              style={styles.closeBtn}
+              onClick={closePredictModal}
+            >
+              &times;
+            </button>
+
+            <textarea
+              value={predictText}
+              onChange={(e) => setPredictText(e.target.value)}
+              placeholder="Enter Smilies here. Use new line as separator"
+              style={styles.textarea}
+            />
+
+            <div style={styles.submitWrapper}>
+              <button
+                type="button"
+                onClick={submitPredictModal}
+                style={styles.submitBtn}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Row
         justify="center"
         gutter={[16, 16]}

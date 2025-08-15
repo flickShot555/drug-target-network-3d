@@ -177,6 +177,7 @@ const DataProcessor = () => {
   };
 
   const scrollbarStyle = {
+    marginTop: "15px",
     height: "75vh",
     overflowY: "auto",
     scrollbarWidth: isDarkMode ? "thin" : "auto",
@@ -260,7 +261,7 @@ const DataProcessor = () => {
             style={{ height: "90vh" }}
             title={
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span>3D Force Network Graph</span>
+                <span>PharmacoProfiler</span>
                 <p className="font-size">Total compounds visible: {ParentSourceCount}</p>
                 <p className="font-size">Total cell lines visible: {ProteinChildCount}</p>
                 <div>

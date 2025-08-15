@@ -19,7 +19,7 @@ const SliderComponent = () => {
 
   return (
     <div style={{ marginTop: "5px", width: "200px" }}>
-        <h5 style={{ padding: "2px", margin: "1px"}} > {ParentSourceCount} Connected compound </h5>
+        <h5 style={{ padding: "2px", margin: "1px"}} > {ParentSourceCount} connected compound/s </h5>
     <Slider
     style={{ padding: "2px", margin: "1px"}}
       value={sliderCurrent}

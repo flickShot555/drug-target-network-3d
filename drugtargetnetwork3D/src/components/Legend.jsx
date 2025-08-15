@@ -139,6 +139,11 @@ const Legend = ({ legendData }) => {
     }
   };
 
+  function capitalizeFirstLetter(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
   
       <div>
@@ -155,7 +160,7 @@ const Legend = ({ legendData }) => {
         >
           {Object.keys(legendData).map((category) => (
             <div key={category}>
-              <h5 style={{ color: isDarkMode ? 'white' : 'black' , margin: "0px" ,padding:"0px"}}>{category}</h5>
+              <h5 style={{ color: isDarkMode ? 'white' : 'black' , margin: "0px" ,padding:"0px"}}>{capitalizeFirstLetter(category)}</h5>
               <ul style={{   padding: '5px', margin:"0px"}}>
                 {Object.entries(legendData[category]).map(([value, { color, checked }]) => (
                   <li
@@ -169,10 +174,10 @@ const Legend = ({ legendData }) => {
                     {renderShape(category, color, value)}
                     <Checkbox
                       checked={checked}
-                      onChange={() => handleCheckboxChange(category, value)}
+                      onChange={() => handleCheckboxChange(category, capitalizeFirstLetter(value))}
                       style={{ color: isDarkMode ? 'white' : 'black' }}
                     >
-                      {category === "phase" ? `phase ${value}` : value}
+                      {category === "phase" ? `Phase ${value}` : value}
                     </Checkbox>
                   </li>
                 ))}

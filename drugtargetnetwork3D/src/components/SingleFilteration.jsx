@@ -101,14 +101,14 @@ const SingleFilteration = () => {
       >
         <div>
             <a onClick={toggleVisibility} style={{ color: isDarkMode ? '#fff' : 'blue' }}>
-                Filter Compounds/Celline
+                Filter compounds/celline
             </a>
             {visible && (
                 <Draggable>
                     <Card
                         title={
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <span style={titleStyle}>Filter Compounds/Celline</span>
+                                <span style={titleStyle}>Filter compounds/celline</span>
                                 <CloseOutlined onClick={handleClose} style={{ cursor: 'pointer', color: isDarkMode ? '#fff' : '#000' }} />
                             </div>
                         }

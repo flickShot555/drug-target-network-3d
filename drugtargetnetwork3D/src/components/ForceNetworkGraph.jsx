@@ -35,7 +35,7 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
       fg.d3Force("center", d3.forceCenter(0, 0));
       // Set a boundary box size (adjust as needed)
 
-      const BOUNDARY = 450; // This is half the width/height of the visible cube
+      const BOUNDARY = 400; // This is half the width/height of the visible cube
 
       // Add a custom force to keep nodes in range
       fg.d3Force('bound', () => {
@@ -146,8 +146,8 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
   return (
     <div
       style={{
-        width: "100%",
-        height: "75vh",
+        width: "98%",
+        height: "79vh",
         overflow: "hidden",
         backgroundColor: isDarkMode ? "#000000" : "#ffffff",
       }}>
@@ -171,7 +171,8 @@ const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
         linkDirectionalParticleSpeed={() => 0.01}
         linkDirectionalParticleWidth={1}
         linkColor={generateDataSet || (isDarkMode ? "#ffffff" : "#000000")}
-        height={650}
+        height={560}
+        width = {1270}
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
         rendererConfig={{ preserveDrawingBuffer: true }}   // <- add this
       />

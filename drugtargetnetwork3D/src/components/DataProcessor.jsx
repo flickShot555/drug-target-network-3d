@@ -26,6 +26,7 @@ import {
 } from "./../app/features/countSlice";
 
 const DataProcessor = () => {
+  document.querySelectorAll('.scene-nav-info').forEach(el => el.style.display = 'none');
   const dispatch = useDispatch();
   const [clonedGraphData, setClonedGraphData] = useState(null);
   const graphData = useSelector(selectGraphData);
@@ -193,7 +194,7 @@ const DataProcessor = () => {
   };
 
   return (
-    <div ref={exportRef} data-export-ref="1" style={{ height: "100vh" }}>
+    <div ref={exportRef} data-export-ref="1" style={{ height: "95vh" }}>
       {/* Smilies Prediction Modal (JSX) */}
       {showPredictModal && (
         <div
@@ -235,7 +236,7 @@ const DataProcessor = () => {
       )}
       <Row
         justify="center"
-        gutter={[16, 16]}
+        gutter={[16, 6]}
         style={{ padding: "10px", marginTop: "1px", height: "100%" }}
       >
         {/* Left: Legend */}
@@ -270,11 +271,11 @@ const DataProcessor = () => {
                 </div>
               </div>
             }
-            bordered
+            
           >
             {clonedGraphData ? (
               // chartRef must be attached only to this div (graph container)
-              <div ref={chartRef} style={{ height: "85vh" }}>
+              <div ref={chartRef} style={{ height: "65vh" }}>
                 <ForceNetworkGraph graphData={clonedGraphData} getNodeShape={getNodeShape} generateDataSet={generateDataSet} />
                 <NodeCountUpdater graphData={clonedGraphData} />
               </div>

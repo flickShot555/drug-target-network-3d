@@ -127,10 +127,7 @@ const ExportChartModal = ({ exportRef = null, chartRef = null, fileName = "chart
       }
     */
     
-    const stylingValue = document.querySelectorAll('.scene-nav-info').display;
     try {
-      
-      document.querySelectorAll('.scene-nav-info').forEach(el => el.style.display === 'none');
       // 2) Insert watermark DIV into DOM (before hiding canvas) but hide graph canvas afterwards for clean DOM snapshot
       if (resetBtn instanceof HTMLElement) {
         // ensure the export wrapper is positioned (so absolute coords are relative to it)
@@ -310,9 +307,6 @@ const ExportChartModal = ({ exportRef = null, chartRef = null, fileName = "chart
           delete target.__prevPositionForExport;
         }
       } catch (e) {}
-      try {
-        document.querySelectorAll('.scene-nav-info').forEach(el => el.style.display === stylingValue);
-      }catch (e) {}
     }
   };
 

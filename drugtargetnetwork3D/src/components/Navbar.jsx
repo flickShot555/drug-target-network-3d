@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Row, Col } from "antd";
 import SelectComponent from "./SelectComponent"; // Ensure correct path
 import CustomButton from "./CustomButton"; // Ensure correct path
-import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
+//import "./Stylesfiles/Navbar.css"; // Import any specific styles for Navbar
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import SinglePIC50 from "./SinglePIC50";
@@ -627,7 +627,7 @@ const Navbar = () => {
         Add More
       </p>
 
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center",paddingLeft: 10}}>
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center",paddingLeft: 10, flexWrap: "wrap"}}>
       <GetTheData
         style={{marginRight: 9}}
         type="addmoredata"

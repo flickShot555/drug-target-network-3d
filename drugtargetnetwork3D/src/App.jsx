@@ -37,7 +37,7 @@ const App = () => {
 
           {/* Define Routes */}
           <Routes>
-            <Route path="/drugtargetnetwork/3d/" element={<DataProcessor />} /> {/* Default route */}
+            <Route path="/" element={<DataProcessor />} /> {/* Default route */}
             <Route path="*" element={<p>Enter the current path</p>} /> {/* Fallback for unknown routes */}
           </Routes>
 

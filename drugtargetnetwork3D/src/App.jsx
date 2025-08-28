@@ -4,6 +4,7 @@ import DataProcessor from "./components/DataProcessor";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Footer from "./components/NewFooter";
 
 const App = () => {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Get dark mode state from Redux
@@ -42,6 +43,7 @@ const App = () => {
           </Routes>
 
           {/* Footer could go here */}
+          <Footer />
         </Layout>
       </Router>
     </ConfigProvider>

@@ -47,3 +47,6 @@ body{
   padding: 0px;
   font-size: 12px;
 }
+.scene-nav-info {
+  display: none !important;
+}

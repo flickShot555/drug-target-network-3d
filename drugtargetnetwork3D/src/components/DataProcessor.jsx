@@ -24,6 +24,7 @@ import {
   selectProteinChildCount,
   selectParentSourceCount,
 } from "./../app/features/countSlice";
+import SmartFooterAwareFloatingButton from "./SmartFooterAwareFloatingButton";
 
 const DataProcessor = () => {
   document.querySelectorAll('.scene-nav-info').forEach(el => el.style.display = 'none');
@@ -194,7 +195,7 @@ const DataProcessor = () => {
   };
 
   return (
-    <div ref={exportRef} data-export-ref="1" style={{ height: "95vh" }}>
+    <div ref={exportRef} data-export-ref="1" style={{ height: "93vh" }}>
       {/* Smilies Prediction Modal (JSX) */}
       {showPredictModal && (
         <div
@@ -283,6 +284,7 @@ const DataProcessor = () => {
           </Card>
         </Col>
       </Row>
+      <SmartFooterAwareFloatingButton url="http://bioicawtech.com/drugtargetnetwork" />
     </div>
   );
 };

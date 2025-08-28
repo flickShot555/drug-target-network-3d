@@ -11,7 +11,7 @@ import * as d3 from 'd3-force-3d';
 //import { forceLink, forceManyBody, forceX, forceY, forceZ, forceCollide } from 'd3-force-3d';
 
 const ForceNetworkGraph = ({ graphData, getNodeShape, generateDataSet }) => {
-  
+  //document.getElementsByClassName('scene-nav-info')[0].style.display = 'none';
   const dispatch = useDispatch();
   const fgRef = useRef();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);

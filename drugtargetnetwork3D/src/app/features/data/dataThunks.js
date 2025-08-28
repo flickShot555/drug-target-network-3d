@@ -12,7 +12,7 @@ export const fetchGraphData = createAsyncThunk(
     const dataParam = urlParams.get('data'); // Retrieve the value of the 'data' parameter
     
     // Set the file name based on the 'data' query parameter
-    let jsonFile = '/newdata.json'; // Default JSON file
+    let jsonFile = './newdata.json'; // Default JSON file
     if (dataParam === '2') {
       jsonFile = '/sampledata2.json';
     } else if (dataParam === '3') {

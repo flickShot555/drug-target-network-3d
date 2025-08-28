@@ -48,9 +48,16 @@ const useColorShape = () => {
 
     let scaleFactor = 3;
     let geometry;
+    /**
+      if (node.type === "parent_source") {
+        geometry = new THREE.BoxGeometry(10*scaleFactor, 10*scaleFactor, 20*scaleFactor);
+      }
+    */ 
     if (node.type === "parent_source") {
-      geometry = new THREE.BoxGeometry(10*scaleFactor, 10*scaleFactor, 20*scaleFactor);
-    } else if (node.type === "protein_child") {
+      const radius = 5 * scaleFactor;
+      const length = 20 * scaleFactor - 2 * radius; // interior cylinder length
+      geometry = new THREE.CapsuleGeometry(radius, length, 8, 16);
+    }else if (node.type === "protein_child") {
       geometry = new THREE.SphereGeometry(5*scaleFactor); // Sphere for protein_child
     } else if (node.type === "disease_child") {
       geometry = new THREE.ConeGeometry(7*scaleFactor, 12*scaleFactor, 3*scaleFactor);

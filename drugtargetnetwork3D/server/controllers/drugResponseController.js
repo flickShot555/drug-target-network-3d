@@ -1,30 +1,26 @@
 // server/controllers/drugResponseController.js
-import { execute } from '../db.js'; // ensure db.js exports execute that returns pool.execute promise
+// ESM module — expects server/mongo.js to export connectToDatabase() and getDb()
+const { getDb } = require('../mongo.js');
 
-export async function search(req, res) {
+/**
+ * Normalize request body keys that might be posted as "key" or "key[]"
+ */
+const normFactory = (body) => (key) => body[key];
+
+/**
+ * Convert various input shapes into an array of non-empty strings.
+ */
+const asArray = (val) => Array.isArray(val) ? val : (val ? [val] : []);
+
+/**
+ * Main search handler — MongoDB version of original SQL-based search.
+ */
+async function search(req, res) {
   try {
-    // We accept JSON, urlencoded, or multipart/form-data (handled by multer().none())
     const body = req.body || {};
+    const norm = normFactory(body);
 
-    // If frontend appended arrays using keys like "Chembl_id1[]" (PHP style),
-    // normalize so we can read either "Chembl_id1" or "Chembl_id1[]".
-    const norm = (key) => {
-      if (key in body) return body[key];
-      const bracketKey = `${key}[]`;
-      if (bracketKey in body) return body[bracketKey];
-      return undefined;
-    };
-
-    const asArray = (v) => {
-      if (v == null) return [];
-      if (Array.isArray(v)) return v;
-      if (typeof v === 'string') {
-        if (v.includes(',')) return v.split(',').map(s => s.trim()).filter(Boolean);
-        return [v];
-      }
-      return [v];
-    };
-
+    // Read inputs (supports key and key[])
     const pic50 = norm('pic50') ?? norm('pic50[]');
     const rawCountIncrement = norm('count_increment') ?? norm('count_increment[]');
 
@@ -35,67 +31,121 @@ export async function search(req, res) {
     const disease_class1 = asArray(norm('disease_class1'));
     const compound_class1 = asArray(norm('compound_class1'));
 
-    const conditions = [];
-    const params = [];
+    // Defensive: cap very large IN lists
+    const MAX_IN_SIZE = 2000;
+    const cap = (arr) => (arr && arr.length > MAX_IN_SIZE) ? arr.slice(0, MAX_IN_SIZE) : arr;
 
-    let sql = `
-      SELECT drugResponse_sorted.*,
-             compounds_updated1.INCHI_KEY,
-             compounds_updated1.COMPOUND_CLASS,
-             drug_disease_sorted.Disease_class,
-             drug_disease_sorted.Disease_name,
-             drug_disease_sorted.Phase
-      FROM drugResponse_sorted
-      LEFT JOIN compounds_updated1 ON drugResponse_sorted.COMPOUND_NAME = compounds_updated1.COMPOUND_NAME
-      LEFT JOIN drug_disease_sorted ON compounds_updated1.INCHI_KEY = drug_disease_sorted.INCHI_KEY
-    `;
-
-    const addInCondition = (col, arr) => {
-      if (!arr || arr.length === 0) return;
-      const placeholders = arr.map(() => '?').join(',');
-      conditions.push(`${col} IN (${placeholders})`);
-      arr.forEach(v => params.push(v));
-    };
-
-    addInCondition('drugResponse_sorted.ONCOTREE_PRIMARY_DISEASE', Chembl_id1);
-    addInCondition('drugResponse_sorted.MAX_PHASE', MaxPhase1);
-
-    if (pic50 !== undefined && pic50 !== null && String(pic50).trim() !== '') {
-      const num = parseFloat(pic50);
-      if (!Number.isNaN(num)) {
-        conditions.push('VALUE >= ?');
-        params.push(num);
-      }
-    }
-
-    addInCondition('drugResponse_sorted.ONCOTREE_LINEAGE', oncotree_change1);
-    addInCondition('drugResponse_sorted.DATASET', DataPlatform);
-    addInCondition('drug_disease_sorted.Disease_class', disease_class1);
-    addInCondition('compounds_updated1.COMPOUND_CLASS', compound_class1);
+    const chemIds = cap(Chembl_id1);
+    const maxPhases = cap(MaxPhase1);
+    const lineages = cap(oncotree_change1);
+    const platforms = cap(DataPlatform);
+    const diseaseClasses = cap(disease_class1);
+    const compoundClasses = cap(compound_class1);
 
     const count_increment = parseInt(rawCountIncrement || '1', 10) || 1;
+    const limit = Math.max(1, 2000 * count_increment);
 
-    if (conditions.length > 0) {
-      if (count_increment === 1) {
-        conditions.push(`drugResponse_sorted.MAX_PHASE NOT IN ('Preclinical','Unknown')`);
-      }
-      sql += ' WHERE ' + conditions.join(' AND ');
-    } else {
-      if (count_increment === 1) {
-        sql += ` WHERE drugResponse_sorted.MAX_PHASE NOT IN ('Preclinical','Unknown')`;
+    // Build base match
+    const baseMatch = {};
+    if (chemIds.length) baseMatch.ONCOTREE_PRIMARY_DISEASE = { $in: chemIds };
+    if (maxPhases.length) baseMatch.MAX_PHASE = { $in: maxPhases };
+    if (lineages.length) baseMatch.ONCOTREE_LINEAGE = { $in: lineages };
+    if (platforms.length) baseMatch.DATASET = { $in: platforms };
+
+    if (pic50 !== undefined && String(pic50).trim() !== '') {
+      const num = parseFloat(pic50);
+      if (!Number.isNaN(num)) {
+        baseMatch.VALUE_num = { $gte: num };
+      } else {
+        console.warn('search: pic50 provided but not numeric:', pic50);
       }
     }
 
-    const limit = 2000 * count_increment;
-    sql += ` LIMIT ?`;
-    params.push(limit);
+    if (count_increment === 1 && !baseMatch.MAX_PHASE) {
+      baseMatch.MAX_PHASE = { $nin: ['Preclinical', 'Unknown'] };
+    }
 
-    // Execute (expect execute to return [rows, fields] like mysql2 pool.execute)
-    const [rows] = await execute(sql, params);
+    // Build aggregation pipeline
+    const pipeline = [
+      { $addFields: { VALUE_num: { $convert: { input: '$VALUE', to: 'double', onError: null, onNull: null } } } }
+    ];
+
+    if (Object.keys(baseMatch).length) pipeline.push({ $match: baseMatch });
+
+    pipeline.push(
+      {
+        $lookup: {
+          from: 'compounds_updated1',
+          localField: 'COMPOUND_NAME',
+          foreignField: 'COMPOUND_NAME',
+          as: 'compound_info'
+        }
+      },
+      { $unwind: { path: '$compound_info', preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: 'drug_disease_sorteds',
+          localField: 'compound_info.INCHI_KEY',
+          foreignField: 'INCHI_KEY',
+          as: 'disease_info'
+        }
+      },
+      { $unwind: { path: '$disease_info', preserveNullAndEmptyArrays: true } }
+    );
+
+    const postJoinMatch = {};
+    if (diseaseClasses.length) postJoinMatch['disease_info.Disease_class'] = { $in: diseaseClasses };
+    if (compoundClasses.length) postJoinMatch['compound_info.COMPOUND_CLASS'] = { $in: compoundClasses };
+    if (Object.keys(postJoinMatch).length) pipeline.push({ $match: postJoinMatch });
+
+    pipeline.push(
+      {
+        $addFields: {
+          INCHI_KEY: '$compound_info.INCHI_KEY',
+          COMPOUND_CLASS: '$compound_info.COMPOUND_CLASS',
+          Disease_class: '$disease_info.Disease_class',
+          Disease_name: '$disease_info.Disease_name',
+          Phase: '$disease_info.Phase'
+        }
+      },
+      {
+        $project: {
+          drugresponse_id: 1,
+          COMPOUND_NAME: 1,
+          CELL_LINE_NAME: 1,
+          VALUE: 1,
+          VALUE_num: 1,
+          METRIC: 1,
+          DATASET: 1,
+          Pubmed_ID: 1,
+          PUBCHEM_ID: 1,
+          CHEMBL_ID: 1,
+          MAX_PHASE: 1,
+          RRID: 1,
+          ONCOTREE_LINEAGE: 1,
+          ONCOTREE_PRIMARY_DISEASE: 1,
+          created_at: 1,
+          INCHI_KEY: 1,
+          COMPOUND_CLASS: 1,
+          Disease_class: 1,
+          Disease_name: 1,
+          Phase: 1
+        }
+      },
+      { $sort: { created_at: -1, drugresponse_id: -1 } },
+      { $limit: limit }
+    );
+
+    const db = getDb();
+    const rows = await db.collection('drugResponse_sorted').aggregate(pipeline, { allowDiskUse: true }).toArray();
 
     return res.json(rows);
   } catch (err) {
-    console.error('search error', err);
+    console.error('drugResponseController.search error:', err);
     return res.status(500).json({ ok: false, error: 'Server error' });
   }
 }
+
+// export in CommonJS
+module.exports = { search };
+

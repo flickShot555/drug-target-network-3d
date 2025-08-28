@@ -1,8 +1,12 @@
 // server/routes/drugResponse.js
-import { Router } from 'express';
+const { Router } = require('express');
 const router = Router();
-import { search } from '../controllers/drugResponseController';
+const { search } = require('../controllers/drugResponseController');
 
 router.post('/search', search);
+router.get("/", (req,res)=>{
+    console.log("the server is running");
+    res.json("the server is running");
+})
 
-export default router;
+module.exports = router;

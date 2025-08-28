@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { message } from 'antd';
+import {  message } from 'antd';
 import CustomButton from './CustomButton'; // Assuming CustomButton is a styled button
 import { setInitialData } from './../app/features/data/dataSlice';
 import { setLoading } from './../app/features/loaderSlice'; // Import loader actions
@@ -24,15 +24,6 @@ const GetTheData = ({ type, before, after, count, setCount }) => {
     count_increment: count, // Use dynamic count here
   }));
 
-  // API endpoint selection:
-  // - If you set VITE_API_URL in client/.env (e.g. http://localhost:5000),
-  //   it will call `${VITE_API_URL}/api/drugresponse/search`.
-  // - Otherwise it will call the relative path '/api/drugresponse/search',
-  //   which works if you configured Vite proxy to forward /api to your server.
-  const API_ENDPOINT = import.meta.env.VITE_API_URL
-    ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api/drugresponse/search`
-    : '/api/drugresponse/search';
-
   // Handle increment or decrement of count based on the type
   const handleButtonClick = () => {
     if (type === 'addmoredata') {
@@ -44,56 +35,128 @@ const GetTheData = ({ type, before, after, count, setCount }) => {
   };
 
   // Function to apply the filters and make the API call
-  const handleApplyFilter = async () => {
-    dispatch(setLoading(true)); // Start loading
-
-    try {
-      // Prepare the object
-      const dataObject = {
-        count_increment: selectedFilters.count_increment,
-        Chembl_id1: selectedFilters.Chembl_id1 || [],
-        MaxPhase1: selectedFilters.MaxPhase1 || [],
-        oncotree_change1: selectedFilters.oncotree_change1 || [],
-        DataPlatform: selectedFilters.DataPlatform || [],
-        pic50: selectedFilters.pic50 || "",
-        disease_class1: selectedFilters.disease_class1 || [],
-        compound_class1: selectedFilters.compound_class1 || []
-      };
-
-      // Log for debugging
-      console.log("📦 Sending dataObject:", dataObject);
-
-      // Convert to FormData so PHP's $_POST works (and backend that expects arrays like key[])
-      const formData = new FormData();
-      Object.entries(dataObject).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          // Keep original behavior: append arrays as key[]
-          value.forEach(v => formData.append(`${key}[]`, v));
-        } else {
-          formData.append(key, value);
+  /**
+    const handleApplyFilter = async () => {
+      dispatch(setLoading(true)); // Start global loading
+  
+      try {
+        // Sending filters and count in the POST request
+        const response = await axios.post('https://bioicawtech.com/drugtargetnetwork/getDataFor3d.php', {
+          Chembl_id1: selectedFilters.Chembl_id1,
+          MaxPhase1: selectedFilters.MaxPhase1,
+          pic50: selectedFilters.pic50,
+          oncotree_change1: selectedFilters.oncotree_change1,
+          DataPlatform: selectedFilters.DataPlatform,
+          disease_class1: selectedFilters.disease_class1,
+          compound_class1: selectedFilters.compound_class1,
+          count_increment: selectedFilters.count_increment,
+        });
+  
+        // Handle the response from the backend (PHP)
+        message.success('Data fetched successfully!');
+        dispatch(setInitialData(response.data)); // Assuming response.data contains the data you want
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        message.error('Failed to fetch data.');
+      } finally {
+        dispatch(setLoading(false)); // Stop global loading
+      }
+    };
+  */
+    /**
+      const handleApplyFilter = () => {
+        dispatch(setLoading(true)); // Start global loading
+      
+        try {
+          const dataObject = {
+            count_increment: selectedFilters.count_increment,
+            Chembl_id1: selectedFilters.Chembl_id1 || [],
+            MaxPhase1: selectedFilters.MaxPhase1 || [],
+            oncotree_change1: selectedFilters.oncotree_change1 || [],
+            DataPlatform: selectedFilters.DataPlatform || [],
+            pic50: selectedFilters.pic50 || "",
+            disease_class1: selectedFilters.disease_class1 || [],
+            compound_class1: selectedFilters.compound_class1 || []
+          };
+      
+          console.log("Formatted dataObject for DB:", dataObject);
+      
+          // ✅ Optional: Check structure
+          console.log("Type check:", {
+            count_increment: typeof dataObject.count_increment,
+            Chembl_id1: Array.isArray(dataObject.Chembl_id1),
+            MaxPhase1: Array.isArray(dataObject.MaxPhase1),
+            oncotree_change1: Array.isArray(dataObject.oncotree_change1),
+            DataPlatform: Array.isArray(dataObject.DataPlatform),
+            pic50: typeof dataObject.pic50,
+            disease_class1: Array.isArray(dataObject.disease_class1),
+            compound_class1: Array.isArray(dataObject.compound_class1)
+          });
+      
+          message.success('Data object prepared successfully!');
+        } catch (error) {
+          console.error('Error preparing data object:', error);
+          message.error('Failed to prepare data object.');
+        } finally {
+          dispatch(setLoading(false)); // Stop global loading
         }
-      });
-
-      // Send as form data (Axios sets Content-Type automatically for FormData)
-      const response = await axios.post(API_ENDPOINT, formData);
-
-      console.log("✅ Response data from API:", response.data);
-
-      // Now response.data should be the array your reducer expects
-      message.success("Data fetched successfully!");
-      dispatch(setInitialData(response.data));
-    } catch (error) {
-      console.error("❌ Error fetching data:", error);
-      message.error("Failed to fetch data.");
-    } finally {
-      dispatch(setLoading(false)); // Stop loading
-    }
-  };
+      };
+    */
+      const handleApplyFilter = async () => {
+        dispatch(setLoading(true)); // Start loading
+      
+        try {
+          // Prepare the object
+          const dataObject = {
+            count_increment: selectedFilters.count_increment,
+            Chembl_id1: selectedFilters.Chembl_id1 || [],
+            MaxPhase1: selectedFilters.MaxPhase1 || [],
+            oncotree_change1: selectedFilters.oncotree_change1 || [],
+            DataPlatform: selectedFilters.DataPlatform || [],
+            pic50: selectedFilters.pic50 || "",
+            disease_class1: selectedFilters.disease_class1 || [],
+            compound_class1: selectedFilters.compound_class1 || []
+          };
+      
+          // Log for debugging
+          console.log("📦 Sending dataObject:", dataObject);
+      
+          // Convert to FormData so PHP's $_POST works
+          const formData = new FormData();
+          Object.entries(dataObject).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+              value.forEach(v => formData.append(`${key}[]`, v)); // Send arrays as key[]
+            } else {
+              formData.append(key, value);
+            }
+          });
+      
+          // Send as form data (no need for Content-Type header, Axios sets it automatically)
+          const response = await axios.post(
+            "https://bioicawtech.com/drugtargetnetwork/getDataFor3d.php",
+            formData
+          );
+      
+          console.log("✅ Response data from API:", response.data);
+      
+          // Now response.data should be the array your reducer expects
+          message.success("Data fetched successfully!");
+          dispatch(setInitialData(response.data));
+        } catch (error) {
+          console.error("❌ Error fetching data:", error);
+          message.error("Failed to fetch data.");
+        } finally {
+          dispatch(setLoading(false)); // Stop loading
+        }
+      };
+      
+    
 
   return (
-    <CustomButton onClick={handleButtonClick} disabled={isLoading}> {/* Disable button during loading */}
-      {isLoading ? after : before}
-    </CustomButton>
+      <CustomButton onClick={handleButtonClick} disabled={isLoading}> {/* Disable button during loading */}
+        {isLoading ? after : before}
+      </CustomButton>
+
   );
 };
 
